@@ -1,2 +1,7 @@
-# kuna-ticker-extenstion
-Chrome Exteption for Kuna Exchange
+# Chrome Exteption for [Kuna.io](https://kuna.io/) Cryptocurrency Exchange
+
+
+
+
+
+*Created with a Love by [CoinWizard](https://coinwizard.me/) Team*

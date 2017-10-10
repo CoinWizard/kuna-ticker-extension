@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "module": "es6",
+        "target": "es6",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "outDir": "ts-build",
+        "jsx": "preserve",
+        "lib": [
+            "es2016",
+            "dom"
+        ],
+        "baseUrl": "./src",
+        "skipLibCheck": true,
+        "experimentalDecorators": true
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

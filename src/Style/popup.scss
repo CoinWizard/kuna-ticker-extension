@@ -1,0 +1,35 @@
+@import "fonts";
+@import "variable";
+@import "cleaner";
+
+body {
+    width: $weight;
+    height: $height;
+    font-size: 16px;
+    background: white;
+    color: rgb(38, 38, 38);
+    font-family: $font;
+}
+
+.created-by {
+    display: none;
+    position: fixed;
+    font-size: 10px;
+    left: 3px;
+    bottom: 3px;
+    z-index: 1000;
+
+    a {
+        display: inline-block;
+        color: rgb(64, 64, 64);
+    }
+
+    &__logo {
+        height: 12px;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0 0 4px;
+    }
+}
+
+@import "screens/home";

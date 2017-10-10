@@ -1,0 +1,1 @@
+export default (name) => `Else name function: ${name}`;
