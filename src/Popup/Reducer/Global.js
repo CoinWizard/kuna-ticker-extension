@@ -1,7 +1,5 @@
-
-
 const initialState = {
-    currentTicker: null
+
 };
 
 /**

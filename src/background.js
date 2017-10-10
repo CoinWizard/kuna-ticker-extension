@@ -5,17 +5,19 @@ const ext = new ExtensionPlatform;
 
 import * as Events from './Library/EventProtocol/Events';
 import * as KunaApiClient from './Library/Kuna/ApiClient';
-import BaseKunaTickers from './Library/Kuna/Tikers';
+import KunaTickerMap from './Library/Kuna/TickerMap';
 
 
 const Tickers = {};
 
-_.each(BaseKunaTickers, (ticker) => {
+_.each(KunaTickerMap, (ticker) => {
     Tickers[ticker.key] = {
         ...ticker,
         price: 0
     };
 });
+
+let currentTickerKey = KunaTickerMap.btcuah.key;
 
 const updateTickerPrice = (key) => {
     KunaApiClient.extractTicker(key).then((ticker) => {
@@ -32,12 +34,49 @@ const tickerUpdater = () => {
     _.each(Tickers, (ticker) => updateTickerPrice(ticker.key));
 };
 
+/**
+ * @param request
+ * @param sender
+ * @param sendResponse
+ */
+const extensionEventListener = (request, sender, sendResponse) => {
+    const {event = null} = request;
+
+    if (!event) {
+        return;
+    }
+
+    switch (event) {
+        case Events.GET_CURRENT_TICKER: {
+            sendResponse({
+                currentTickerKey: currentTickerKey
+            });
+            break;
+        }
+
+        case Events.SET_CURRENT_TICKER: {
+            const {tickerKey} = request;
+            if (!tickerKey) {
+                currentTickerKey = tickerKey;
+                sendResponse({
+                    currentTicker: currentTickerKey
+                });
+            }
+            break;
+        }
+
+        case Events.GET_TICKERS: {
+            sendResponse({
+                tickers: Tickers
+            });
+            break;
+        }
+    }
+};
+
 
 const initBackground = () => {
-    ext.getExtension().extension.onMessage.addListener((request, sender, sendResponse) => {
-        console.log(request, sender);
-    });
-
+    ext.getExtension().extension.onMessage.addListener(extensionEventListener);
     setInterval(tickerUpdater, 30000);
 };
 

@@ -1,4 +1,4 @@
-const Tickers = {
+const TickerMap = {
     btcuah: {
         key: 'btcuah',
         baseCurrency: 'BTC',
@@ -11,4 +11,4 @@ const Tickers = {
     }
 };
 
-export default Tickers;
+export default TickerMap;

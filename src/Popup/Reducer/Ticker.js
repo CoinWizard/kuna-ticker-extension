@@ -1,11 +1,20 @@
+import AbstractAction from './../Actions/AbstractAction';
+
 const initialTickerState = {
-    tickers: []
+    tickers: {},
+    currentTickerKey: null
 };
 
 /**
  * @param state
- * @returns {[*,*]}
+ * @param action
+ * @return {{tickers}}
  */
-export default function tickerState(state = initialTickerState) {
+export default function tickerState(state = initialTickerState, action = null) {
+
+    if (action instanceof AbstractAction && action.getReducerKey() === 'ticker') {
+        return action.dispatch(state);
+    }
+
     return state;
 }
