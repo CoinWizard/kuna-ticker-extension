@@ -2,6 +2,8 @@ import React from 'react';
 import store from './../Store/Store';
 import {connect} from 'react-redux';
 import * as _ from 'lodash';
+import Numeral from 'numeral';
+import classNames from 'classNames';
 
 import ExtensionPlatform from './../../Library/Extension';
 import * as Events from './../../Library/EventProtocol/Events';
@@ -34,12 +36,25 @@ class HomeScreen extends React.Component {
 
         return (
             <div>
-                <div>{currentTickerKey}</div>
-                {_.map(tickers, (trc) => {
-                    return (
-                        <div key={trc.key}><i>{trc.price}</i> {trc.baseCurrency} / {trc.quoteCurrency}</div>
-                    )
-                })}
+                <div className="current-ticker">
+                    {Numeral(currentTicker.price).format('0,0.[00]')} {currentTicker.quoteCurrency}
+                </div>
+
+                <div className="ticker-list">
+                    {_.map(tickers, (trc) => {
+                        const itemProps = {
+                            key: trc.key,
+                            className: classNames({
+                                'ticker-list__item': true,
+                                '-active': currentTickerKey === trc.key
+                            })
+                        };
+
+                        return (
+                            <div {...itemProps}>{trc.baseCurrency} / {trc.quoteCurrency}</div>
+                        )
+                    })}
+                </div>
             </div>
         );
     }
