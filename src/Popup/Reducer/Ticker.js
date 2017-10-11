@@ -12,9 +12,9 @@ const initialTickerState = {
  * @param ticker
  * @returns {({}&U)|({}&U&V&W)|({}&U&V)|any}
  */
-function updateTickerPrice(state, ticker) {
+function updateTicker(state, ticker) {
     const {tickers = []} = state;
-    tickers[ticker.key].price = ticker.price;
+    tickers[ticker.key] = ticker;
 
     return updateObject(state, {tickers: tickers});
 }
@@ -31,8 +31,8 @@ export default function tickerState(state = initialTickerState, action = null) {
             return updateObject(state, {tickers: action.tickers});
         }
 
-        case Actions.UPDATE_TICKER_PRICE: {
-            return updateTickerPrice(state, action.ticker);
+        case Actions.UPDATE_TICKER: {
+            return updateTicker(state, action.ticker);
         }
 
         case Actions.SET_CURRENT_TICKER: {

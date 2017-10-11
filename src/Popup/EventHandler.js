@@ -5,7 +5,7 @@ const ext = new ExtensionPlatform;
 
 import * as Events from './../Library/EventProtocol/Events';
 
-import {updateTickerPrice} from './Actions/TickerActions';
+import {updateTicker} from './Actions/TickerActions';
 
 ext.getExtension().extension.onMessage.addListener((request, sender, sendResponse) => {
     let {event = null, ...payload} = request;
@@ -16,7 +16,7 @@ ext.getExtension().extension.onMessage.addListener((request, sender, sendRespons
 
     switch (event) {
         case Events.UPDATE_TICKER: {
-            store.dispatch(updateTickerPrice(payload));
+            store.dispatch(updateTicker(payload));
             break;
         }
 

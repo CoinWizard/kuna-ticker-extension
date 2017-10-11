@@ -11,12 +11,14 @@ const ext = new ExtensionPlatform;
 
 import {fetchTickers, setCurrentTickerKey} from './../Actions/TickerActions';
 
+import CurrentTickerView from './HomeViews/CurrentTickerView';
+
 const currentExtension = ext.getExtension().extension;
 
 class HomeScreen extends React.Component {
 
     componentWillMount() {
-        currentExtension.sendMessage({event: Events.GET_CURRENT_TICKER}, (response) => {
+        currentExtension.sendMessage({event: Events.FETCH_CURRENT_TICKER}, (response) => {
             store.dispatch(setCurrentTickerKey(response.currentTickerKey));
         });
 
@@ -25,21 +27,24 @@ class HomeScreen extends React.Component {
         });
     }
 
+    onChangeCurrentTicker = (tickerKey) => {
+        const request = {
+            event: Events.SET_CURRENT_TICKER,
+            tickerKey: tickerKey
+        };
+
+        currentExtension.sendMessage(request, (response) => {
+            store.dispatch(setCurrentTickerKey(tickerKey));
+        });
+    };
+
     render() {
         const {tickers = [], currentTickerKey = null} = this.props;
 
         const currentTicker = _.find(tickers, {key: currentTickerKey});
 
-        if (!currentTicker) {
-            return <div className="loading">'Wait...'</div>;
-        }
-
         return (
             <div>
-                <div className="current-ticker">
-                    {Numeral(currentTicker.price).format('0,0.[00]')} {currentTicker.quoteCurrency}
-                </div>
-
                 <div className="ticker-list">
                     {_.map(tickers, (trc) => {
                         const itemProps = {
@@ -47,14 +52,17 @@ class HomeScreen extends React.Component {
                             className: classNames({
                                 'ticker-list__item': true,
                                 '-active': currentTickerKey === trc.key
-                            })
+                            }),
+                            onClick: () => this.onChangeCurrentTicker(trc.key)
                         };
 
                         return (
-                            <div {...itemProps}>{trc.baseCurrency} / {trc.quoteCurrency}</div>
+                            <div {...itemProps}>{trc.baseCurrency}/{trc.quoteCurrency}</div>
                         )
                     })}
                 </div>
+
+                <CurrentTickerView ticker={currentTicker} />
             </div>
         );
     }

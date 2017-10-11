@@ -13,15 +13,19 @@ const Tickers = {};
 _.each(KunaTickerMap, (ticker) => {
     Tickers[ticker.key] = {
         ...ticker,
-        price: 0
+        price: 0,
+        volume_base: 0,
+        volume_quote: 0
     };
 });
 
 let currentTickerKey = KunaTickerMap.btcuah.key;
 
-const updateTickerPrice = (key) => {
+const updateTicker = (key) => {
     KunaApiClient.extractTicker(key).then((ticker) => {
         Tickers[key].price = ticker.last;
+        Tickers[key].volume_base = ticker.vol;
+        Tickers[key].volume_quote = ticker.price;
 
         ext.getExtension().extension.sendMessage({
             event: Events.UPDATE_TICKER,
@@ -31,7 +35,7 @@ const updateTickerPrice = (key) => {
 };
 
 const tickerUpdater = () => {
-    _.each(Tickers, (ticker) => updateTickerPrice(ticker.key));
+    _.each(Tickers, (ticker) => updateTicker(ticker.key));
 };
 
 /**
@@ -49,7 +53,7 @@ const extensionEventListener = (request, sender, sendResponse) => {
     }
 
     switch (event) {
-        case Events.GET_CURRENT_TICKER: {
+        case Events.FETCH_CURRENT_TICKER: {
             sendResponse({
                 currentTickerKey: currentTickerKey
             });
@@ -59,11 +63,13 @@ const extensionEventListener = (request, sender, sendResponse) => {
         case Events.SET_CURRENT_TICKER: {
             const {tickerKey} = request;
             if (!tickerKey) {
-                currentTickerKey = tickerKey;
-                sendResponse({
-                    currentTicker: currentTickerKey
-                });
+                break;
             }
+
+            currentTickerKey = tickerKey;
+            sendResponse({
+                currentTicker: currentTickerKey
+            });
             break;
         }
 

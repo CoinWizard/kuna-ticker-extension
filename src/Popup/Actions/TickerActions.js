@@ -4,9 +4,9 @@ import * as Actions from './ActionTypes';
  * @param ticker
  * @returns {{action, ticker: *}}
  */
-export const updateTickerPrice = (ticker) => {
+export const updateTicker = (ticker) => {
     return {
-        type: Actions.UPDATE_TICKER_PRICE,
+        type: Actions.UPDATE_TICKER,
         ticker: ticker
     };
 };

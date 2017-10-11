@@ -25,7 +25,7 @@ const Plugins = [
 ];
 
 
-if (false) {
+if (true) {
     Plugins.push(
         new Webpack.LoaderOptionsPlugin({
             minimize: true,
