@@ -1,6 +1,4 @@
-const initialState = {
-
-};
+const initialState = {};
 
 /**
  * @param state

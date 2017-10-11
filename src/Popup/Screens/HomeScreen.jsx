@@ -7,9 +7,7 @@ import ExtensionPlatform from './../../Library/Extension';
 import * as Events from './../../Library/EventProtocol/Events';
 const ext = new ExtensionPlatform;
 
-import GetCurrentTickerAction from './../Actions/Ticker/GetTickersAction';
-import GetTickersAction from './../Actions/Ticker/GetTickersAction';
-
+import {fetchTickers, setCurrentTickerKey} from './../Actions/TickerActions';
 
 const currentExtension = ext.getExtension().extension;
 
@@ -17,11 +15,11 @@ class HomeScreen extends React.Component {
 
     componentWillMount() {
         currentExtension.sendMessage({event: Events.GET_CURRENT_TICKER}, (response) => {
-            store.dispatch(new GetCurrentTickerAction(response.currentTickerKey));
+            store.dispatch(setCurrentTickerKey(response.currentTickerKey));
         });
 
         currentExtension.sendMessage({event: Events.GET_TICKERS}, (response) => {
-            store.dispatch(new GetTickersAction(response.tickers));
+            store.dispatch(fetchTickers(response.tickers));
         });
     }
 
@@ -33,7 +31,7 @@ class HomeScreen extends React.Component {
                 <div>{currentTickerKey}</div>
                 {_.map(tickers, (trc) => {
                     return (
-                        <div key={trc.key}>{trc.baseCurrency} / {trc.quoteCurrency}</div>
+                        <div key={trc.key}><i>{trc.price}</i> {trc.baseCurrency} / {trc.quoteCurrency}</div>
                     )
                 })}
             </div>

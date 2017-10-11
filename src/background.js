@@ -42,6 +42,8 @@ const tickerUpdater = () => {
 const extensionEventListener = (request, sender, sendResponse) => {
     const {event = null} = request;
 
+    console.log(request, sender);
+
     if (!event) {
         return;
     }
@@ -76,7 +78,10 @@ const extensionEventListener = (request, sender, sendResponse) => {
 
 
 const initBackground = () => {
+
     ext.getExtension().extension.onMessage.addListener(extensionEventListener);
+
+    tickerUpdater();
     setInterval(tickerUpdater, 30000);
 };
 

@@ -1,6 +1,3 @@
-export const REDUCER_TICKER = 'ticker';
-
-export const GET_TICKERS = 'GET_TICKERS';
+export const FETCH_TICKERS = 'FETCH_TICKERS';
 export const UPDATE_TICKER_PRICE = 'UPDATE_TICKER_PRICE';
-export const GET_CURRENT_TICKER = 'GET_CURRENT_TICKER';
 export const SET_CURRENT_TICKER = 'SET_CURRENT_TICKER';
