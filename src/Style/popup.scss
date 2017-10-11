@@ -6,13 +6,15 @@ body {
     width: $weight;
     height: $height;
     font-size: 16px;
-    background: white;
-    color: rgb(38, 38, 38);
+    color: rgb(255, 255, 255);
     font-family: $font;
+
+    background-color: #0078c8;
+    background: linear-gradient(45deg, #0078c8, #0091ff);
 }
 
 .created-by {
-    display: none;
+    // display: none;
     position: fixed;
     font-size: 10px;
     left: 3px;
@@ -21,7 +23,7 @@ body {
 
     a {
         display: inline-block;
-        color: rgb(64, 64, 64);
+        color: rgb(230, 230, 230);
     }
 
     &__logo {

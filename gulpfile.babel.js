@@ -1,16 +1,14 @@
 import gulp from 'gulp';
 import Path from 'path';
 import del from 'del';
-import uglify from 'gulp-uglify';
 import gulpWebpack from 'gulp-webpack';
 import webpackConfig from './webpack.config.js';
 import named from 'vinyl-named';
 import sass from 'gulp-sass';
-import autoprefixer from 'autoprefixer';
-import minifycss from 'minifycss';
-import sourcemaps from 'gulp-sourcemaps';
 import jsoneditor from 'gulp-json-editor';
-import manifest from './resources/manifest.json';
+import zip from 'gulp-zip';
+
+const manifest = require('./resources/manifest.json');
 
 const PATH = {
     SOURCE: Path.join(__dirname, './src'),
@@ -97,6 +95,13 @@ gulp.task('clean', function clean() {
 
 gulp.task('build', ['copy', 'css', 'js']);
 
+gulp.task('copy:watch', function () {
+    gulp.watch(['./src/*.*'], 'build');
+});
+
+gulp.task('zip:chrome', zipTask('chrome'));
+gulp.task('zip:firefox', zipTask('firefox'));
+gulp.task('zip', ['zip:chrome', 'zip:firefox']);
 
 function copyTask(opts) {
     const {
@@ -107,11 +112,20 @@ function copyTask(opts) {
     } = opts;
 
     return () => {
-        let stream = gulp.src(source + pattern, {base: source})
+        let stream = gulp.src(source + pattern, {base: source});
         destinations.forEach((destination) => {
             stream = stream.pipe(gulp.dest(destination))
         });
 
         return stream
+    }
+}
+
+function zipTask(target) {
+    return () => {
+        return gulp
+            .src(`./dist/${target}/**`)
+            .pipe(zip(`kuna-${target}-${manifest.version}.zip`))
+            .pipe(gulp.dest('./builds'));
     }
 }

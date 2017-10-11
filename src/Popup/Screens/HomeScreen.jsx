@@ -26,6 +26,12 @@ class HomeScreen extends React.Component {
     render() {
         const {tickers = [], currentTickerKey = null} = this.props;
 
+        const currentTicker = _.find(tickers, {key: currentTickerKey});
+
+        if (!currentTicker) {
+            return <div className="loading">'Wait...'</div>;
+        }
+
         return (
             <div>
                 <div>{currentTickerKey}</div>
