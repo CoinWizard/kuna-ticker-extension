@@ -107,4 +107,5 @@ fabric.properties
 
 .idea
 /dist/*
+/builds/*
 .gulp-scss-cache
