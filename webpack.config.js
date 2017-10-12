@@ -53,6 +53,10 @@ if (true) {
 
 const Loaders = [
     {
+        test: /\.json$/,
+        loader: 'json-loader'
+    },
+    {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /(node_modules)/,
@@ -79,7 +83,7 @@ const WebpackConfig = {
         filename: "js/[name].js"
     },
     resolve: {
-        extensions: ["", ".ts", ".tsx", ".js", ".jsx"],
+        extensions: ["", ".ts", ".tsx", ".js", ".jsx", ".json"],
         modules: [
             PATH.SOURCE,
             Path.resolve(__dirname, 'node_modules')

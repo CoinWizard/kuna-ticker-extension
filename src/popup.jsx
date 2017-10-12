@@ -2,6 +2,8 @@ import React from 'react';
 import {render} from 'react-dom';
 
 import PopupApplication from './Popup/index.jsx';
+import './Popup/Analytics';
+
 
 document.addEventListener('DOMContentLoaded', () => {
     let ComponentElement = document.getElementById('popup-application');
@@ -15,3 +17,4 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 });
+
