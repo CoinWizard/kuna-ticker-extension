@@ -11,15 +11,17 @@
         "https://*/*"
     ],
     "icons": {
-        "50": "/images/kun_50.png",
-        "128": "/images/kun_128.png"
+        "114": "/images/kuna_114.png",
+        "128": "/images/kuna_128.png",
+        "144": "/images/kuna_144.png",
+        "258": "/images/kuna_258.png"
     },
     "background": {
         "page": "/views/background.html"
     },
     "browser_action": {
         "default_icon": {
-            "128": "/images/kun_128.png"
+            "144": "/images/kuna_144.png"
         },
         "default_popup": "/views/popup.html",
         "default_title": "Kuna Ticker"

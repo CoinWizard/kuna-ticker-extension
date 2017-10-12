@@ -2,9 +2,15 @@
 @import "variable";
 @import "cleaner";
 
+html {
+    width: 300px;
+    max-width: 300px;
+    overflow: hidden;
+}
+
 body {
-    width: $weight;
-    height: $height;
+    width: 300px;
+    height: 200px;
     font-size: 16px;
     background: white;
     color: rgb(38, 38, 38);

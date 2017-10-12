@@ -17,20 +17,28 @@ export default class CurrentTickerView extends React.Component {
                     <span className="current-ticker__price-currency">{ticker.quoteCurrency}</span>
                 </label>
 
+                <div className="current-ticker__market">
+                    <a
+                        href={`https://kuna.io/markets/${ticker.key}`}
+                        className="current-ticker__market-link"
+                        target="_blank"
+                    >Market {ticker.baseCurrency}/{ticker.quoteCurrency}</a>
+                </div>
+
                 <div className="current-ticker__title">Volume 24h</div>
 
                 <label className="current-ticker__vol">
                     <span className="current-ticker__vol-currency">{ticker.baseCurrency}</span>
                     <span className="current-ticker__vol-value">
-                            {Numeral(ticker.volume_base).format("0,0.[00]")}
-                            </span>
+                        {Numeral(ticker.volume_base).format("0,0.[00]")}
+                    </span>
                 </label>
 
                 <label className="current-ticker__vol">
                     <span className="current-ticker__vol-currency">{ticker.quoteCurrency}</span>
                     <span className="current-ticker__vol-value">
-                            {Numeral(ticker.volume_quote).format("0,0.[00]")}
-                        </span>
+                        {Numeral(ticker.volume_quote).format("0,0.[00]")}
+                    </span>
                 </label>
             </div>
         );

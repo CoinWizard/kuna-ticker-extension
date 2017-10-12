@@ -11,9 +11,33 @@ const TickerMap = {
         quoteCurrency: 'UAH',
         format: '0,0.[00]'
     },
+    wavesuah: {
+        key: 'wavesuah',
+        baseCurrency: 'WAVES',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]'
+    },
+    gbguah: {
+        key: 'gbguah',
+        baseCurrency: 'GBG',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]'
+    },
+    golosgbg: {
+        key: 'golosgbg',
+        baseCurrency: 'GOLOS',
+        quoteCurrency: 'GBG',
+        format: '0,0.[0000]'
+    },
     kunbtc: {
         key: 'kunbtc',
         baseCurrency: 'KUN',
+        quoteCurrency: 'BTC',
+        format: '0,0.[000000]'
+    },
+    bchbtc: {
+        key: 'bchbtc',
+        baseCurrency: 'BCH',
         quoteCurrency: 'BTC',
         format: '0,0.[000000]'
     }

@@ -16,7 +16,9 @@ ext.getExtension().extension.onMessage.addListener((request, sender, sendRespons
 
     switch (event) {
         case Events.UPDATE_TICKER: {
-            store.dispatch(updateTicker(payload));
+            if ('key' in payload) {
+                store.dispatch(updateTicker(payload));
+            }
             break;
         }
 
