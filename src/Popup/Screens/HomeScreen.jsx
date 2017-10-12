@@ -62,7 +62,7 @@ class HomeScreen extends React.Component {
                     })}
                 </div>
 
-                <CurrentTickerView ticker={currentTicker} />
+                <CurrentTickerView ticker={currentTicker}/>
             </div>
         );
     }

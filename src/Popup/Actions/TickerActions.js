@@ -1,4 +1,4 @@
-import * as Actions from './ActionTypes';
+import {ActionTypes} from './ActionTypes';
 
 /**
  * @param ticker
@@ -6,7 +6,7 @@ import * as Actions from './ActionTypes';
  */
 export const updateTicker = (ticker) => {
     return {
-        type: Actions.UPDATE_TICKER,
+        type: ActionTypes.UPDATE_TICKER,
         ticker: ticker
     };
 };
@@ -17,7 +17,7 @@ export const updateTicker = (ticker) => {
  */
 export const setCurrentTickerKey = (tickerKey) => {
     return {
-        type: Actions.SET_CURRENT_TICKER,
+        type: ActionTypes.SET_CURRENT_TICKER,
         tickerKey: tickerKey
     };
 };
@@ -29,7 +29,7 @@ export const setCurrentTickerKey = (tickerKey) => {
  */
 export const fetchTickers = (tickers = []) => {
     return {
-        type: Actions.FETCH_TICKERS,
+        type: ActionTypes.FETCH_TICKERS,
         tickers: tickers
     };
 };

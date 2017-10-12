@@ -1,10 +1,17 @@
 import React from 'react';
 import Numeral from 'numeral';
 
-export default class CurrentTickerView extends React.Component {
+import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+
+export interface CurrentTickerViewPropsInterface {
+    ticker: TickerInterface;
+}
+
+class CurrentTickerView extends React.Component<CurrentTickerViewPropsInterface, {}> {
 
     render() {
-        const {ticker = null} = this.props;
+
+        const { ticker = null } = this.props;
 
         if (!ticker) {
             return <div className="loading">Wait...</div>;
@@ -44,3 +51,5 @@ export default class CurrentTickerView extends React.Component {
         );
     }
 }
+
+export default CurrentTickerView;

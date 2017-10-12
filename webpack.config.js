@@ -12,6 +12,13 @@ const PATH = {
     TARGET: Path.join(__dirname, './dist')
 };
 
+const ENV = {
+    DEVELOPMENT: 'development',
+    PRODUCTION: 'production'
+};
+
+const NODE_ENV = process.env.NODE_ENV || ENV.DEVELOPMENT;
+
 const Plugins = [
     new Webpack.NamedModulesPlugin(),
     new Webpack.optimize.ModuleConcatenationPlugin(),
@@ -21,11 +28,19 @@ const Plugins = [
         // add errors to webpack instead of warnings
         failOnError: true
     }),
-    new Webpack.optimize.CommonsChunkPlugin({async: true})
+    new Webpack.optimize.CommonsChunkPlugin({async: true}),
+    new Webpack.DefinePlugin({
+        "process.env": {
+            NODE_ENV: JSON.stringify(NODE_ENV)
+        }
+    }),
+    new Webpack.EnvironmentPlugin({
+        NODE_ENV: NODE_ENV
+    })
 ];
 
 
-if (true) {
+if (NODE_ENV === ENV.PRODUCTION) {
     Plugins.push(
         new Webpack.LoaderOptionsPlugin({
             minimize: true,
@@ -55,8 +70,16 @@ const Loaders = [
     {
         test: /\.json$/,
         loader: 'json-loader'
-    },
-    {
+    }, {
+        test: /\.ts$/,
+        loader: "awesome-typescript-loader"
+    },{
+        test: /\.tsx$/,
+        loader: 'babel-loader',
+        query: {
+            presets: ['es2015', 'react']
+        }
+    }, {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /(node_modules)/,
@@ -64,7 +87,7 @@ const Loaders = [
             presets: ['react', 'es2015', 'stage-0']
         }
     }, {
-        test: /.jsx?$/,
+        test: /.jsx$/,
         loader: 'babel-loader',
         exclude: /(node_modules)/,
         query: {
@@ -87,7 +110,12 @@ const WebpackConfig = {
         modules: [
             PATH.SOURCE,
             Path.resolve(__dirname, 'node_modules')
-        ]
+        ],
+        alias: {
+            Core: Path.join(__dirname, 'src/Core'),
+            Popup: Path.join(__dirname, 'src/Popup'),
+            Background: Path.join(__dirname, 'src/Background'),
+        }
     },
     devtool: 'inline-source-map',
     plugins: Plugins,
