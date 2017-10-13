@@ -1,8 +1,10 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import PopupApplication from './Popup/index.jsx';
-import './Popup/Analytics';
+import 'Core/WindowDeclaration';
+
+import PopupApplication from 'Popup/index';
+import 'Popup/Analytics';
 
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,12 +1,12 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import store from './Store/Store.js';
+import store from 'Popup/Store/index';
 
-import HomeScreen from './Screens/HomeScreen';
+import HomeScreen from 'Popup/Screens/HomeScreen';
 
-import './EventHandler';
+import 'Popup/EventHandler';
 
-export default class PopupApplication extends React.Component {
+class PopupApplication extends React.Component {
     render() {
         return (
             <div className="application">
@@ -17,3 +17,5 @@ export default class PopupApplication extends React.Component {
         );
     }
 }
+
+export default PopupApplication;

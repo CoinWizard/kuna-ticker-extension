@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 
-import ExtensionPlatform from './Library/Extension';
+import ExtensionPlatform from 'Library/Extension';
 const ext = new ExtensionPlatform;
 
-import * as Events from './Library/EventProtocol/Events';
-import * as KunaApiClient from './Library/Kuna/ApiClient';
-import KunaTickerMap from './Library/Kuna/TickerMap';
+import {Events} from 'Library/EventProtocol/Events';
+import KunaApiClient from 'Library/Kuna/ApiClient';
+import KunaTickerMap from 'Library/Kuna/TickerMap';
 
 
 const Tickers = {};

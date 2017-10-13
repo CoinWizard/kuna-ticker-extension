@@ -1,4 +1,4 @@
-import {ActionTypes} from './ActionTypes';
+import {ActionTypes} from 'Popup/Actions/ActionTypes';
 
 /**
  * @param ticker

@@ -1,17 +1,16 @@
 import React from 'react';
-import store from './../Store/Store';
+import store from 'Popup/Store/index';
 import {connect} from 'react-redux';
 import * as _ from 'lodash';
 import Numeral from 'numeral';
 import classNames from 'classNames';
 
-import ExtensionPlatform from './../../Library/Extension';
-import * as Events from './../../Library/EventProtocol/Events';
+import ExtensionPlatform from 'Library/Extension';
+import {Events} from 'Library/EventProtocol/Events';
 const ext = new ExtensionPlatform;
 
-import {fetchTickers, setCurrentTickerKey} from './../Actions/TickerActions';
-
-import CurrentTickerView from './HomeViews/CurrentTickerView';
+import {fetchTickers, setCurrentTickerKey} from 'Popup/Actions/TickerActions';
+import CurrentTickerView from 'Popup/Screens/HomeViews/CurrentTickerView';
 
 const currentExtension = ext.getExtension().extension;
 

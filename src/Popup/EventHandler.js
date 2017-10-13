@@ -1,11 +1,11 @@
-import store from './Store/Store';
+import store from 'Popup/Store/index';
 
-import ExtensionPlatform from './../Library/Extension';
+import ExtensionPlatform from 'Library/Extension';
 const ext = new ExtensionPlatform;
 
-import * as Events from './../Library/EventProtocol/Events';
+import {Events} from 'Library/EventProtocol/Events';
 
-import {updateTicker} from './Actions/TickerActions';
+import {updateTicker} from 'Popup/Actions/TickerActions';
 
 ext.getExtension().extension.onMessage.addListener((request, sender, sendResponse) => {
     let {event = null, ...payload} = request;

@@ -73,7 +73,7 @@ const Loaders = [
     }, {
         test: /\.ts$/,
         loader: "awesome-typescript-loader"
-    },{
+    }, {
         test: /\.tsx$/,
         loader: 'babel-loader',
         query: {
@@ -115,6 +115,9 @@ const WebpackConfig = {
             Core: Path.join(__dirname, 'src/Core'),
             Popup: Path.join(__dirname, 'src/Popup'),
             Background: Path.join(__dirname, 'src/Background'),
+
+            // @depracated
+            Library: Path.join(__dirname, 'src/Library')
         }
     },
     devtool: 'inline-source-map',
