@@ -2,17 +2,17 @@ import React from 'react';
 import store from 'Popup/Store/index';
 import {connect} from 'react-redux';
 import * as _ from 'lodash';
-import Numeral from 'numeral';
-import classNames from 'classNames';
 
-import ExtensionPlatform from 'Library/Extension';
-import {Events} from 'Library/EventProtocol/Events';
-const ext = new ExtensionPlatform;
+import Dropdown from 'react-dropdown';
+
+import ExtensionPlatform from 'Core/Extension';
+import {Events} from 'Core/EventProtocol/Events';
 
 import {TickerActions} from 'Popup/Actions/TickerActions';
 import CurrentTickerView from 'Popup/Screens/HomeViews/CurrentTickerView';
 
-const currentExtension = ext.getExtension().extension;
+const currentExtension = ExtensionPlatform.getExtension().extension;
+
 
 class HomeScreen extends React.Component {
 
@@ -26,7 +26,8 @@ class HomeScreen extends React.Component {
         });
     }
 
-    onChangeCurrentTicker = (tickerKey) => {
+    onSelectMarket = (value) => {
+        const tickerKey = value.value;
         const request = {
             event: Events.SET_CURRENT_TICKER,
             tickerKey: tickerKey
@@ -37,6 +38,42 @@ class HomeScreen extends React.Component {
         });
     };
 
+
+    getDropDownOptions() {
+        const {tickers = []} = this.props;
+
+        return _.map(tickers, (trc) => {
+            return {
+                value: trc.key,
+                label: `${trc.baseCurrency}/${trc.quoteCurrency}`
+            };
+        });
+    }
+
+
+    drawDropDown(currentTicker = null) {
+
+        let currentTickerDropdownValue = null;
+
+        if (currentTicker) {
+            currentTickerDropdownValue = {
+                value: currentTicker.key,
+                label: `${currentTicker.baseCurrency}/${currentTicker.quoteCurrency}`
+            }
+        }
+
+
+        return (
+            <Dropdown
+                value={currentTickerDropdownValue}
+                options={this.getDropDownOptions()}
+                onChange={this.onSelectMarket}
+                placeholder="Select an Marker"
+                className="ticker-list__dropdown"
+            />
+        )
+    }
+
     render() {
         const {tickers = [], currentTickerKey = null} = this.props;
 
@@ -45,22 +82,8 @@ class HomeScreen extends React.Component {
         return (
             <div>
                 <div className="ticker-list">
-                    {_.map(tickers, (trc) => {
-                        const itemProps = {
-                            key: trc.key,
-                            className: classNames({
-                                'ticker-list__item': true,
-                                '-active': currentTickerKey === trc.key
-                            }),
-                            onClick: () => this.onChangeCurrentTicker(trc.key)
-                        };
-
-                        return (
-                            <div {...itemProps}>{trc.baseCurrency}/{trc.quoteCurrency}</div>
-                        )
-                    })}
+                    {this.drawDropDown(currentTicker)}
                 </div>
-
                 <CurrentTickerView ticker={currentTicker}/>
             </div>
         );

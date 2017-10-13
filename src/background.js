@@ -1,11 +1,10 @@
 import * as _ from 'lodash';
 
-import ExtensionPlatform from 'Library/Extension';
-const ext = new ExtensionPlatform;
+import ExtensionPlatform from 'Core/Extension';
 
-import {Events} from 'Library/EventProtocol/Events';
-import KunaApiClient from 'Library/Kuna/ApiClient';
-import KunaTickerMap from 'Library/Kuna/TickerMap';
+import {Events} from 'Core/EventProtocol/Events';
+import KunaApiClient from 'Core/Kuna/ApiClient';
+import KunaTickerMap from 'Core/Kuna/TickerMap';
 
 
 const Tickers = {};
@@ -27,7 +26,7 @@ const updateTicker = (key) => {
         Tickers[key].volume_base = ticker.vol;
         Tickers[key].volume_quote = ticker.price;
 
-        ext.getExtension().extension.sendMessage({
+        ExtensionPlatform.getExtension().extension.sendMessage({
             event: Events.UPDATE_TICKER,
             ticker: Tickers[key]
         });
@@ -85,7 +84,7 @@ const extensionEventListener = (request, sender, sendResponse) => {
 
 const initBackground = () => {
 
-    ext.getExtension().extension.onMessage.addListener(extensionEventListener);
+    ExtensionPlatform.getExtension().extension.onMessage.addListener(extensionEventListener);
 
     tickerUpdater();
     setInterval(tickerUpdater, 30000);
