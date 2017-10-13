@@ -1,8 +1,9 @@
-import Axios from 'axios';
+import Axios, {AxiosInstance, AxiosPromise, AxiosResponse, AxiosError} from 'axios';
+import {TickerInterface} from 'Core/Interfaces/TickerInterface';
 
 export class KunApiClient {
 
-    private axiosClient: Axios;
+    private axiosClient: AxiosInstance;
 
     constructor() {
         this.axiosClient = Axios.create({
@@ -10,29 +11,26 @@ export class KunApiClient {
         });
     }
 
-    extractTicker(tickerKey: string): Promise {
+    extractTicker(tickerKey: string): AxiosPromise {
 
-        /**
-         * @param response
-         * @returns {Object} ticker
-         */
-        const onSuccess = (response) => {
+        const onSuccess = (response: AxiosResponse) => {
+
             const {data} = response;
 
             return data.ticker;
         };
 
-        /**
-         * @param response
-         * @param error
-         */
-        const onError = ({response, ...error}) => {
+        const onError = (error: AxiosError) => {
+
+            const {response = null} = error;
+
             console.error(error);
             console.error(response);
         };
 
-        return AxiosClient.get(`/tickers/${tickerKey}`)
-            .then(onSuccess);
+        return this.axiosClient
+            .get(`/tickers/${tickerKey}`)
+            .then(onSuccess, onError);
     }
 }
 

@@ -1,7 +1,7 @@
-import {createStore, applyMiddleware, Store} from 'redux'
+import {createStore, applyMiddleware} from 'redux';
 import rootReducer from 'Popup/Reducer';
 
-const store: Store<any> = createStore(
+const store = createStore(
     rootReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

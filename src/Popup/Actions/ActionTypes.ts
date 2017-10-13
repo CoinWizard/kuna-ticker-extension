@@ -1,5 +1,5 @@
-export class ActionTypes {
-    static FETCH_TICKERS = 'FETCH_TICKERS';
-    static UPDATE_TICKER = 'UPDATE_TICKER';
-    static SET_CURRENT_TICKER = 'SET_CURRENT_TICKER';
+export enum ActionTypes {
+    FETCH_TICKERS = 'FETCH_TICKERS',
+    UPDATE_TICKER = 'UPDATE_TICKER',
+    SET_CURRENT_TICKER = 'SET_CURRENT_TICKER'
 }

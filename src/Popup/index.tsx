@@ -6,7 +6,7 @@ import HomeScreen from 'Popup/Screens/HomeScreen';
 
 import 'Popup/EventHandler';
 
-class PopupApplication extends React.Component {
+class PopupApplication extends React.Component<any, any> {
     render() {
         return (
             <div className="application">

@@ -1,4 +1,4 @@
-export const enum Events {
+export enum Events {
 
     REGISTER = 'REGISTER',
     CLOSE_POPUP = 'CLOSE_POPUP',

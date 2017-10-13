@@ -1,14 +1,11 @@
 import React from 'react';
 import {render} from 'react-dom';
-
-import 'Core/WindowDeclaration';
-
 import PopupApplication from 'Popup/index';
 import 'Popup/Analytics';
 
-
-document.addEventListener('DOMContentLoaded', () => {
+const onContentLoaded = () => {
     let ComponentElement = document.getElementById('popup-application');
+
     try {
         render(<PopupApplication />, ComponentElement);
     } catch (exception) {
@@ -18,5 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             exception
         );
     }
-});
+};
+
+document.addEventListener('DOMContentLoaded', onContentLoaded);
 
