@@ -7,10 +7,10 @@ import KunaApiClient from 'Core/Kuna/ApiClient';
 import KunaTickerMap from 'Core/Kuna/TickerMap';
 
 
-const Tickers = {};
+const TickerStorage = {};
 
 _.each(KunaTickerMap, (ticker) => {
-    Tickers[ticker.key] = {
+    TickerStorage[ticker.key] = {
         ...ticker,
         price: 0,
         volume_base: 0,
@@ -18,23 +18,32 @@ _.each(KunaTickerMap, (ticker) => {
     };
 });
 
-let currentTickerKey = KunaTickerMap.btcuah.key;
+let currentTickerKey = 'btcuah';
 
 const updateTicker = (key) => {
-    KunaApiClient.extractTicker(key).then((ticker) => {
-        Tickers[key].price = ticker.last;
-        Tickers[key].volume_base = ticker.vol;
-        Tickers[key].volume_quote = ticker.price;
+    KunaApiClient.extractTicker(key).then((kunaTickerData) => {
+
+        const currentTicker = TickerStorage[key];
+
+        if (!currentTicker) {
+            return;
+        }
+
+        currentTicker.price = kunaTickerData.last;
+        currentTicker.volume_base = kunaTickerData.vol;
+        currentTicker.volume_quote = kunaTickerData.price;
+
+        TickerStorage[key] = currentTicker;
 
         ExtensionPlatform.getExtension().extension.sendMessage({
             event: Events.UPDATE_TICKER,
-            ticker: Tickers[key]
+            ticker: currentTicker
         });
     });
 };
 
 const tickerUpdater = () => {
-    _.each(Tickers, (ticker) => updateTicker(ticker.key));
+    _.each(TickerStorage, (ticker) => updateTicker(ticker.key));
 };
 
 /**
@@ -44,8 +53,6 @@ const tickerUpdater = () => {
  */
 const extensionEventListener = (request, sender, sendResponse) => {
     const {event = null} = request;
-
-    console.log(request, sender);
 
     if (!event) {
         return;
@@ -74,16 +81,14 @@ const extensionEventListener = (request, sender, sendResponse) => {
 
         case Events.GET_TICKERS: {
             sendResponse({
-                tickers: Tickers
+                tickers: TickerStorage
             });
             break;
         }
     }
 };
 
-
 const initBackground = () => {
-
     ExtensionPlatform.getExtension().extension.onMessage.addListener(extensionEventListener);
 
     tickerUpdater();
