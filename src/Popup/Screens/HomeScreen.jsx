@@ -2,8 +2,7 @@ import React from 'react';
 import store from 'Popup/Store/index';
 import {connect} from 'react-redux';
 import * as _ from 'lodash';
-
-import Dropdown from 'react-dropdown';
+import Numeral from 'numeral';
 
 import ExtensionPlatform from 'Core/Extension';
 import {Events} from 'Core/EventProtocol/Events';
@@ -16,6 +15,10 @@ const currentExtension = ExtensionPlatform.getExtension().extension;
 
 class HomeScreen extends React.Component {
 
+    state = {
+        selectMode: false
+    };
+
     componentWillMount() {
         currentExtension.sendMessage({event: Events.FETCH_CURRENT_TICKER}, (response) => {
             store.dispatch(TickerActions.setCurrentTickerKey(response.currentTickerKey));
@@ -26,8 +29,7 @@ class HomeScreen extends React.Component {
         });
     }
 
-    onSelectMarket = (value) => {
-        const tickerKey = value.value;
+    onSelectMarket = (tickerKey) => {
         const request = {
             event: Events.SET_CURRENT_TICKER,
             tickerKey: tickerKey
@@ -36,6 +38,8 @@ class HomeScreen extends React.Component {
         currentExtension.sendMessage(request, (response) => {
             store.dispatch(TickerActions.setCurrentTickerKey(tickerKey));
         });
+
+        this.setState({selectMode: false});
     };
 
 
@@ -50,27 +54,33 @@ class HomeScreen extends React.Component {
         });
     }
 
-
-    drawDropDown(currentTicker = null) {
-
-        let currentTickerDropdownValue = null;
-
-        if (currentTicker) {
-            currentTickerDropdownValue = {
-                value: currentTicker.key,
-                label: `${currentTicker.baseCurrency}/${currentTicker.quoteCurrency}`
-            }
-        }
-
+    drawTickerList() {
+        const {tickers = [], currentTickerKey = null} = this.props;
+        const {selectMode = false} = this.state;
 
         return (
-            <Dropdown
-                value={currentTickerDropdownValue}
-                options={this.getDropDownOptions()}
-                onChange={this.onSelectMarket}
-                placeholder="Select an Marker"
-                className="ticker-list__dropdown"
-            />
+            <div className={`ticker-list ${selectMode ? '-active' : ''}`}>
+                {_.map(tickers, (ticker) => {
+                    const tickerListItemProps = {
+                        key: ticker.key,
+                        className: `ticker-list__item ${currentTickerKey === ticker.key ? '-active' : ''}`,
+                        onClick: () => {
+                            this.onSelectMarket(ticker.key);
+                        }
+                    };
+
+                    return (
+                        <div {...tickerListItemProps}>
+                            <label className="ticker-list__item-name">
+                                {ticker.baseCurrency} / {ticker.quoteCurrency}
+                            </label>
+                            <span className="ticker-list__item-price">
+                                {Numeral(ticker.price).format(ticker.format)} {ticker.quoteCurrency}
+                            </span>
+                        </div>
+                    )
+                })}
+            </div>
         )
     }
 
@@ -79,11 +89,25 @@ class HomeScreen extends React.Component {
 
         const currentTicker = _.find(tickers, {key: currentTickerKey});
 
+        const currentTickerLabelProps = {
+            className: "current-ticker-label",
+            onClick: () => {
+                this.setState({selectMode: true});
+            }
+        };
+
         return (
             <div>
-                <div className="ticker-list">
-                    {this.drawDropDown(currentTicker)}
-                </div>
+                {this.drawTickerList()}
+                {
+                    currentTicker && (
+                        <div {...currentTickerLabelProps}>
+                            <label className="current-ticker-label__item">
+                                {currentTicker.baseCurrency} / {currentTicker.quoteCurrency}
+                            </label>
+                        </div>
+                    )
+                }
                 <CurrentTickerView ticker={currentTicker}/>
             </div>
         );

@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Kuna.io Exchange Ticker",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "short_name": "Kuna Ticker",
     "description": "Лучший способ следить за ценой Bitcoin к Гривне.",
     "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",

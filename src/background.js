@@ -14,7 +14,17 @@ _.each(KunaTickerMap, (ticker) => {
         ...ticker,
         price: 0,
         volume_base: 0,
-        volume_quote: 0
+        volume_quote: 0,
+        OHLC: {
+            high: 0,
+            low: 0,
+            open: 0,
+            close: 0,
+        },
+        depth: {
+            bid: 0,
+            ask: 0
+        }
     };
 });
 
@@ -32,6 +42,18 @@ const updateTicker = (key) => {
         currentTicker.price = kunaTickerData.last;
         currentTicker.volume_base = kunaTickerData.vol;
         currentTicker.volume_quote = kunaTickerData.price;
+
+        currentTicker.OHLC = {
+            high: kunaTickerData.high,
+            low: kunaTickerData.low,
+            open: 0,
+            close: 0
+        };
+
+        currentTicker.depth = {
+            bid: kunaTickerData.sell,
+            ask: kunaTickerData.buy
+        };
 
         TickerStorage[key] = currentTicker;
 

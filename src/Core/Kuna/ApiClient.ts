@@ -1,5 +1,6 @@
-import Axios, {AxiosInstance, AxiosPromise, AxiosResponse, AxiosError} from 'axios';
-import {TickerInterface} from 'Core/Interfaces/TickerInterface';
+import Axios, { AxiosInstance, AxiosPromise, AxiosResponse, AxiosError } from 'axios';
+import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { KunaTickerInterface } from "Core/Kuna/KunaTickerInterface";
 
 export class KunApiClient {
 
@@ -15,14 +16,14 @@ export class KunApiClient {
 
         const onSuccess = (response: AxiosResponse) => {
 
-            const {data} = response;
+            const { data } = response;
 
             return data.ticker;
         };
 
         const onError = (error: AxiosError) => {
 
-            const {response = null} = error;
+            const { response = null } = error;
 
             console.error(error);
             console.error(response);
