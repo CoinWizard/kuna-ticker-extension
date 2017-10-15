@@ -6,6 +6,8 @@ import {Events} from 'Core/EventProtocol/Events';
 import KunaApiClient from 'Core/Kuna/ApiClient';
 import KunaTickerMap from 'Core/Kuna/TickerMap';
 
+import BadgeController from 'Background/BadgeController';
+
 
 const TickerStorage = {};
 
@@ -61,8 +63,13 @@ const updateTicker = (key) => {
             event: Events.UPDATE_TICKER,
             ticker: currentTicker
         });
+
+        if (currentTickerKey === currentTicker.key) {
+            BadgeController.updateBudgetTexts(TickerStorage[key]);
+        }
     });
 };
+
 
 const tickerUpdater = () => {
     _.each(TickerStorage, (ticker) => updateTicker(ticker.key));
@@ -98,6 +105,14 @@ const extensionEventListener = (request, sender, sendResponse) => {
             sendResponse({
                 currentTicker: currentTickerKey
             });
+
+
+            try {
+                BadgeController.updateBudgetTexts(TickerStorage[currentTickerKey]);
+            } catch (error) {
+                console.log(error);
+            }
+
             break;
         }
 
@@ -115,6 +130,10 @@ const initBackground = () => {
 
     tickerUpdater();
     setInterval(tickerUpdater, 30000);
+
+    ExtensionPlatform.getExtension().browserAction.setBadgeBackgroundColor({
+        color: '#11a0ff'
+    });
 };
 
 document.addEventListener('DOMContentLoaded', initBackground);
