@@ -89,8 +89,8 @@ class HomeScreen extends React.Component {
 
         const currentTicker = _.find(tickers, {key: currentTickerKey});
 
-        const currentTickerLabelProps = {
-            className: "current-ticker-label",
+        const currentMarketLabelProps = {
+            className: "header__current-market",
             onClick: () => {
                 this.setState({selectMode: true});
             }
@@ -98,22 +98,21 @@ class HomeScreen extends React.Component {
 
         return (
             <div>
+                {this.drawTickerList()}
+
                 <header className="header">
                     <a href="https://kuna.io/" target="_blank" className="header__logo">
                         <img className="header__logo-img" src="/images/kuna-logo.png"/>
                     </a>
-                </header>
-
-                {this.drawTickerList()}
-                {
-                    currentTicker && (
-                        <div {...currentTickerLabelProps}>
-                            <label className="current-ticker-label__item">
+                    {
+                        currentTicker && (
+                            <label {...currentMarketLabelProps}>
                                 {currentTicker.baseCurrency} / {currentTicker.quoteCurrency}
                             </label>
-                        </div>
-                    )
-                }
+                        )
+                    }
+                </header>
+
                 <CurrentTickerView ticker={currentTicker}/>
             </div>
         );

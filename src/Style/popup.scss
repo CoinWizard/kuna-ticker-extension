@@ -9,14 +9,16 @@ html {
 
 body {
     width: 300px;
-    height: 200px;
+    height: 255px;
     overflow: hidden;
     font-size: 16px;
     background: white;
-    color: $color-shuttle-gray;
+    color: $color-dark-gray;
     background: $color-all-ocean;
     font-family: $font;
 }
+
+@import "parts/header";
 
 .created-by {
     display: none;
@@ -47,20 +49,6 @@ body {
     font-size: 18px;
     font-weight: 100;
     letter-spacing: 0.8px;
-}
-
-.header {
-    height: 50px;
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    &__logo {
-        display: block;
-        &-img {
-            height: 16px;
-        }
-    }
 }
 
 .application {

@@ -1,0 +1,40 @@
+.header {
+    padding: 0 10px;
+    height: 50px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__logo {
+        display: block;
+        &-img {
+            display: block;
+            height: 21px;
+        }
+    }
+
+    &__current-market {
+        display: block;
+        cursor: pointer;
+        padding: 0 22px 0 8px;
+        border-radius: 4px;
+        font-size: 14px;
+        color: $color-shuttle-gray;
+
+        &:after {
+            border-style: solid;
+            border-color: $color-shuttle-gray;
+            border-width: 1px 1px 0 0;
+            content: '';
+            transform: rotate(135deg);
+            display: block;
+            height: 4px;
+            width: 4px;
+            margin-top: -4px;
+            position: absolute;
+            right: 8px;
+            top: 50%;
+        }
+    }
+}
