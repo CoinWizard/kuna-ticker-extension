@@ -1,7 +1,3 @@
-.application {
-    padding: 16px 8px 16px 8px
-}
-
 .current-ticker {
     &__price {
         font-size: 24px;
@@ -89,7 +85,7 @@
         }
 
         &-price {
-            color: $color-blue;
+            color: $color-kuna-blue;
             font-weight: 100;
         }
     }
@@ -106,11 +102,11 @@
         padding: 0 22px 0 8px;
         border-radius: 4px;
         font-size: 14px;
-        color: $color-blue;
+        color: $color-kuna-blue;
 
         &:after {
             border-style: solid;
-            border-color: $color-blue;
+            border-color: $color-kuna-blue;
             border-width: 1px 1px 0 0;
             content: ' ';
             transform: rotate(135deg);

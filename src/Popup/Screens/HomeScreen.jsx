@@ -98,6 +98,12 @@ class HomeScreen extends React.Component {
 
         return (
             <div>
+                <header className="header">
+                    <a href="https://kuna.io/" target="_blank" className="header__logo">
+                        <img className="header__logo-img" src="/images/kuna-logo.png"/>
+                    </a>
+                </header>
+
                 {this.drawTickerList()}
                 {
                     currentTicker && (

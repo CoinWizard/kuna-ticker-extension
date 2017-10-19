@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
-    "name": "Kuna.io Exchange Ticker",
-    "version": "0.3.1",
+    "name": "Kuna Exchange ticker",
+    "version": "0.4.0",
     "short_name": "Kuna Ticker",
-    "description": "Лучший способ следить за ценой Bitcoin к Гривне.",
+    "description": "Be first at changes of Bitcoin - Kuna Exchange ticker",
     "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
     "permissions": [
         "tabs",
@@ -26,6 +26,6 @@
             "144": "/images/kuna_144.png"
         },
         "default_popup": "/views/popup.html",
-        "default_title": "Kuna Ticker"
+        "default_title": "Kuna Exchange ticker"
     }
 }
