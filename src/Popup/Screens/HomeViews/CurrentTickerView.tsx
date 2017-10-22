@@ -27,7 +27,7 @@ class CurrentTickerView extends React.Component<CurrentTickerViewPropsInterface,
 
                     <div className="current-ticker__market">
                         <a
-                            href={`https://kuna.io/markets/${ticker.key}`}
+                            href={`https://kuna.io/markets/${ticker.key}?ref=coinwizard-kuna-ticker`}
                             className="current-ticker__market-link"
                             target="_blank"
                         >Market {ticker.baseCurrency}/{ticker.quoteCurrency}</a>

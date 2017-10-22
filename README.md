@@ -1,6 +1,8 @@
-# Chrome Extension for [Kuna.io](https://kuna.io/) Cryptocurrency Exchange
+# Chrome Extension for [Kuna.io](https://kuna.io/?ref=coinwizard-kuna-ticker) Cryptocurrency Exchange
 
-Download Chrome Extension in [Web Store](https://chrome.google.com/webstore/detail/kunaio-ticker-exchange/fgdaflnjoincloakmmndamfgofijeine)
+Download Chrome Extension:
+
+[![Web Store](https://developer.chrome.com/webstore/images/ChromeWebStore_Badge_v2_206x58.png)](https://chrome.google.com/webstore/detail/kunaio-ticker-exchange/fgdaflnjoincloakmmndamfgofijeine)
 
 ---
 

@@ -7,8 +7,6 @@ import KunaApiClient from 'Core/Kuna/ApiClient';
 import KunaTickerMap from 'Core/Kuna/TickerMap';
 
 import BadgeController from 'Background/BadgeController';
-
-
 const TickerStorage = {};
 
 _.each(KunaTickerMap, (ticker) => {

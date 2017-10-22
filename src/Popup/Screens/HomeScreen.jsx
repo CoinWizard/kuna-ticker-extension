@@ -101,7 +101,7 @@ class HomeScreen extends React.Component {
                 {this.drawTickerList()}
 
                 <header className="header">
-                    <a href="https://kuna.io/" target="_blank" className="header__logo">
+                    <a href="https://kuna.io/?ref=coinwizard-kuna-ticker" target="_blank" className="header__logo">
                         <img className="header__logo-img" src="/images/kuna-logo.png"/>
                     </a>
                     {
