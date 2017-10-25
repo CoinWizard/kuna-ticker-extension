@@ -4,6 +4,10 @@ import ExtensionInstance from 'Core/ExtensionInstance';
 
 const extension: ExtensionInstance = new ExtensionInstance();
 
+declare global {
+    const VERSION: string;
+}
+
 export default class ExtensionPlatform {
 
     static getExtension(): ExtensionInstance {
