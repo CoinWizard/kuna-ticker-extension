@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Ticker for Kuna exchange",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "short_name": "Ticker for Kuna",
     "description": "Be first at changes of Bitcoin - Kuna Exchange ticker",
     "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
