@@ -1,3 +1,12 @@
+import ChromeBrowserInterface = chrome.browser;
+import ChromeExtensionInterface = chrome.extension;
+
+declare global {
+    interface Window {
+        browser: any
+    }
+}
+
 const apis = [
     'alarms',
     'bookmarks',
@@ -32,7 +41,7 @@ class Extension {
     cookies = null;
     downloads = null;
     events = null;
-    extension = null;
+    extension: any = null;
     extensionTypes = null;
     history = null;
     i18n = null;
@@ -45,20 +54,21 @@ class Extension {
     webNavigation = null;
     webRequest = null;
     windows = null;
+    api = null;
 
     constructor() {
         this.initBaseApi();
 
         try {
-            if (browser && browser.runtime) {
-                this.runtime = browser.runtime
+            if (window.browser && window.browser.runtime) {
+                this.runtime = window.browser.runtime
             }
         } catch (e) {
         }
 
         try {
-            if (browser && browser.browserAction) {
-                this.browserAction = browser.browserAction
+            if (window.browser && window.browser.browserAction) {
+                this.browserAction = window.browser.browserAction
             }
         } catch (e) {
         }
@@ -84,14 +94,14 @@ class Extension {
             }
 
             try {
-                if (browser[api]) {
-                    this[api] = browser[api]
+                if (window.browser[api]) {
+                    this[api] = window.browser[api]
                 }
             } catch (e) {
             }
 
             try {
-                this.api = browser.extension[api]
+                this.api = window.browser.extension[api]
             } catch (e) {
             }
         });
