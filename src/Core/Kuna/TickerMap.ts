@@ -40,6 +40,12 @@ const TickerMap = {
         baseCurrency: 'BCH',
         quoteCurrency: 'BTC',
         format: '0,0.[000000]'
+    },
+    rmcbtc: {
+        key: 'rmcbtc',
+        baseCurrency: 'RMC',
+        quoteCurrency: 'BTC',
+        format: '0,0.[000000]'
     }
 };
 
