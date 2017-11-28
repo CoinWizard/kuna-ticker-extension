@@ -7,7 +7,7 @@ const browserAction = ExtensionPlatform.getExtension().browserAction;
 
 export default class BadgeController {
 
-    static formatTickerPrice(price: number): string {
+    static formatTickerPrice (price: number): string {
         let priceNumeral = Numeral(price);
 
         if (price < 10) {
@@ -16,16 +16,16 @@ export default class BadgeController {
             return '' + priceNumeral.format('0,0.[0]');
         } else if (price < 1000) {
             return '' + priceNumeral.format('0,0.[0]');
-        } else if (price < 10000) {
-            return '' + priceNumeral.format('0.0a');
+        } else if (price < 100000) {
+            return '' + priceNumeral.divide(1000).format('0.[0]');
         } else if (price < 1000000) {
-            return '' + priceNumeral.format('0a');
+            return '' + priceNumeral.divide(1000).format('0,0');
         }
 
         return '' + price;
     }
 
-    static updateBudgetTexts(ticker: TickerInterface) {
+    static updateBudgetTexts (ticker: TickerInterface) {
         browserAction.setBadgeText({
             text: BadgeController.formatTickerPrice(ticker.price)
         });
