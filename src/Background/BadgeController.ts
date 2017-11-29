@@ -16,10 +16,14 @@ export default class BadgeController {
             return '' + priceNumeral.format('0,0.[0]');
         } else if (price < 1000) {
             return '' + priceNumeral.format('0,0.[0]');
+        } else if (price < 10000) {
+            return '' + priceNumeral.format('00');
         } else if (price < 100000) {
             return '' + priceNumeral.divide(1000).format('0.[0]');
         } else if (price < 1000000) {
-            return '' + priceNumeral.divide(1000).format('0,0');
+            return '' + priceNumeral.divide(1000).format('00');
+        } else if (price < 10000000) {
+            return '' + priceNumeral.divide(1000000).format('0.[00]');
         }
 
         return '' + price;

@@ -135,3 +135,24 @@ const initBackground = () => {
 };
 
 document.addEventListener('DOMContentLoaded', initBackground);
+
+ExtensionPlatform.getExtension().contextMenus.removeAll();
+ExtensionPlatform.getExtension().contextMenus.create({
+    title: "by CoinWizard Team",
+    contexts: ["browser_action"],
+    onclick: () => {
+        ExtensionPlatform.getExtension().tabs.create({
+            url: "https://coinwizard.me?ref=kuna-extension"
+        });
+    }
+});
+
+ExtensionPlatform.getExtension().contextMenus.create({
+    title: "Source code",
+    contexts: ["browser_action"],
+    onclick: () => {
+        ExtensionPlatform.getExtension().tabs.create({
+            url: "https://github.com/CoinWizard/kuna-ticker-extension"
+        });
+    }
+});
