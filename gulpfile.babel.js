@@ -54,19 +54,12 @@ gulp.task('manifest:production', () => {
         .pipe(gulp.dest('./dist/chrome', {overwrite: true}))
 });
 
-
-gulp.task('js', () => {
-    return gulp
-        .src([
-            "./src/popup.jsx",
-            "./src/pageContent.js",
-            "./src/background.js"
-        ])
-        .pipe(named())
-        .pipe(gulpWebpack(webpackConfig))
-        .pipe(gulp.dest('./dist/chrome'))
-        .pipe(gulp.dest('./dist/firefox'));
-});
+//|---------------------------------------------------------------------------
+//| Configuration for create JavaScript bundles
+//| Use WebPack
+//|---------------------------------------------------------------------------
+gulp.task('js', generateBundlerTask({watch: false}));
+gulp.task('js:watch', generateBundlerTask({watch: true}));
 
 
 gulp.task('css', () => {
@@ -127,5 +120,37 @@ function zipTask(target) {
             .src(`./dist/${target}/**`)
             .pipe(zip(`kuna-${target}-${manifest.version}.zip`))
             .pipe(gulp.dest('./builds'));
+    }
+}
+
+
+/**
+ * @param options
+ */
+function generateBundlerTask(options) {
+
+    const webpackBundlerConfig = {
+        ...webpackConfig
+    };
+
+    if (options.watch) {
+        webpackBundlerConfig.watch = true;
+        webpackBundlerConfig.watchOptions = {
+            aggregateTimeout: 200,
+            ignored: /node_modules/
+        };
+    }
+
+    return () => {
+        return gulp
+        .src([
+            "./src/popup.jsx",
+            "./src/pageContent.js",
+            "./src/background.js"
+        ])
+        .pipe(named())
+        .pipe(gulpWebpack(webpackBundlerConfig))
+        .pipe(gulp.dest('./dist/chrome'))
+        .pipe(gulp.dest('./dist/firefox'));
     }
 }

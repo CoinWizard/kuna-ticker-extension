@@ -69,7 +69,7 @@ const Loaders = [
         loader: 'json-loader'
     }, {
         test: /\.ts$/,
-        loader: "awesome-typescript-loader"
+        loader: 'awesome-typescript-loader'
     }, {
         test: /\.tsx$/,
         loader: 'babel-loader',
@@ -81,14 +81,16 @@ const Loaders = [
         loader: 'babel-loader',
         exclude: /(node_modules)/,
         query: {
-            presets: ['react', 'es2015', 'stage-0']
+            presets: ['react', 'es2015', 'stage-0'],
+            plugins: ['transform-decorators-legacy']
         }
     }, {
         test: /.jsx$/,
         loader: 'babel-loader',
         exclude: /(node_modules)/,
         query: {
-            presets: ['react', 'es2015', 'stage-0']
+            presets: ['react', 'es2015', 'stage-0'],
+            plugins: ['transform-decorators-legacy']
         }
     }
 ];

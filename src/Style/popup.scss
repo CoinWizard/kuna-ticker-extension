@@ -3,19 +3,19 @@
 @import "cleaner";
 
 html {
-    width: 300px;
-    max-width: 300px;
+    width: 310px;
+    max-width: 310px;
 }
 
 body {
-    width: 300px;
-    height: 255px;
+    width: 310px;
+    height: 270px;
     overflow: hidden;
     font-size: 16px;
     background: white;
     color: $color-dark-gray;
-    background: $color-all-ocean;
     font-family: $font;
+    font-weight: 300;
 }
 
 @import "parts/header";

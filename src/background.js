@@ -39,31 +39,35 @@ const updateTicker = (key) => {
             return;
         }
 
-        currentTicker.price = kunaTickerData.last;
-        currentTicker.volume_base = kunaTickerData.vol;
-        currentTicker.volume_quote = kunaTickerData.price;
+        try {
+            currentTicker.price = kunaTickerData.last;
+            currentTicker.volume_base = kunaTickerData.vol;
+            currentTicker.volume_quote = kunaTickerData.price;
 
-        currentTicker.OHLC = {
-            high: kunaTickerData.high,
-            low: kunaTickerData.low,
-            open: 0,
-            close: 0
-        };
+            currentTicker.OHLC = {
+                high: kunaTickerData.high,
+                low: kunaTickerData.low,
+                open: 0,
+                close: 0
+            };
 
-        currentTicker.depth = {
-            bid: kunaTickerData.sell,
-            ask: kunaTickerData.buy
-        };
+            currentTicker.depth = {
+                bid: kunaTickerData.sell,
+                ask: kunaTickerData.buy
+            };
 
-        TickerStorage[key] = currentTicker;
+            TickerStorage[key] = currentTicker;
 
-        ExtensionPlatform.getExtension().extension.sendMessage({
-            event: Events.UPDATE_TICKER,
-            ticker: currentTicker
-        });
+            ExtensionPlatform.getExtension().extension.sendMessage({
+                event: Events.UPDATE_TICKER,
+                ticker: currentTicker
+            });
 
-        if (currentTickerKey === currentTicker.key) {
-            BadgeController.updateBudgetTexts(TickerStorage[key]);
+            if (currentTickerKey === currentTicker.key) {
+                BadgeController.updateBudgetTexts(TickerStorage[key]);
+            }
+        } catch (error) {
+            console.warn(error)
         }
     });
 };
@@ -127,7 +131,7 @@ const initBackground = () => {
     ExtensionPlatform.getExtension().extension.onMessage.addListener(extensionEventListener);
 
     tickerUpdater();
-    setInterval(tickerUpdater, 30000);
+    setInterval(tickerUpdater, 60000);
 
     ExtensionPlatform.getExtension().browserAction.setBadgeBackgroundColor({
         color: '#11a0ff'

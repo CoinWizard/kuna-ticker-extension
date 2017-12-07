@@ -19,7 +19,12 @@ if (!visitorUUID) {
     localStorage.set(USER_UUID_KEY, visitorUUID);
 }
 
-const visitor = UniversalAnalytics(GA_IDENTIFY, visitorUUID, {https: true});
-visitor.screenview("KUNA / Popup", APPLICATION_NAME, DISPLAYED_VERSION).send();
+export const visitor = UniversalAnalytics(GA_IDENTIFY, visitorUUID, {https: true});
 
-export default visitor;
+export const sendScreenView = (pageTitle) => {
+    visitor.screenview(pageTitle, APPLICATION_NAME, DISPLAYED_VERSION).send();
+};
+
+export const sendTickerScreenView = (ticker) => {
+    sendScreenView(`KUNA / Popup ~ ${ticker.baseCurrency}/${ticker.quoteCurrency}`);
+};

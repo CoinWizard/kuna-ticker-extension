@@ -1,25 +1,33 @@
 import React from 'react';
 import store from 'Popup/Store/index';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import Numeral from 'numeral';
 
 import ExtensionPlatform from 'Core/Extension';
-import {Events} from 'Core/EventProtocol/Events';
+import { Events } from 'Core/EventProtocol/Events';
+import {sendTickerScreenView} from 'Popup/Analytics';
 
-import {TickerActions} from 'Popup/Actions/TickerActions';
+import { TickerActions } from 'Popup/Actions/TickerActions';
 import CurrentTickerView from 'Popup/Screens/HomeViews/CurrentTickerView';
 
 const currentExtension = ExtensionPlatform.getExtension().extension;
 
+const mapStateToProps = (state) => {
+    return {
+        tickers: state.ticker.tickers,
+        currentTickerKey: state.ticker.currentTickerKey
+    };
+};
 
-class HomeScreen extends React.Component {
+@connect(mapStateToProps)
+export default class HomeScreen extends React.Component {
 
     state = {
         selectMode: false
     };
 
-    componentWillMount() {
+    componentWillMount () {
         currentExtension.sendMessage({event: Events.FETCH_CURRENT_TICKER}, (response) => {
             store.dispatch(TickerActions.setCurrentTickerKey(response.currentTickerKey));
         });
@@ -30,31 +38,24 @@ class HomeScreen extends React.Component {
     }
 
     onSelectMarket = (tickerKey) => {
+        const {tickers = []} = this.props;
         const request = {
             event: Events.SET_CURRENT_TICKER,
             tickerKey: tickerKey
         };
 
+        const currentTicker = _.find(tickers, {key: tickerKey});
+
         currentExtension.sendMessage(request, (response) => {
             store.dispatch(TickerActions.setCurrentTickerKey(tickerKey));
         });
 
+        sendTickerScreenView(currentTicker);
+
         this.setState({selectMode: false});
     };
 
-
-    getDropDownOptions() {
-        const {tickers = []} = this.props;
-
-        return _.map(tickers, (trc) => {
-            return {
-                value: trc.key,
-                label: `${trc.baseCurrency}/${trc.quoteCurrency}`
-            };
-        });
-    }
-
-    drawTickerList() {
+    drawTickerList () {
         const {tickers = [], currentTickerKey = null} = this.props;
         const {selectMode = false} = this.state;
 
@@ -78,19 +79,19 @@ class HomeScreen extends React.Component {
                                 {Numeral(ticker.price).format(ticker.format)} {ticker.quoteCurrency}
                             </span>
                         </div>
-                    )
+                    );
                 })}
             </div>
-        )
+        );
     }
 
-    render() {
+    render () {
         const {tickers = [], currentTickerKey = null} = this.props;
 
         const currentTicker = _.find(tickers, {key: currentTickerKey});
 
         const currentMarketLabelProps = {
-            className: "header__current-market",
+            className: 'header__current-market',
             onClick: () => {
                 this.setState({selectMode: true});
             }
@@ -107,24 +108,14 @@ class HomeScreen extends React.Component {
                     {
                         currentTicker && (
                             <label {...currentMarketLabelProps}>
-                                {currentTicker.baseCurrency} / {currentTicker.quoteCurrency}
+                                {currentTicker.baseCurrency}/{currentTicker.quoteCurrency}
                             </label>
                         )
                     }
                 </header>
 
-                <CurrentTickerView ticker={currentTicker}/>
+                {currentTicker ? <CurrentTickerView ticker={currentTicker}/> : <div className="loading">Wait...</div>}
             </div>
-        );
+        )
     }
 }
-
-
-export default connect(
-    (state) => {
-        return {
-            tickers: state.ticker.tickers,
-            currentTickerKey: state.ticker.currentTickerKey
-        };
-    }
-)(HomeScreen)

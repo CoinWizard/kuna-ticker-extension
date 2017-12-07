@@ -1,28 +1,35 @@
 import React from 'react';
 import Numeral from 'numeral';
 
+import {sendScreenView} from 'Popup/Analytics';
 import {TickerInterface} from 'Core/Interfaces/TickerInterface';
 
 export interface CurrentTickerViewPropsInterface {
     ticker: TickerInterface;
 }
 
-class CurrentTickerView extends React.Component<CurrentTickerViewPropsInterface, {}> {
+export default class CurrentTickerView extends React.Component<CurrentTickerViewPropsInterface, {}> {
 
-    render() {
+    componentDidMount () {
+        const {ticker} = this.props;
+        sendScreenView();
+    }
 
-        const {ticker = null} = this.props;
-
-        if (!ticker) {
-            return <div className="loading">Wait...</div>;
-        }
+    render () {
+        const {ticker} = this.props;
 
         return (
             <div className="current-ticker">
                 <div className="current-ticker__bugged">
                     <label className="current-ticker__price">
-                        {Numeral(ticker.price).format(ticker.format)}
-                        <span className="current-ticker__price-currency">{ticker.quoteCurrency}</span>
+                        <span className="current-ticker__price-base">
+                        1<span className="current-ticker__price-currency">{ticker.baseCurrency}</span>
+                        </span>
+                        <span className="current-ticker__price-separator">=</span>
+                        <span className="current-ticker__price-quote">
+                            {Numeral(ticker.price).format(ticker.format)}
+                            <span className="current-ticker__price-currency">{ticker.quoteCurrency}</span>
+                        </span>
                     </label>
 
                     <div className="current-ticker__market">
@@ -50,7 +57,6 @@ class CurrentTickerView extends React.Component<CurrentTickerViewPropsInterface,
                     </label>
 
 
-
                     <label className="current-ticker__info">
                         <span className="current-ticker__info-label">Low price</span>
                         <span className="current-ticker__info-value">
@@ -69,5 +75,3 @@ class CurrentTickerView extends React.Component<CurrentTickerViewPropsInterface,
         );
     }
 }
-
-export default CurrentTickerView;
