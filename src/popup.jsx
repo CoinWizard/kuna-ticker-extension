@@ -1,7 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
 import PopupApplication from 'Popup/index';
-import 'Popup/Analytics';
 
 const onContentLoaded = () => {
     let ComponentElement = document.getElementById('popup-application');
