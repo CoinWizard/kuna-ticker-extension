@@ -1,7 +1,7 @@
 import React from 'react';
 import Numeral from 'numeral';
 
-import {sendScreenView} from 'Popup/Analytics';
+import {sendTickerScreenView} from 'Popup/Analytics';
 import {TickerInterface} from 'Core/Interfaces/TickerInterface';
 
 export interface CurrentTickerViewPropsInterface {
@@ -12,7 +12,7 @@ export default class CurrentTickerView extends React.Component<CurrentTickerView
 
     componentDidMount () {
         const {ticker} = this.props;
-        sendScreenView();
+        sendTickerScreenView(ticker);
     }
 
     render () {
