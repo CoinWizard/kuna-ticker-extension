@@ -61,6 +61,11 @@ export const currencies: Dictionary<CurrencyInterface> = {
         key: 'ARN',
         name: 'Aeron',
         color: '#135180'
+    },
+    EVR: {
+        key: 'EVR',
+        name: 'Everus',
+        color: '#35beb4'
     }
 };
 

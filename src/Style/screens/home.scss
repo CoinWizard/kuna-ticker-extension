@@ -1,7 +1,7 @@
 .current-ticker {
 
     &__bugged {
-        padding: 16px;
+        padding: 16px 16px 0 16px;
         border: 1px solid $color-alto {
             width: 1px 0;
         }
@@ -69,6 +69,37 @@
             font-size: 14px;
             font-weight: 100;
             letter-spacing: 0.8px;
+        }
+    }
+
+    &-tabs {
+        font-size: 12px;
+        display: flex;
+        padding: 12px 0 4px 0;
+
+        &__item {
+            transition: all 0.2s;
+            line-height: 14px;
+            font-weight: 500;
+            margin-right: 12px;
+            cursor: pointer;
+            color: $color-gull-gray;
+            &:after {
+                transition: all 0.2s;
+                position: absolute;
+                content: '';
+                display: block;
+                height: 0;
+                width: 100%;
+                bottom: -5px;
+                background: $color-kuna-dark-blue;
+            }
+            &.-active {
+                color: $color-shuttle-gray;
+                &:after {
+                    height: 2px;
+                }
+            }
         }
     }
 }

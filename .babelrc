@@ -1,4 +1,9 @@
 {
-    "presets": ["react", "es2017", "es2015", "stage-0"],
+    "presets": [
+        "react",
+        "es2017",
+        "es2015",
+        "stage-0"
+    ],
     "retainLines": true
 }

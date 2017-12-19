@@ -58,6 +58,12 @@ const TickerMap = {
         baseCurrency: 'ARN',
         quoteCurrency: 'BTC',
         format: '0,0.[000000]'
+    },
+    evrbtc: {
+        key: 'evrbtc',
+        baseCurrency: 'EVR',
+        quoteCurrency: 'BTC',
+        format: '0,0.[000000]'
     }
 };
 
