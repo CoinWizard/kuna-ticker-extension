@@ -21,7 +21,7 @@ export interface CurrentTickerViewStateInterface {
 const tabsList = [
     {
         key: ViewTabs.Stats,
-        title: 'Stats',
+        title: '24H Stats',
         Component: TickerStats
     },
     {
