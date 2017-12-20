@@ -1,3 +1,58 @@
 .calculator {
     padding: 12px 0;
+
+    &-sell {
+        &__input {
+            display: inline-block;
+            width: 200px;
+            padding: 8px;
+            font-size: 14px;
+            background: $color-all-ocean;
+            color: $color-shuttle-gray;
+            border-radius: 3px;
+            letter-spacing: 1px;
+        }
+
+        &__label {
+            margin-left: 8px;
+        }
+    }
+
+    &-buy {
+        margin: 16px 0;
+        &__amount {
+            color: $color-kuna-blue;
+            display: block;
+            width: 100%;
+            font-size: 24px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1;
+            font-weight: 500;
+
+            & > span {
+                font-weight: 400;
+                font-size: 16px;
+                vertical-align: bottom;
+                color: $color-shuttle-gray;
+            }
+        }
+        &__fee {
+            font-size: 10px;
+        }
+    }
+
+    &-revert {
+        font-size: 12px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 3px;
+        background: $color-dark-gray;
+        color: $color-gull-gray;
+        display: inline-block;
+
+        &:hover {
+            background: lighten($color: $color-dark-gray, $amount: 10%);
+        }
+    }
 }

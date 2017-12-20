@@ -22,7 +22,7 @@ export default class TickerStats extends React.Component<CalculatorViewPropsInte
 
         this.state = {
             revert: false,
-            sellValue: null
+            sellValue: ''
         }
     }
 
@@ -30,9 +30,13 @@ export default class TickerStats extends React.Component<CalculatorViewPropsInte
         this.setState({sellValue: event.currentTarget.value});
     }
 
+    onRevert(event) {
+        this.setState({revert: !this.state.revert});
+    }
+
     render() {
         const {ticker} = this.props;
-        const {revert = false, sellValue = null} = this.state;
+        const {revert = false, sellValue = ''} = this.state;
 
         let value = parseFloat(sellValue.replace(',', '.'));
 
@@ -43,27 +47,42 @@ export default class TickerStats extends React.Component<CalculatorViewPropsInte
         if (revert) {
             baseCoin = getCurrencyByKey(ticker.quoteCurrency);
             quoteCoin = getCurrencyByKey(ticker.baseCurrency);
-            buyValue = value / ticker.price
+            buyValue = value / ticker.price;
         } else {
             baseCoin = getCurrencyByKey(ticker.baseCurrency);
             quoteCoin = getCurrencyByKey(ticker.quoteCurrency);
-            buyValue = value * ticker.price
+            buyValue = value * ticker.price;
+        }
+
+        if (!buyValue) {
+            buyValue = 0;
         }
 
         let feeValue = buyValue * fee;
 
         const inputProps = {
+            className: 'calculator-sell__input',
+            placeholder: `Amount of ${baseCoin.key}`,
             value: this.state.sellValue,
             onChange: this.onInputChange.bind(this)
         };
 
         return (
             <div className="calculator">
-                <input {...inputProps} />
-                <br/>
-                <label>{Numeral(buyValue - feeValue).format(quoteCoin.format)} {quoteCoin.key}</label>
-                <br/>
-                <label>Fee: {Numeral(feeValue).format(quoteCoin.format)} {quoteCoin.key}</label>
+                <div className="calculator-sell">
+                    <input {...inputProps} />
+                    <label className="calculator-sell__label">{baseCoin.key}</label>
+                </div>
+                <div className="calculator-buy">
+                    <label className="calculator-buy__amount">
+                        {Numeral(buyValue - feeValue).format(quoteCoin.format)} <span>{quoteCoin.key}</span>
+                    </label>
+                    <label className="calculator-buy__fee">
+                        Fee: <b>{Numeral(feeValue).format(quoteCoin.format)}</b> <span>{quoteCoin.key}</span>
+                    </label>
+                </div>
+
+                <button className="calculator-revert" onClick={this.onRevert.bind(this)}>Revers</button>
             </div>
         )
     }
