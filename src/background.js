@@ -30,51 +30,50 @@ _.each(KunaTickerMap, (ticker) => {
 
 let currentTickerKey = 'btcuah';
 
-const updateTicker = (key) => {
-    KunaApiClient.extractTicker(key).then((kunaTickerData) => {
+const updateTicker = (key, kunaTickerData) => {
+    const currentTicker = TickerStorage[key];
 
-        const currentTicker = TickerStorage[key];
+    if (!currentTicker) {
+        return;
+    }
 
-        if (!currentTicker) {
-            return;
+    try {
+        currentTicker.price = kunaTickerData.last;
+        currentTicker.volume_base = kunaTickerData.vol;
+        currentTicker.volume_quote = kunaTickerData.price;
+
+        currentTicker.OHLC = {
+            high: kunaTickerData.high,
+            low: kunaTickerData.low,
+            open: 0,
+            close: 0
+        };
+
+        currentTicker.depth = {
+            bid: kunaTickerData.sell,
+            ask: kunaTickerData.buy
+        };
+
+        TickerStorage[key] = currentTicker;
+
+        ExtensionPlatform.getExtension().extension.sendMessage({
+            event: Events.UPDATE_TICKER,
+            ticker: currentTicker
+        });
+
+        if (currentTickerKey === currentTicker.key) {
+            BadgeController.updateBudgetTexts(TickerStorage[key]);
         }
-
-        try {
-            currentTicker.price = kunaTickerData.last;
-            currentTicker.volume_base = kunaTickerData.vol;
-            currentTicker.volume_quote = kunaTickerData.price;
-
-            currentTicker.OHLC = {
-                high: kunaTickerData.high,
-                low: kunaTickerData.low,
-                open: 0,
-                close: 0
-            };
-
-            currentTicker.depth = {
-                bid: kunaTickerData.sell,
-                ask: kunaTickerData.buy
-            };
-
-            TickerStorage[key] = currentTicker;
-
-            ExtensionPlatform.getExtension().extension.sendMessage({
-                event: Events.UPDATE_TICKER,
-                ticker: currentTicker
-            });
-
-            if (currentTickerKey === currentTicker.key) {
-                BadgeController.updateBudgetTexts(TickerStorage[key]);
-            }
-        } catch (error) {
-            console.warn(error)
-        }
-    });
+    } catch (error) {
+        console.warn(error)
+    }
 };
 
 
 const tickerUpdater = () => {
-    _.each(TickerStorage, (ticker) => updateTicker(ticker.key));
+    KunaApiClient.extractTickers().then((tickers) => {
+        _.each(tickers, (ticker, key) => updateTicker(key, ticker.ticker));
+    });
 };
 
 /**

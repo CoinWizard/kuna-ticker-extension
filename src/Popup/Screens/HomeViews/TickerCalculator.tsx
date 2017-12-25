@@ -1,6 +1,5 @@
 import React from 'react';
 import Numeral from 'numeral';
-import classNames from 'classnames';
 import {TickerInterface} from 'Core/Interfaces/TickerInterface';
 import {getCurrencyByKey, CurrencyInterface} from 'Core/Kuna/Currencies';
 
@@ -75,7 +74,7 @@ export default class TickerStats extends React.Component<CalculatorViewPropsInte
                 </div>
                 <div className="calculator-buy">
                     <label className="calculator-buy__amount">
-                        {Numeral(buyValue - feeValue).format(quoteCoin.format)} <span>{quoteCoin.key}</span>
+                        {Numeral(buyValue - feeValue).format(quoteCoin.format)}<span>{quoteCoin.key}</span>
                     </label>
                     <label className="calculator-buy__fee">
                         Fee: <b>{Numeral(feeValue).format(quoteCoin.format)}</b> <span>{quoteCoin.key}</span>

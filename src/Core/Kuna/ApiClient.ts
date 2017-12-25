@@ -33,6 +33,23 @@ export class KunApiClient {
             .get(`/tickers/${tickerKey}`)
             .then(onSuccess, onError);
     }
+
+    extractTickers(): AxiosPromise {
+
+        const onSuccess = (response: AxiosResponse) => {
+            return response.data;
+        };
+
+        const onError = (error: AxiosError) => {
+            const {response = null} = error;
+            console.error(error);
+            console.error(response);
+        };
+
+        return this.axiosClient
+            .get(`/tickers`)
+            .then(onSuccess, onError);
+    }
 }
 
 
