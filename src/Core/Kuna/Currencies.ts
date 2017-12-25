@@ -79,6 +79,12 @@ export const currencies: Dictionary<CurrencyInterface> = {
         name: 'Everus',
         color: '#35beb4',
         format: '0,0.[0000]'
+    },
+    B2B: {
+        key: 'B2B',
+        name: 'B2bx',
+        color: '#00a275',
+        format: '0,0.[0000]'
     }
 };
 
