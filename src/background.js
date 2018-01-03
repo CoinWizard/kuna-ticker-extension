@@ -1,40 +1,24 @@
 import * as _ from 'lodash';
 
+import {STORE_KEY} from 'Core/Constant';
+import store from 'Core/Store';
+import {wrapStore} from 'react-chrome-redux';
 import ExtensionPlatform from 'Core/Extension';
-
 import {Events} from 'Core/EventProtocol/Events';
 import KunaApiClient from 'Core/Kuna/ApiClient';
-import KunaTickerMap from 'Core/Kuna/TickerMap';
-
 import BadgeController from 'Background/BadgeController';
-const TickerStorage = {};
-
-_.each(KunaTickerMap, (ticker) => {
-    TickerStorage[ticker.key] = {
-        ...ticker,
-        price: 0,
-        volume_base: 0,
-        volume_quote: 0,
-        OHLC: {
-            high: 0,
-            low: 0,
-            open: 0,
-            close: 0,
-        },
-        depth: {
-            bid: 0,
-            ask: 0
-        }
-    };
-});
-
-let currentTickerKey = 'btcuah';
+import {setupContextMenu} from 'Background/ExtensionSetup';
 
 const updateTicker = (key, kunaTickerData) => {
-    const currentTicker = TickerStorage[key];
+
+    const {ticker} = store.getState();
+
+    const currentTicker = ticker.tickers[key];
 
     if (!currentTicker) {
-        return;
+        return {
+            type: "NOTHING"
+        };
     }
 
     try {
@@ -54,80 +38,39 @@ const updateTicker = (key, kunaTickerData) => {
             ask: kunaTickerData.buy
         };
 
-        TickerStorage[key] = currentTicker;
-
-        ExtensionPlatform.getExtension().extension.sendMessage({
-            event: Events.UPDATE_TICKER,
-            ticker: currentTicker
-        });
-
-        if (currentTickerKey === currentTicker.key) {
-            BadgeController.updateBudgetTexts(TickerStorage[key]);
+        if (ticker.currentTickerKey === currentTicker.key) {
+            BadgeController.updateBudgetTexts(currentTicker);
         }
+
+        return {
+            type: 'UPDATE_TICKER',
+            ticker: currentTicker
+        };
     } catch (error) {
-        console.warn(error)
+        console.error(error);
     }
+
+    return {
+        type: "NOTHING"
+    };
 };
 
 
 const tickerUpdater = () => {
     KunaApiClient.extractTickers().then((tickers) => {
-        _.each(tickers, (ticker, key) => updateTicker(key, ticker.ticker));
+        _.each(tickers, (ticker, key) => store.dispatch(updateTicker(key, ticker.ticker)));
     });
 };
 
-/**
- * @param request
- * @param sender
- * @param sendResponse
- */
-const extensionEventListener = (request, sender, sendResponse) => {
-    const {event = null} = request;
-
-    if (!event) {
-        return;
-    }
-
-    switch (event) {
-        case Events.FETCH_CURRENT_TICKER: {
-            sendResponse({
-                currentTickerKey: currentTickerKey
-            });
-            break;
-        }
-
-        case Events.SET_CURRENT_TICKER: {
-            const {tickerKey} = request;
-            if (!tickerKey) {
-                break;
-            }
-
-            currentTickerKey = tickerKey;
-            sendResponse({
-                currentTicker: currentTickerKey
-            });
-
-
-            try {
-                BadgeController.updateBudgetTexts(TickerStorage[currentTickerKey]);
-            } catch (error) {
-                console.log(error);
-            }
-
-            break;
-        }
-
-        case Events.GET_TICKERS: {
-            sendResponse({
-                tickers: TickerStorage
-            });
-            break;
-        }
-    }
-};
-
 const initBackground = () => {
-    ExtensionPlatform.getExtension().extension.onMessage.addListener(extensionEventListener);
+
+    wrapStore(store, {
+        portName: STORE_KEY
+    });
+
+    window.getState = () => {
+        return store.getState();
+    };
 
     tickerUpdater();
     setInterval(tickerUpdater, 60000);
@@ -139,23 +82,4 @@ const initBackground = () => {
 
 document.addEventListener('DOMContentLoaded', initBackground);
 
-ExtensionPlatform.getExtension().contextMenus.removeAll();
-ExtensionPlatform.getExtension().contextMenus.create({
-    title: "by CoinWizard Team",
-    contexts: ["browser_action"],
-    onclick: () => {
-        ExtensionPlatform.getExtension().tabs.create({
-            url: "https://coinwizard.me?ref=kuna-extension"
-        });
-    }
-});
-
-ExtensionPlatform.getExtension().contextMenus.create({
-    title: "Source code",
-    contexts: ["browser_action"],
-    onclick: () => {
-        ExtensionPlatform.getExtension().tabs.create({
-            url: "https://github.com/CoinWizard/kuna-ticker-extension"
-        });
-    }
-});
+setupContextMenu();

@@ -1,9 +1,6 @@
 import store from 'Popup/Store/index';
-
 import ExtensionPlatform from 'Core/Extension';
-
 import {Events} from 'Core/EventProtocol/Events';
-
 import {TickerActions} from 'Popup/Actions/TickerActions';
 
 ExtensionPlatform.getExtension().extension.onMessage.addListener((request, sender, sendResponse) => {

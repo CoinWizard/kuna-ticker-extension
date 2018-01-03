@@ -90,7 +90,7 @@ const Loaders = [
         exclude: /(node_modules)/,
         query: {
             presets: ['react', 'es2015', 'stage-0'],
-            plugins: ['transform-decorators-legacy','transform-class-properties']
+            plugins: ['transform-decorators-legacy', 'transform-class-properties']
         }
     }
 ];
@@ -113,7 +113,8 @@ const WebpackConfig = {
         alias: {
             Core: Path.join(__dirname, 'src/Core'),
             Popup: Path.join(__dirname, 'src/Popup'),
-            Background: Path.join(__dirname, 'src/Background')
+            Background: Path.join(__dirname, 'src/Background'),
+            PageContent: Path.join(__dirname, 'src/PageContent')
         }
     },
     devtool: 'inline-source-map',

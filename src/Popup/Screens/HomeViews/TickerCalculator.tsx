@@ -3,85 +3,116 @@ import Numeral from 'numeral';
 import {TickerInterface} from 'Core/Interfaces/TickerInterface';
 import {getCurrencyByKey, CurrencyInterface} from 'Core/Kuna/Currencies';
 
-export interface CalculatorViewPropsInterface {
+export interface PropsInterface {
     ticker: TickerInterface;
 }
 
-export interface CalculatorViewStateInterface {
-    revert: boolean;
-    sellValue: string | null;
+export interface StateInterface {
+    activeInput?: string;
+    value: string;
 }
+
+const InputType = {
+    Base: 'base',
+    Quote: 'quote'
+};
 
 const fee: number = 0.0025;
 
-export default class TickerStats extends React.Component<CalculatorViewPropsInterface, CalculatorViewStateInterface> {
+export default class TickerStats extends React.Component<PropsInterface, StateInterface> {
 
-    constructor(props) {
-        super(props)
+    constructor(props, context) {
+        super(props, context);
 
         this.state = {
-            revert: false,
-            sellValue: ''
+            activeInput: null,
+            value: ''
+        };
+    }
+
+    onChangeInput(activateInput: string) {
+        return (event) => {
+            this.setState({
+                value: event.target.value,
+                activeInput: activateInput
+            });
         }
     }
 
-    onInputChange(event) {
-        this.setState({sellValue: event.currentTarget.value});
-    }
+    drawFeeComponent(calculatedValue: number, coin: CurrencyInterface): void | any {
 
-    onRevert(event) {
-        this.setState({revert: !this.state.revert});
+        if (calculatedValue <= 0) {
+            return;
+        }
+
+        return (<div className="calculator-fee">
+            <span>Fee:</span> <b>{Numeral(calculatedValue * fee).format(coin.format)} {coin.key}</b>
+        </div>);
     }
 
     render() {
         const {ticker} = this.props;
-        const {revert = false, sellValue = ''} = this.state;
 
-        let value = parseFloat(sellValue.replace(',', '.'));
+        const {value = '', activeInput} = this.state;
 
-        let buyValue: number,
-            baseCoin: CurrencyInterface, 
-            quoteCoin: CurrencyInterface;
+        let numberValue = parseFloat(value.replace(',', '.')) || 0;
+        let calculatedValue = 0;
 
-        if (revert) {
-            baseCoin = getCurrencyByKey(ticker.quoteCurrency);
-            quoteCoin = getCurrencyByKey(ticker.baseCurrency);
-            buyValue = value / ticker.price;
-        } else {
-            baseCoin = getCurrencyByKey(ticker.baseCurrency);
-            quoteCoin = getCurrencyByKey(ticker.quoteCurrency);
-            buyValue = value * ticker.price;
+        switch (activeInput) {
+            case InputType.Quote:
+                calculatedValue = numberValue / ticker.price;
+                break;
+
+            case InputType.Base:
+                calculatedValue = numberValue * ticker.price;
+                break;
         }
 
-        if (!buyValue) {
-            buyValue = 0;
-        }
-
-        let feeValue = buyValue * fee;
-
-        const inputProps = {
-            className: 'calculator-sell__input',
-            placeholder: `Amount of ${baseCoin.key}`,
-            value: this.state.sellValue,
-            onChange: this.onInputChange.bind(this)
-        };
+        let baseCoin: CurrencyInterface = getCurrencyByKey(ticker.baseCurrency),
+            quoteCoin: CurrencyInterface = getCurrencyByKey(ticker.quoteCurrency);
 
         return (
             <div className="calculator">
-                <div className="calculator-sell">
-                    <input {...inputProps} />
-                    <label className="calculator-sell__label">{baseCoin.key}</label>
-                </div>
-                <div className="calculator-buy">
-                    <label className="calculator-buy__amount">
-                        {Numeral(buyValue - feeValue).format(quoteCoin.format)}<span>{quoteCoin.key}</span>
-                    </label>
-                    <label className="calculator-buy__fee">
-                        Fee: <b>{Numeral(feeValue).format(quoteCoin.format)}</b> <span>{quoteCoin.key}</span>
-                    </label>
-                </div>
 
-                <button className="calculator-revert" onClick={this.onRevert.bind(this)}>Revers</button>
+                <div className="calculator-form">
+                    <label className="calculator-side">
+                    <span className="calculator-side-value">
+                        {
+                            activeInput === InputType.Quote && calculatedValue > 0
+                                ? Numeral(calculatedValue).format(baseCoin.format)
+                                : null
+                        }
+                    </span>
+                        <input
+                            className="calculator-side-input"
+                            placeholder={!value ? "0.00" : null}
+                            value={activeInput === InputType.Base ? value : ''}
+                            onChange={this.onChangeInput(InputType.Base)}
+                        />
+                        <span className="calculator-side-coin-key">{baseCoin.key}</span>
+                    </label>
+
+                    <label className="calculator-side">
+                    <span className="calculator-side-value">
+                        {
+                            activeInput === InputType.Base && calculatedValue > 0
+                                ? Numeral(calculatedValue).format(quoteCoin.format)
+                                : null
+                        }
+                    </span>
+                        <input
+                            className="calculator-side-input"
+                            placeholder={!value ? "0.00" : null}
+                            value={activeInput === InputType.Quote ? value : ''}
+                            onChange={this.onChangeInput(InputType.Quote)}
+                        />
+                        <span className="calculator-side-coin-key">{quoteCoin.key}</span>
+                    </label>
+                </div>
+                {this.drawFeeComponent(
+                    calculatedValue,
+                    activeInput === InputType.Quote ? baseCoin : quoteCoin
+                )}
             </div>
         )
     }
