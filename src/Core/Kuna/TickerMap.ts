@@ -17,6 +17,12 @@ const TickerMap = {
         quoteCurrency: 'UAH',
         format: '0,0.[00]'
     },
+    bchuah: {
+        key: 'bchuah',
+        baseCurrency: 'BCH',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]'
+    },
     gbguah: {
         key: 'gbguah',
         baseCurrency: 'GBG',
