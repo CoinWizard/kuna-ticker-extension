@@ -5603,6 +5603,12 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-chrome-redux@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-chrome-redux/-/react-chrome-redux-1.4.0.tgz#ec9379abfd384b8caba5f8cdea909f2599e74d53"
+  dependencies:
+    lodash "^4.5.1"
+
 react-css-modules@^4.7.1:
   version "4.7.1"
   resolved "https://registry.yarnpkg.com/react-css-modules/-/react-css-modules-4.7.1.tgz#08fff65c034780b4352f0a1bb879cab0ee43d820"

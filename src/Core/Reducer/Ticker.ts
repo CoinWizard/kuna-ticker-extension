@@ -1,13 +1,36 @@
+import {Dictionary, each} from 'lodash';
+
 import {ActionTypes} from 'Popup/Actions/ActionTypes';
 import {ObjectUtility} from 'Core/ObjectUtility';
 import {TickerInterface} from 'Core/Interfaces/TickerInterface';
+import {ITickerStore} from 'Core/Interfaces/Store';
 
-import {TickerStateInterface} from 'Popup/Reducer/Interfaces/TickerStateInterface';
+import KunaTickerMap from 'Core/Kuna/TickerMap';
 
-const initialTickerState: TickerStateInterface = {
-    tickers: ({} as Map<string, TickerInterface>),
-    currentTickerKey: null
+
+const initialTickerState: ITickerStore = {
+    tickers: {} as Dictionary<TickerInterface>,
+    currentTickerKey: 'btcuah'
 };
+
+each(KunaTickerMap, (ticker) => {
+    initialTickerState.tickers[ticker.key] = {
+        ...ticker,
+        price: 0,
+        volume_base: 0,
+        volume_quote: 0,
+        OHLC: {
+            high: 0,
+            low: 0,
+            open: 0,
+            close: 0,
+        },
+        depth: {
+            bid: 0,
+            ask: 0
+        }
+    };
+});
 
 
 interface ActionInterface {
@@ -18,14 +41,14 @@ interface ActionInterface {
     tickerKey?: string
 }
 
-function updateTicker(state: TickerStateInterface, ticker: TickerInterface) {
+function updateTicker(state: ITickerStore, ticker: TickerInterface) {
     const {tickers} = state;
     tickers[ticker.key] = ticker;
 
     return ObjectUtility.updateObject(state, {tickers: tickers});
 }
 
-export default function tickerState(state: TickerStateInterface = initialTickerState,
+export default function tickerState(state: ITickerStore = initialTickerState,
                                     action: ActionInterface = null) {
     switch (action.type) {
         case ActionTypes.FETCH_TICKERS: {

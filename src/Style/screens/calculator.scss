@@ -1,61 +1,51 @@
 .calculator {
     padding: 12px 0;
 
-    &-sell {
-        &__input {
-            display: inline-block;
-            width: 200px;
-            padding: 8px;
-            font-size: 12px;
-            background: $color-all-ocean;
-            color: $color-shuttle-gray;
-            border-radius: 3px;
-            letter-spacing: 1px;
-        }
-
-        &__label {
-            margin-left: 8px;
-            font-weight: 400;
-            color: $color-shuttle-gray;
-        }
+    &-form {
+        display: flex;
+        justify-content: space-between;
     }
 
-    &-buy {
-        margin: 16px 0;
-        &__amount {
-            color: $color-kuna-blue;
-            display: block;
-            width: 100%;
-            font-size: 24px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 1;
-            font-weight: 500;
+    &-side {
+        width: 130px;
 
-            & > span {
-                font-weight: 400;
-                color: $color-shuttle-gray;
-                font-size: 16px;
-                vertical-align: bottom;
-                margin-left: 2px;
+        &-input {
+            box-sizing: border-box;
+            font-size: 12px;
+            border: 1px solid $color-gull-gray;
+            background: $color-all-ocean;
+            border-radius: 3px;
+
+            padding: 8px 10px;
+            width: 100%;
+            line-height: 1.62;
+            z-index: 2;
+
+            &:focus {
+                border: 1px solid $color-kuna-blue;
             }
         }
-        &__fee {
-            font-size: 10px;
+
+        &-coin-key, &-value {
+            position: absolute;
+            top: 11px;
+            z-index: 3;
+
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        &-value {
+            left: 10px;
+        }
+
+        &-coin-key {
+            right: 10px;
         }
     }
 
-    &-revert {
+    &-fee {
         font-size: 12px;
-        cursor: pointer;
-        padding: 4px 8px;
-        border-radius: 3px;
-        background: $color-dark-gray;
-        color: $color-gull-gray;
-        display: inline-block;
-
-        &:hover {
-            background: lighten($color: $color-dark-gray, $amount: 10%);
-        }
+        margin: 8px 0;
     }
 }
