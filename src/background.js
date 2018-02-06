@@ -63,7 +63,6 @@ const tickerUpdater = () => {
 };
 
 const initBackground = () => {
-
     wrapStore(store, {
         portName: STORE_KEY
     });
@@ -83,3 +82,14 @@ const initBackground = () => {
 document.addEventListener('DOMContentLoaded', initBackground);
 
 setupContextMenu();
+
+ExtensionPlatform.getRuntime().onInstalled.addListener((event) => {
+    switch (event.reason) {
+        case 'install':
+            ExtensionPlatform.getTabs().create({url: 'http://blokspot.io/price-trackers/ticker-for-kuna'});
+            break;
+
+        case 'update':
+            break;
+    }
+});

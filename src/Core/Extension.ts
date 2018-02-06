@@ -8,6 +8,17 @@ declare global {
     const VERSION: string;
 }
 
+interface RuntimeInterface {
+    onMessage: chrome.runtime.ExtensionMessageEvent;
+    onInstalled: chrome.runtime.ExtensionMessageEvent;
+
+    connect(connectInfo?: chrome.runtime.ConnectInfo): chrome.runtime.Port;
+}
+
+interface TabsInterface {
+    create(props?: chrome.tabs.CreateProperties): void;
+}
+
 export default class ExtensionPlatform {
 
     static getExtension(): ExtensionInstance {
@@ -16,6 +27,20 @@ export default class ExtensionPlatform {
 
     static reload() {
         extension.runtime.reload();
+    }
+
+    /**
+     * Extract Tabs function
+     */
+    static getTabs(): TabsInterface {
+        return extension.tabs;
+    }
+
+    /**
+     * extract Runtime object function
+     */
+    static getRuntime(): RuntimeInterface {
+        return extension.runtime;
     }
 
     static openWindow(createProperties: CreateProperties,
