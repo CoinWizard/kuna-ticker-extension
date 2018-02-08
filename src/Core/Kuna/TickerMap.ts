@@ -23,6 +23,12 @@ const TickerMap = {
         quoteCurrency: 'UAH',
         format: '0,0.[00]'
     },
+    xrpuah: {
+        key: 'xrpuah',
+        baseCurrency: 'XRP',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]'
+    },
     gbguah: {
         key: 'gbguah',
         baseCurrency: 'GBG',

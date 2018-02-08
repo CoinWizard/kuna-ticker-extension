@@ -85,6 +85,12 @@ export const currencies: Dictionary<CurrencyInterface> = {
         name: 'B2bx',
         color: '#00a275',
         format: '0,0.[0000]'
+    },
+    XRP: {
+        key: 'XRP',
+        name: 'Ripple',
+        color: '#0096C8',
+        format: '0,0.[0000]'
     }
 };
 
