@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-import PageBudgetApplication from 'PageContent/index';
+import PageBudgetApplication from './PageContent/index';
 
 const onContentLoaded = () => {
     let componentElement = document.createElement('div');
@@ -21,4 +21,4 @@ const onContentLoaded = () => {
     }
 };
 
-document.addEventListener('DOMContentLoaded', onContentLoaded);
+// document.addEventListener('DOMContentLoaded', onContentLoaded);

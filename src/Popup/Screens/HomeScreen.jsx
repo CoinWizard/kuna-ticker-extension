@@ -1,7 +1,7 @@
 import React from 'react';
 import store from 'Popup/Store/index';
 import {connect} from 'react-redux';
-import {find, map} from 'lodash';
+import {find, map, each} from 'lodash';
 import Numeral from 'numeral';
 
 import {Events} from 'Core/EventProtocol/Events';
@@ -11,9 +11,27 @@ import {TickerActions} from 'Popup/Actions/TickerActions';
 import CurrentTickerView from 'Popup/Screens/HomeViews/CurrentTickerView';
 
 const mapStateToProps = (state) => {
+    const {tickers, currentTickerKey} = state.ticker;
+
+    const totalMap = {};
+    each(tickers, (ticker) => {
+        if (!(ticker.baseCurrency in totalMap)) {
+            totalMap[ticker.baseCurrency] = 0;
+        }
+
+        if (!(ticker.quoteCurrency in totalMap)) {
+            totalMap[ticker.quoteCurrency] = 0;
+        }
+
+        totalMap[ticker.baseCurrency] += parseFloat(ticker.volume_base);
+        totalMap[ticker.quoteCurrency] += parseFloat(ticker.volume_quote);
+    });
+
+    console.log(totalMap);
+
     return {
-        tickers: state.ticker.tickers,
-        currentTickerKey: state.ticker.currentTickerKey
+        tickers: tickers,
+        currentTickerKey: currentTickerKey
     };
 };
 

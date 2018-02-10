@@ -86,7 +86,9 @@ setupContextMenu();
 ExtensionPlatform.getRuntime().onInstalled.addListener((event) => {
     switch (event.reason) {
         case 'install':
-            ExtensionPlatform.getTabs().create({url: 'http://blokspot.io/price-trackers/ticker-for-kuna'});
+            ExtensionPlatform.getTabs().create({
+                url: 'http://blokspot.io/price-trackers/ticker-for-kuna?ref=kuna-extension'
+            });
             break;
 
         case 'update':

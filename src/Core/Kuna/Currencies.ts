@@ -91,6 +91,24 @@ export const currencies: Dictionary<CurrencyInterface> = {
         name: 'Ripple',
         color: '#0096C8',
         format: '0,0.[0000]'
+    },
+    EOS: {
+        key: 'EOS',
+        name: 'EOS',
+        color: '#0096C8',
+        format: '0,0.[0000]'
+    },
+    FOOD: {
+        key: 'FOOD',
+        name: 'FoodCoin',
+        color: '#0096C8',
+        format: '0,0.[0000]'
+    },
+    OTX: {
+        key: 'OTX',
+        name: 'Octanox',
+        color: '#0096C8',
+        format: '0,0.[0000]'
     }
 };
 
