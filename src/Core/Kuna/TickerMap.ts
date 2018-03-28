@@ -102,6 +102,25 @@ const TickerMap = {
         baseCurrency: 'OTX',
         quoteCurrency: 'BTC',
         format: '0,0.[000000]'
+    },
+
+    hknbtc: {
+        key: 'hknbtc',
+        baseCurrency: 'HKN',
+        quoteCurrency: 'BTC',
+        format: '0,0.[000000]'
+    },
+    xlmuah: {
+        key: 'xlmuah',
+        baseCurrency: 'XLM',
+        quoteCurrency: 'UAH',
+        format: '0,0.[000000]'
+    },
+    tusduah: {
+        key: 'tusduah',
+        baseCurrency: 'TUSD',
+        quoteCurrency: 'UAH',
+        format: '0,0.[000000]'
     }
 };
 

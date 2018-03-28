@@ -125,6 +125,28 @@
         transform: scale(1);
     }
 
+    &__separator {
+        color: $color-kuna-dark-blue;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 4px;
+        margin-bottom: 8px;
+        margin-left: 8px;
+        &:after {
+            position: absolute;
+            content: '';
+            width: 240px;
+            height: 1px;
+            background: $color-kuna-dark-blue;
+            top: 10px;
+            right: -4px;
+        }
+    }
+
+    &__item + &__separator {
+        margin-top: 16px;
+    }
+
     &__item {
         transition: all 0.2s;
         position: relative;

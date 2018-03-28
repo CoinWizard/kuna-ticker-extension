@@ -1,7 +1,7 @@
 import React from 'react';
 import store from 'Popup/Store/index';
 import {connect} from 'react-redux';
-import {find, map, each} from 'lodash';
+import {find, map, each, groupBy} from 'lodash';
 import Numeral from 'numeral';
 
 import {Events} from 'Core/EventProtocol/Events';
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
 };
 
 @connect(mapStateToProps)
-export default class HomeScreen extends React.Component {
+export default class HomeScreen extends React.PureComponent {
 
     state = {
         selectMode: false
@@ -56,30 +56,51 @@ export default class HomeScreen extends React.Component {
         const {tickers = [], currentTickerKey = null} = this.props;
         const {selectMode = false} = this.state;
 
-        return (
-            <div className={`ticker-list ${selectMode ? '-active' : ''}`}>
-                {map(tickers, (ticker) => {
-                    const tickerListItemProps = {
-                        key: ticker.key,
-                        className: `ticker-list__item ${currentTickerKey === ticker.key ? '-active' : ''}`,
-                        onClick: () => {
-                            this.onSelectMarket(ticker.key);
-                        }
-                    };
+        const groupedTickers = groupBy(tickers, 'quoteCurrency');
+        const tickerList = [];
 
-                    return (
-                        <div {...tickerListItemProps}>
-                            <label className="ticker-list__item-name">
-                                {ticker.baseCurrency} / {ticker.quoteCurrency}
-                            </label>
-                            <span className="ticker-list__item-price">
-                                {Numeral(ticker.price).format(ticker.format)} {ticker.quoteCurrency}
-                            </span>
-                        </div>
-                    );
-                })}
-            </div>
-        );
+        const createTicker = (ticker) => {
+            const tickerListItemProps = {
+                key: ticker.key,
+                className: `ticker-list__item ${currentTickerKey === ticker.key ? '-active' : ''}`,
+                onClick: () => {
+                    this.onSelectMarket(ticker.key);
+                }
+            };
+
+            tickerList.push(
+                <div {...tickerListItemProps}>
+                    <label className="ticker-list__item-name">
+                        {ticker.baseCurrency} / {ticker.quoteCurrency}
+                    </label>
+                    <span className="ticker-list__item-price">
+                        {Numeral(ticker.price).format(ticker.format)} {ticker.quoteCurrency}
+                    </span>
+                </div>
+            );
+        };
+
+        const createTickerSeparator = (coinKey) => {
+            return (
+                <div
+                    className="ticker-list__separator"
+                    key={'separator-' + coinKey}
+                >to {coinKey}</div>
+            );
+        };
+
+        tickerList.push(createTickerSeparator('UAH'));
+        each(groupedTickers['UAH'], createTicker);
+
+        tickerList.push(createTickerSeparator('BTC'));
+        each(groupedTickers['BTC'], createTicker);
+
+        tickerList.push(createTickerSeparator('GBG'));
+        each(groupedTickers['GBG'], createTicker);
+
+        console.log(tickerList);
+
+        return <div className={`ticker-list ${selectMode ? '-active' : ''}`}>{tickerList}</div>;
     }
 
     render() {
@@ -99,7 +120,7 @@ export default class HomeScreen extends React.Component {
                 {this.drawTickerList()}
 
                 <header className="header">
-                    <a href="https://kuna.io/?ref=coinwizard-kuna-ticker" target="_blank" className="header__logo">
+                    <a href="https://kuna.io/?utm_source=extension&utm_medium=Header&utm_campaign=Kuna_Extension" target="_blank" className="header__logo">
                         <img className="header__logo-img" src="/images/kuna-logo.png"/>
                     </a>
                     {

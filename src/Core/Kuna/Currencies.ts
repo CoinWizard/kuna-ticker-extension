@@ -109,6 +109,24 @@ export const currencies: Dictionary<CurrencyInterface> = {
         name: 'Octanox',
         color: '#0096C8',
         format: '0,0.[0000]'
+    },
+    HKN: {
+        key: 'HKN',
+        name: 'Hacken',
+        color: '#0096C8',
+        format: '0,0.[0000]'
+    },
+    XLM: {
+        key: 'XLM',
+        name: 'Stellar',
+        color: '#0096C8',
+        format: '0,0.[0000]'
+    },
+    TUSD: {
+        key: 'TUSD',
+        name: 'Tether',
+        color: '#0096C8',
+        format: '0,0.[0000]'
     }
 };
 

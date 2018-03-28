@@ -11,7 +11,7 @@ export function setupContextMenu() {
         contexts: ["browser_action"],
         onclick: () => {
             extension.tabs.create({
-                url: "https://coinwizard.me?ref=kuna-extension"
+                url: "https://coinwizard.me?ref=Kuna_Extension"
             });
         }
     });
