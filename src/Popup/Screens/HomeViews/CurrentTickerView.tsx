@@ -72,7 +72,7 @@ export default class CurrentTickerView extends React.Component<CurrentTickerView
                     </label>
 
                     <div className="current-ticker__market">
-                        <a  href={`https://kuna.io/markets/${ticker.key}?utm_source=extension&utm_medium=Ticker&utm_campaign=Kuna_Extension`}
+                        <a  href={`https://kuna.io/markets/${ticker.key}?src=Kuna_Extension`}
                             className="current-ticker__market-link"
                             target="_blank"
                         >Market {ticker.baseCurrency}/{ticker.quoteCurrency}</a>

@@ -120,7 +120,7 @@ export default class HomeScreen extends React.PureComponent {
                 {this.drawTickerList()}
 
                 <header className="header">
-                    <a href="https://kuna.io/?utm_source=extension&utm_medium=Header&utm_campaign=Kuna_Extension" target="_blank" className="header__logo">
+                    <a href="https://kuna.io/?src=Kuna_Extension" target="_blank" className="header__logo">
                         <img className="header__logo-img" src="/images/kuna-logo.png"/>
                     </a>
                     {
