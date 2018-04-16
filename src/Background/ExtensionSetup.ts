@@ -2,8 +2,6 @@ import ExtensionPlatform from 'Core/Extension';
 
 const extension = ExtensionPlatform.getExtension();
 
-
-
 export function setupContextMenu() {
     extension.contextMenus.removeAll();
     extension.contextMenus.create({

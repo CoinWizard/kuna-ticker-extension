@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
 import {STORE_KEY} from 'Core/Constant';
-import store from 'Core/Store';
+import store from 'Core/Store/index';
 import {wrapStore} from 'react-chrome-redux';
 import ExtensionPlatform from 'Core/Extension';
 import {Events} from 'Core/EventProtocol/Events';

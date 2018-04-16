@@ -11,6 +11,18 @@ const TickerMap = {
         quoteCurrency: 'UAH',
         format: '0,0.[00]'
     },
+    dashuah: {
+        key: 'dashuah',
+        baseCurrency: 'DASH',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]'
+    },
+    ltcuah: {
+        key: 'ltcuah',
+        baseCurrency: 'LTC',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]'
+    },
     wavesuah: {
         key: 'wavesuah',
         baseCurrency: 'WAVES',

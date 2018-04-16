@@ -1,5 +1,25 @@
 import {Dictionary} from "lodash";
 
+export enum CoinUnits {
+    Bitcoin = 'BTC',
+    Ethereum = 'ETH',
+    Dash = 'DASH',
+    Litecoin = 'LTC',
+    BitcoinCash = 'BCH',
+
+    Waves = 'WAVES',
+    Golos = 'GOL',
+    GolosGold = 'GBG',
+
+    RussianMinerCoin = 'RMC',
+    Revain = 'R',
+    Aeron = 'ARN',
+
+    KunaToken = 'KUN',
+
+    UrainianHrivna = 'UAH'
+}
+
 export interface CurrencyInterface {
     key: string
     name: string
@@ -18,6 +38,18 @@ export const currencies: Dictionary<CurrencyInterface> = {
         key: 'ETH',
         name: 'Ethereum',
         color: '#434348',
+        format: '0,0.[0000]'
+    },
+    Dash: {
+        key: 'DASH',
+        name: 'Dash',
+        color: '#0096C8',
+        format: '0,0.[0000]'
+    },
+    LTC: {
+        key: 'LTC',
+        name: 'Litecoin',
+        color: '#0096C8',
         format: '0,0.[0000]'
     },
     UAH: {

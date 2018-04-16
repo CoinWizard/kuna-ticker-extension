@@ -1,6 +1,3 @@
-import ChromeBrowserInterface = chrome.browser;
-import ChromeExtensionInterface = chrome.extension;
-
 declare global {
     interface Window {
         browser: any
@@ -33,8 +30,8 @@ const apis = [
 
 class Extension {
 
-    alarms = null;
-    bookmarks = null;
+    alarms: typeof chrome.alarms = null;
+    bookmarks: typeof chrome.bookmarks = null;
     browserAction = null;
     commands = null;
     contextMenus = null;
