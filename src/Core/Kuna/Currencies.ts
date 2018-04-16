@@ -40,7 +40,7 @@ export const currencies: Dictionary<CurrencyInterface> = {
         color: '#434348',
         format: '0,0.[0000]'
     },
-    Dash: {
+    DASH: {
         key: 'DASH',
         name: 'Dash',
         color: '#0096C8',
