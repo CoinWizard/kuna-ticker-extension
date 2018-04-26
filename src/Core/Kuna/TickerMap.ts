@@ -89,14 +89,6 @@ const TickerMap = {
         quoteCurrency: 'BTC',
         format: '0,0.[000000]'
     },
-    b2bbtc: {
-        key: 'b2bbtc',
-        baseCurrency: 'B2B',
-        quoteCurrency: 'BTC',
-        format: '0,0.[000000]'
-    },
-
-
     eosbtc: {
         key: 'eosbtc',
         baseCurrency: 'EOS',

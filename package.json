@@ -1,7 +1,7 @@
 {
   "name": "kuna-ticker-extension",
   "description": "Kuna.io Exchange Ticker Extension",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "public": true,
   "scripts": {
     "build:prod": "NODE_ENV=production $(npm bin)/gulp build && $(npm bin)/gulp zip"
