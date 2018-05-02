@@ -159,6 +159,18 @@ export const currencies: Dictionary<CurrencyInterface> = {
         name: 'Tether',
         color: '#0096C8',
         format: '0,0.[0000]'
+    },
+    ZEC: {
+        key: 'ZEC',
+        name: 'ZCash',
+        color: '#0096C8',
+        format: '0,0.[0000]'
+    },
+    VENUS: {
+        key: 'VENUS',
+        name: 'Venus',
+        color: '#0096C8',
+        format: '0,0.[0000]'
     }
 };
 

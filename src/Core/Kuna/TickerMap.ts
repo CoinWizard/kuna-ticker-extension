@@ -29,15 +29,21 @@ const TickerMap = {
         quoteCurrency: 'UAH',
         format: '0,0.[00]'
     },
-    bchuah: {
-        key: 'bchuah',
-        baseCurrency: 'BCH',
-        quoteCurrency: 'UAH',
-        format: '0,0.[00]'
-    },
     xrpuah: {
         key: 'xrpuah',
         baseCurrency: 'XRP',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]'
+    },
+    zecuah: {
+        key: 'zecuah',
+        baseCurrency: 'ZEC',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]'
+    },
+    bchuah: {
+        key: 'bchuah',
+        baseCurrency: 'BCH',
         quoteCurrency: 'UAH',
         format: '0,0.[00]'
     },
@@ -107,10 +113,15 @@ const TickerMap = {
         quoteCurrency: 'BTC',
         format: '0,0.[000000]'
     },
-
     hknbtc: {
         key: 'hknbtc',
         baseCurrency: 'HKN',
+        quoteCurrency: 'BTC',
+        format: '0,0.[000000]'
+    },
+    venusbtc: {
+        key: 'venusbtc',
+        baseCurrency: 'VENUS',
         quoteCurrency: 'BTC',
         format: '0,0.[000000]'
     },

@@ -8,6 +8,7 @@ import sass from 'gulp-sass';
 import jsoneditor from 'gulp-json-editor';
 import zip from 'gulp-zip';
 
+const packageJson = require('./package.json');
 const manifest = require('./resources/manifest.json');
 
 const PATH = {
@@ -44,6 +45,11 @@ gulp.task('copy:views', copyTask({
 gulp.task('manifest:production', () => {
     return gulp
         .src('./resources/manifest.json')
+        .pipe(jsoneditor((json) => {
+            json.version = packageJson.version;
+
+            return json;
+        }))
         .pipe(gulp.dest('./dist/firefox', {overwrite: true}))
 
         .pipe(jsoneditor((json) => {
@@ -118,7 +124,7 @@ function zipTask(target) {
     return () => {
         return gulp
             .src(`./dist/${target}/**`)
-            .pipe(zip(`kuna-${target}-${manifest.version}.zip`))
+            .pipe(zip(`kuna-${target}-${packageJson.version}.zip`))
             .pipe(gulp.dest('./builds'));
     }
 }
@@ -143,14 +149,14 @@ function generateBundlerTask(options) {
 
     return () => {
         return gulp
-        .src([
-            "./src/popup.jsx",
-            "./src/pageContent.js",
-            "./src/background.js"
-        ])
-        .pipe(named())
-        .pipe(gulpWebpack(webpackBundlerConfig))
-        .pipe(gulp.dest('./dist/chrome'))
-        .pipe(gulp.dest('./dist/firefox'));
+            .src([
+                "./src/popup.jsx",
+                "./src/pageContent.js",
+                "./src/background.js"
+            ])
+            .pipe(named())
+            .pipe(gulpWebpack(webpackBundlerConfig))
+            .pipe(gulp.dest('./dist/chrome'))
+            .pipe(gulp.dest('./dist/firefox'));
     }
 }
