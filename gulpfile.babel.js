@@ -1,10 +1,7 @@
 import gulp from 'gulp';
 import Path from 'path';
 import del from 'del';
-import gulpWebpack from 'gulp-webpack';
-import webpackConfig from './webpack.config.js';
 import named from 'vinyl-named';
-import sass from 'gulp-sass';
 import jsoneditor from 'gulp-json-editor';
 import zip from 'gulp-zip';
 
@@ -64,21 +61,9 @@ gulp.task('manifest:production', () => {
 //| Configuration for create JavaScript bundles
 //| Use WebPack
 //|---------------------------------------------------------------------------
-gulp.task('js', generateBundlerTask({watch: false}));
-gulp.task('js:watch', generateBundlerTask({watch: true}));
-
-
-gulp.task('css', () => {
-    return gulp
-        .src('./src/Style/popup.scss')
-        .pipe(
-            sass({
-                outputStyle: 'compressed'
-            }).on('error', sass.logError)
-        )
-        .pipe(gulp.dest('./dist/chrome/css'))
-        .pipe(gulp.dest('./dist/firefox/css'));
-});
+gulp.task('js', []);
+gulp.task('js:watch', []);
+gulp.task('css', []);
 
 
 const staticFiles = ['images', 'views', 'root'];
@@ -92,7 +77,7 @@ gulp.task('clean', function clean() {
     return del(['./dist/*']);
 });
 
-gulp.task('build', ['copy', 'css', 'js']);
+gulp.task('build', ['copy']);
 
 gulp.task('copy:watch', function () {
     gulp.watch(['./src/*.*'], 'build');
@@ -126,37 +111,5 @@ function zipTask(target) {
             .src(`./dist/${target}/**`)
             .pipe(zip(`kuna-${target}-${packageJson.version}.zip`))
             .pipe(gulp.dest('./builds'));
-    }
-}
-
-
-/**
- * @param options
- */
-function generateBundlerTask(options) {
-
-    const webpackBundlerConfig = {
-        ...webpackConfig
-    };
-
-    if (options.watch) {
-        webpackBundlerConfig.watch = true;
-        webpackBundlerConfig.watchOptions = {
-            aggregateTimeout: 200,
-            ignored: /node_modules/
-        };
-    }
-
-    return () => {
-        return gulp
-            .src([
-                "./src/popup.jsx",
-                "./src/pageContent.js",
-                "./src/background.js"
-            ])
-            .pipe(named())
-            .pipe(gulpWebpack(webpackBundlerConfig))
-            .pipe(gulp.dest('./dist/chrome'))
-            .pipe(gulp.dest('./dist/firefox'));
     }
 }

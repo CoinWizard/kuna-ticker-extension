@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "module": "commonjs",
     "target": "es5",
+    "module": "es2015",
+    "allowJs": true,
+    "declaration": false,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
     "sourceMap": true,
-    "outDir": "ts-build",
-    "jsx": "preserve",
+    "jsx": "react",
     "lib": [
       "es2016",
       "dom"
@@ -17,7 +17,9 @@
       "./src"
     ],
     "baseUrl": "./src",
+    "outDir": "./dist/typescript",
     "skipLibCheck": true,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
   "include": [

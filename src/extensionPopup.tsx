@@ -1,6 +1,8 @@
 import React from 'react';
 import {render} from 'react-dom';
-import PopupApplication from 'Popup/index';
+import {PopupApplication} from 'Popup';
+
+import 'Style/popup.scss';
 
 const onContentLoaded = () => {
     let ComponentElement = document.getElementById('popup-application');

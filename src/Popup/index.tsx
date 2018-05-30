@@ -1,18 +1,19 @@
 import React from 'react';
 import {Provider} from 'react-redux';
 import proxyStore from 'Popup/Store';
-
 import HomeScreen from 'Popup/Screens/HomeScreen';
-
 import 'Popup/EventHandler';
+
+interface IProps {
+}
 
 interface IState {
     ready: boolean;
 }
 
-export default class PopupApplication extends React.Component<any, IState> {
+export class PopupApplication extends React.Component<IProps, IState> {
 
-    constructor(props: any, context) {
+    public constructor(props: any, context) {
         super(props, context);
 
         this.state = {
@@ -20,17 +21,18 @@ export default class PopupApplication extends React.Component<any, IState> {
         };
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         proxyStore.ready(() => {
             setTimeout(() => {
                 this.setState({ready: true});
-            }, 0)
+            }, 0);
         });
     }
 
-    render() {
+    public render(): JSX.Element {
+        const {ready = false} = this.state;
 
-        if (false === this.state.ready) {
+        if (false === ready) {
             return (
                 <div className='application -loading'>
                     <div className="loading">Loading...</div>
@@ -41,7 +43,7 @@ export default class PopupApplication extends React.Component<any, IState> {
         return (
             <div className="application">
                 <Provider store={proxyStore}>
-                    <HomeScreen />
+                    <HomeScreen/>
                 </Provider>
             </div>
         );

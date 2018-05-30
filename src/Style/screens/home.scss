@@ -135,10 +135,10 @@
         &:after {
             position: absolute;
             content: '';
-            width: 240px;
             height: 1px;
             background: $color-kuna-dark-blue;
             top: 10px;
+            left: 80px;
             right: -4px;
         }
     }
