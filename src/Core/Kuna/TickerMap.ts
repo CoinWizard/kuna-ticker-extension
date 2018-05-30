@@ -53,9 +53,9 @@ const TickerMap = {
         quoteCurrency: 'UAH',
         format: '0,0.[00]'
     },
-    golosgbg: {
-        key: 'golosgbg',
-        baseCurrency: 'GOLOS',
+    golgbg: {
+        key: 'golgbg',
+        baseCurrency: 'GOL',
         quoteCurrency: 'GBG',
         format: '0,0.[0000]'
     },
@@ -95,23 +95,17 @@ const TickerMap = {
         quoteCurrency: 'BTC',
         format: '0,0.[000000]'
     },
-    eosbtc: {
-        key: 'eosbtc',
-        baseCurrency: 'EOS',
-        quoteCurrency: 'BTC',
-        format: '0,0.[00000]'
-    },
     foodbtc: {
         key: 'foodbtc',
         baseCurrency: 'FOOD',
         quoteCurrency: 'BTC',
         format: '0,0.[000000]'
     },
-    otxbtc: {
-        key: 'otxbtc',
-        baseCurrency: 'OTX',
+    erc20btc: {
+        key: 'erc20btc',
+        baseCurrency: 'ERC20',
         quoteCurrency: 'BTC',
-        format: '0,0.[000000]'
+        format: '0,0.[00000]'
     },
     hknbtc: {
         key: 'hknbtc',

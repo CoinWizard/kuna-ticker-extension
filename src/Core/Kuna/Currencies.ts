@@ -171,6 +171,12 @@ export const currencies: Dictionary<CurrencyInterface> = {
         name: 'Venus',
         color: '#0096C8',
         format: '0,0.[0000]'
+    },
+    ERC20: {
+        key: 'ERC20',
+        name: 'ERC20',
+        color: '#0096C8',
+        format: '0,0.[0000]'
     }
 };
 
