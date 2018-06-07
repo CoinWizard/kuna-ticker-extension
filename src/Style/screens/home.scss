@@ -48,7 +48,7 @@
 
     &__info {
         &-container {
-            padding: 0 16px;
+            padding: 0 16px 16px 16px;
         }
 
         display: inline-block;
@@ -69,6 +69,14 @@
             font-size: 14px;
             font-weight: 100;
             letter-spacing: 0.8px;
+
+            &.-red {
+                color: rgb(207, 0, 0);
+            }
+
+            &.-green {
+                color: rgb(17, 207, 0);
+            }
         }
     }
 
@@ -84,6 +92,7 @@
             margin-right: 12px;
             cursor: pointer;
             color: $color-gull-gray;
+            text-decoration: none;
             &:after {
                 transition: all 0.2s;
                 position: absolute;

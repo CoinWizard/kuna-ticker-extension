@@ -1,9 +1,8 @@
 import React from 'react';
 import Numeral from 'numeral';
-import {find} from 'lodash';
-import classNames from 'classnames';
+import {Router, Switch, Route, NavLink} from 'react-router-dom';
+import {createMemoryHistory, MemoryHistory} from 'history';
 
-import ViewTabs from './ViewTabsEnum';
 import {sendTickerScreenView} from 'Popup/Analytics';
 import {TickerInterface} from 'Core/Interfaces/TickerInterface';
 
@@ -14,81 +13,60 @@ interface IViewProps {
     ticker: TickerInterface;
 }
 
-interface IViewState {
-    activeTab: ViewTabs;
-}
+export class CurrentTickerView extends React.Component<IViewProps> {
+    protected history: MemoryHistory = createMemoryHistory();
 
-const tabsList = [{
-    key: ViewTabs.Stats,
-    title: '24H Stats',
-    Component: TickerStats
-}, {
-    key: ViewTabs.Calc,
-    title: 'Calculator',
-    Component: TickerCalculator
-}];
-
-export class CurrentTickerView extends React.Component<IViewProps, IViewState> {
-    public state: IViewState = {
-        activeTab: ViewTabs.Stats
-    };
-
-    componentDidMount() {
+    public componentDidMount() {
         const {ticker} = this.props;
         sendTickerScreenView(ticker);
     }
 
-    generateSetTabAction(tab: ViewTabs) {
-        return () => {
-            this.setState({activeTab: tab});
-        }
-    }
-
-    render() {
+    public render(): JSX.Element {
         const {ticker} = this.props;
-        const {activeTab} = this.state;
-
-        const CurrentTickerView = find(tabsList, (item) => item.key === activeTab);
 
         return (
-            <div className="current-ticker">
-
-                <div className="current-ticker__bugged">
-                    <label className="current-ticker__price">
+            <Router history={this.history}>
+                <div className="current-ticker">
+                    <div className="current-ticker__bugged">
+                        <label className="current-ticker__price">
                         <span className="current-ticker__price-base">
                         1<span className="current-ticker__price-currency">{ticker.baseCurrency}</span>
                         </span>
-                        <span className="current-ticker__price-separator">=</span>
-                        <span className="current-ticker__price-quote">
+                            <span className="current-ticker__price-separator">=</span>
+                            <span className="current-ticker__price-quote">
                             {Numeral(ticker.price).format(ticker.format)}
-                            <span className="current-ticker__price-currency">{ticker.quoteCurrency}</span>
+                                <span className="current-ticker__price-currency">{ticker.quoteCurrency}</span>
                         </span>
-                    </label>
+                        </label>
 
-                    <div className="current-ticker__market">
-                        <a href={`https://kuna.io/markets/${ticker.key}?src=Kuna_Extension`}
-                           className="current-ticker__market-link"
-                           target="_blank"
-                        >Market {ticker.baseCurrency}/{ticker.quoteCurrency}</a>
+                        <div className="current-ticker__market">
+                            <a href={`https://kuna.io/markets/${ticker.key}?src=Kuna_Extension`}
+                               className="current-ticker__market-link"
+                               target="_blank"
+                            >Market {ticker.baseCurrency}/{ticker.quoteCurrency}</a>
+                        </div>
+
+                        <div className="current-ticker-tabs">
+                            <NavLink to="/" exact
+                                     activeClassName="-active"
+                                     className="current-ticker-tabs__item"
+                            >24H Stats</NavLink>
+
+                            <NavLink to="/calculator"
+                                     activeClassName="-active"
+                                     className="current-ticker-tabs__item"
+                            >Calculator</NavLink>
+                        </div>
                     </div>
 
-                    <div className="current-ticker-tabs">
-                        {tabsList.map((tabItem) => {
-                            const props = {
-                                key: tabItem.key,
-                                className: classNames("current-ticker-tabs__item", {"-active": activeTab === tabItem.key}),
-                                onClick: this.generateSetTabAction(tabItem.key)
-                            };
-
-                            return <div {...props}>{tabItem.title}</div>
-                        })}
+                    <div className="current-ticker__info-container">
+                        <Switch>
+                            <Route path="/" exact render={() => <TickerStats ticker={ticker}/>}/>
+                            <Route path="/calculator" exact render={() => <TickerCalculator ticker={ticker}/>}/>
+                        </Switch>
                     </div>
                 </div>
-
-                <div className="current-ticker__info-container">
-                    {CurrentTickerView ? <CurrentTickerView.Component ticker={ticker}/> : null}
-                </div>
-            </div>
+            </Router>
         );
     }
 }

@@ -69,7 +69,7 @@ export default class HomeScreen extends React.PureComponent {
             tickerList.push(
                 <div {...tickerListItemProps}>
                     <label className="ticker-list__item-name">
-                        {ticker.baseCurrency} / {ticker.quoteCurrency}
+                        <b>{ticker.baseCurrency}</b> / {ticker.quoteCurrency}
                     </label>
                     <span className="ticker-list__item-price">
                         {Numeral(ticker.price).format(ticker.format)} {ticker.quoteCurrency}

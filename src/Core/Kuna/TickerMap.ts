@@ -17,7 +17,15 @@ const TickerMap = {
         key: 'dashuah',
         baseCurrency: 'DASH',
         quoteCurrency: 'UAH',
-        format: '0,0.[00]'
+        format: '0,0.[00]',
+        compareTo: 'dshusd'
+    },
+    xrpuah: {
+        key: 'xrpuah',
+        baseCurrency: 'XRP',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]',
+        compareTo: 'xrpusd'
     },
     ltcuah: {
         key: 'ltcuah',
@@ -32,12 +40,11 @@ const TickerMap = {
         quoteCurrency: 'UAH',
         format: '0,0.[00]'
     },
-    xrpuah: {
-        key: 'xrpuah',
-        baseCurrency: 'XRP',
+    eosuah: {
+        key: 'eosuah',
+        baseCurrency: 'EOS',
         quoteCurrency: 'UAH',
-        format: '0,0.[00]',
-        compareTo: 'xrpusd'
+        format: '0,0.[00]'
     },
     zecuah: {
         key: 'zecuah',
@@ -56,12 +63,6 @@ const TickerMap = {
         baseCurrency: 'GBG',
         quoteCurrency: 'UAH',
         format: '0,0.[00]'
-    },
-    golgbg: {
-        key: 'golgbg',
-        baseCurrency: 'GOL',
-        quoteCurrency: 'GBG',
-        format: '0,0.[0000]'
     },
     kunbtc: {
         key: 'kunbtc',
@@ -134,6 +135,12 @@ const TickerMap = {
         baseCurrency: 'TUSD',
         quoteCurrency: 'UAH',
         format: '0,0.[000000]'
+    },
+    golgbg: {
+        key: 'golgbg',
+        baseCurrency: 'GOL',
+        quoteCurrency: 'GBG',
+        format: '0,0.[0000]'
     }
 };
 

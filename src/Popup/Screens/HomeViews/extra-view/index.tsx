@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import {TickerInterface} from 'Core/Interfaces/TickerInterface';
 import {BitfinexTicker} from "Core/bitfinex";
 import Numeral from "numeral";
@@ -18,14 +19,22 @@ export class UsdStatsView extends React.Component<IUsdPriceProps> {
             return null;
         }
 
-        const arbitragePercent = Numeral(usdPrice).subtract(bitfinexTicker.last_price).divide(usdPrice);
+        const arbitragePercent: Numeral
+            = Numeral(usdPrice)
+            .subtract(bitfinexTicker.last_price)
+            .divide(usdPrice);
+
+        const arbitrageClass = cn("current-ticker__info-value", {
+            '-red': arbitragePercent.value() > 0,
+            '-green': arbitragePercent.value() < 0
+        });
 
         return (
             <React.Fragment>
                 <label className="current-ticker__info">
                     <span className="current-ticker__info-label">% Arbitrage</span>
-                    <span className="current-ticker__info-value">
-                        {arbitragePercent.format('0,0.[00]%')}
+                    <span className={arbitrageClass}>
+                        {arbitragePercent.format('+0,0.[00]%')}
                     </span>
                 </label>
 

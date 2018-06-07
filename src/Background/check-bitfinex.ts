@@ -6,7 +6,8 @@ const symbolsToCheck = [
     'btcusd',
     'ltcusd',
     'xrpusd',
-    'ethusd'
+    'ethusd',
+    'dshusd'
 ];
 
 export const fetchAndStoreTickers = (symbol: string) => {
