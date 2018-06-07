@@ -1,18 +1,26 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Numeral from 'numeral';
-import classNames from 'classnames';
 import {TickerInterface} from 'Core/Interfaces/TickerInterface';
+import {IStore} from "Core/Interfaces/Store";
+import {BitfinexTicker} from "Core/bitfinex";
+import {UsdStatsView} from "Popup/Screens/HomeViews/extra-view";
 
-export interface StatsViewPropsInterface {
+interface IProps {
     ticker: TickerInterface;
 }
 
-export default class TickerStats extends React.Component<StatsViewPropsInterface, {}> {
-    render() {
-        const {ticker} = this.props;
+interface IStateProps {
+    uahRate?: number;
+    bitfinexTicker?: BitfinexTicker;
+}
+
+class TickerStatsComponent extends React.Component<IProps & IStateProps> {
+    public render() {
+        const {ticker, uahRate = null, bitfinexTicker = null} = this.props;
 
         return (
-            <div className="">
+            <div>
                 <label className="current-ticker__info">
                     <span className="current-ticker__info-label">Volume {ticker.baseCurrency}</span>
                     <span className="current-ticker__info-value">
@@ -41,7 +49,26 @@ export default class TickerStats extends React.Component<StatsViewPropsInterface
                         {Numeral(ticker.OHLC.high).format("0,0.[00]")}
                     </span>
                 </label>
+
+                {ticker.quoteCurrency === 'UAH' && uahRate && (
+                    <UsdStatsView ticker={ticker} uahRate={uahRate} bitfinexTicker={bitfinexTicker}/>
+                )}
             </div>
         )
     }
 }
+
+const mapStateToProps = (store: IStore, ownProps: IProps): IStateProps => {
+
+    let bitfinexTicker = null;
+    if (ownProps.ticker.compareTo) {
+        bitfinexTicker = store.global.bitfinexTickers[ownProps.ticker.compareTo];
+    }
+
+    return {
+        uahRate: store.global.uahRate,
+        bitfinexTicker: bitfinexTicker
+    }
+};
+
+export const TickerStats = connect(mapStateToProps)(TickerStatsComponent);

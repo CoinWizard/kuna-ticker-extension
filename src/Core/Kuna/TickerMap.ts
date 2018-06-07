@@ -3,13 +3,15 @@ const TickerMap = {
         key: 'btcuah',
         baseCurrency: 'BTC',
         quoteCurrency: 'UAH',
-        format: '0,0.[00]'
+        format: '0,0.[00]',
+        compareTo: 'btcusd'
     },
     ethuah: {
         key: 'ethuah',
         baseCurrency: 'ETH',
         quoteCurrency: 'UAH',
-        format: '0,0.[00]'
+        format: '0,0.[00]',
+        compareTo: 'ethusd'
     },
     dashuah: {
         key: 'dashuah',
@@ -21,7 +23,8 @@ const TickerMap = {
         key: 'ltcuah',
         baseCurrency: 'LTC',
         quoteCurrency: 'UAH',
-        format: '0,0.[00]'
+        format: '0,0.[00]',
+        compareTo: 'ltcusd'
     },
     wavesuah: {
         key: 'wavesuah',
@@ -33,7 +36,8 @@ const TickerMap = {
         key: 'xrpuah',
         baseCurrency: 'XRP',
         quoteCurrency: 'UAH',
-        format: '0,0.[00]'
+        format: '0,0.[00]',
+        compareTo: 'xrpusd'
     },
     zecuah: {
         key: 'zecuah',

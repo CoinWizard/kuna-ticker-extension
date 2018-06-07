@@ -1,45 +1,39 @@
 import React from 'react';
 import Numeral from 'numeral';
-import {find} from 'lodash'; 
+import {find} from 'lodash';
 import classNames from 'classnames';
 
 import ViewTabs from './ViewTabsEnum';
 import {sendTickerScreenView} from 'Popup/Analytics';
 import {TickerInterface} from 'Core/Interfaces/TickerInterface';
 
-import TickerStats from './TickerStats';
-import TickerCalculator from './TickerCalculator';
+import {TickerStats} from './TickerStats';
+import {TickerCalculator} from './TickerCalculator';
 
-export interface CurrentTickerViewPropsInterface {
+interface IViewProps {
     ticker: TickerInterface;
 }
 
-export interface CurrentTickerViewStateInterface {
+interface IViewState {
     activeTab: ViewTabs;
 }
 
-const tabsList = [
-    {
-        key: ViewTabs.Stats,
-        title: '24H Stats',
-        Component: TickerStats
-    },
-    {
-        key: ViewTabs.Calc,
-        title: 'Calculator',
-        Component: TickerCalculator
-    }
-];
+const tabsList = [{
+    key: ViewTabs.Stats,
+    title: '24H Stats',
+    Component: TickerStats
+}, {
+    key: ViewTabs.Calc,
+    title: 'Calculator',
+    Component: TickerCalculator
+}];
 
-export default class CurrentTickerView extends React.Component<CurrentTickerViewPropsInterface, CurrentTickerViewStateInterface> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeTab: ViewTabs.Stats
-        };
-    }
+export class CurrentTickerView extends React.Component<IViewProps, IViewState> {
+    public state: IViewState = {
+        activeTab: ViewTabs.Stats
+    };
 
-    componentDidMount () {
+    componentDidMount() {
         const {ticker} = this.props;
         sendTickerScreenView(ticker);
     }
@@ -50,7 +44,7 @@ export default class CurrentTickerView extends React.Component<CurrentTickerView
         }
     }
 
-    render () {
+    render() {
         const {ticker} = this.props;
         const {activeTab} = this.state;
 
@@ -58,7 +52,7 @@ export default class CurrentTickerView extends React.Component<CurrentTickerView
 
         return (
             <div className="current-ticker">
-                
+
                 <div className="current-ticker__bugged">
                     <label className="current-ticker__price">
                         <span className="current-ticker__price-base">
@@ -72,9 +66,9 @@ export default class CurrentTickerView extends React.Component<CurrentTickerView
                     </label>
 
                     <div className="current-ticker__market">
-                        <a  href={`https://kuna.io/markets/${ticker.key}?src=Kuna_Extension`}
-                            className="current-ticker__market-link"
-                            target="_blank"
+                        <a href={`https://kuna.io/markets/${ticker.key}?src=Kuna_Extension`}
+                           className="current-ticker__market-link"
+                           target="_blank"
                         >Market {ticker.baseCurrency}/{ticker.quoteCurrency}</a>
                     </div>
 
@@ -92,7 +86,7 @@ export default class CurrentTickerView extends React.Component<CurrentTickerView
                 </div>
 
                 <div className="current-ticker__info-container">
-                    {CurrentTickerView ? <CurrentTickerView.Component ticker={ticker}/> : null }
+                    {CurrentTickerView ? <CurrentTickerView.Component ticker={ticker}/> : null}
                 </div>
             </div>
         );

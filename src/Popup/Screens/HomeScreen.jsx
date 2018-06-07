@@ -8,7 +8,7 @@ import {Events} from 'Core/EventProtocol/Events';
 import {sendTickerScreenView} from 'Popup/Analytics';
 
 import {TickerActions} from 'Popup/Actions/TickerActions';
-import CurrentTickerView from 'Popup/Screens/HomeViews/CurrentTickerView';
+import {CurrentTickerView} from 'Popup/Screens/HomeViews/CurrentTickerView';
 
 const mapStateToProps = (state) => {
     const {tickers, currentTickerKey} = state.ticker;
@@ -26,8 +26,6 @@ const mapStateToProps = (state) => {
         totalMap[ticker.baseCurrency] += parseFloat(ticker.volume_base);
         totalMap[ticker.quoteCurrency] += parseFloat(ticker.volume_quote);
     });
-
-    console.log(totalMap);
 
     return {
         tickers: tickers,
@@ -97,8 +95,6 @@ export default class HomeScreen extends React.PureComponent {
 
         tickerList.push(createTickerSeparator('GBG'));
         each(groupedTickers['GBG'], createTicker);
-
-        console.log(tickerList);
 
         return <div className={`ticker-list ${selectMode ? '-active' : ''}`}>{tickerList}</div>;
     }

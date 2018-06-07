@@ -1,13 +1,16 @@
-import * as _ from 'lodash';
+// import './cross-origin-handler';
 
+import * as _ from 'lodash';
 import {STORE_KEY} from 'Core/Constant';
 import store from 'Core/Store/index';
 import {wrapStore} from 'react-chrome-redux';
 import ExtensionPlatform from 'Core/Extension';
-import {Events} from 'Core/EventProtocol/Events';
 import KunaApiClient from 'Core/Kuna/ApiClient';
 import BadgeController from 'Background/BadgeController';
 import {setupContextMenu} from 'Background/ExtensionSetup';
+
+import {checkUahRate} from 'Background/check-uah-rate';
+import {processBitfinexTickers} from 'Background/check-bitfinex';
 
 const updateTicker = (key, kunaTickerData) => {
 
@@ -72,7 +75,13 @@ const initBackground = () => {
     };
 
     tickerUpdater();
-    setInterval(tickerUpdater, 60000);
+    setInterval(tickerUpdater, 60 * 1000);
+
+    checkUahRate();
+    setInterval(checkUahRate, 30 * 60 * 1000);
+
+    processBitfinexTickers();
+    setInterval(tickerUpdater, 10 * 60 * 1000);
 
     ExtensionPlatform.getExtension().browserAction.setBadgeBackgroundColor({
         color: '#11a0ff'

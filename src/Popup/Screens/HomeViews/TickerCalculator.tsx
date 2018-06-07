@@ -3,11 +3,11 @@ import Numeral from 'numeral';
 import {TickerInterface} from 'Core/Interfaces/TickerInterface';
 import {getCurrencyByKey, CurrencyInterface} from 'Core/Kuna/Currencies';
 
-export interface PropsInterface {
+interface IProps {
     ticker: TickerInterface;
 }
 
-export interface StateInterface {
+interface IState {
     activeInput?: string;
     value: string;
 }
@@ -19,16 +19,12 @@ const InputType = {
 
 const fee: number = 0.0025;
 
-export default class TickerStats extends React.Component<PropsInterface, StateInterface> {
+export class TickerCalculator extends React.Component<IProps, IState> {
 
-    constructor(props, context) {
-        super(props, context);
-
-        this.state = {
-            activeInput: null,
-            value: ''
-        };
-    }
+    public state: IState = {
+        activeInput: null,
+        value: ''
+    };
 
     onChangeInput(activateInput: string) {
         return (event) => {

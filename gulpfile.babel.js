@@ -1,7 +1,6 @@
 import gulp from 'gulp';
 import Path from 'path';
 import del from 'del';
-import named from 'vinyl-named';
 import jsoneditor from 'gulp-json-editor';
 import zip from 'gulp-zip';
 

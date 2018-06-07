@@ -6,7 +6,12 @@
     "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
     "permissions": [
         "tabs",
-        "contextMenus"
+        "storage",
+        "webRequest",
+        "contextMenus",
+        "webRequestBlocking",
+        "http://*/*",
+        "https://*/*"
     ],
     "author": "CoinWizard Team",
     "icons": {

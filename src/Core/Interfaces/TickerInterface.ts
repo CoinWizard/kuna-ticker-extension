@@ -15,6 +15,7 @@ export interface TickerInterface {
     baseCurrency: string;
     quoteCurrency: string;
     format: string;
+    compareTo?: string;
 
     OHLC: OHLCInterface;
     depth: DepthInterface;
