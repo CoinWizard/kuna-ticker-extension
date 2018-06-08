@@ -78,7 +78,7 @@ const initBackground = () => {
     setInterval(tickerUpdater, 60 * 1000);
 
     checkUahRate();
-    setInterval(checkUahRate, 30 * 60 * 1000);
+    setInterval(checkUahRate, 60 * 60 * 1000);
 
     processBitfinexTickers();
     setInterval(tickerUpdater, 10 * 60 * 1000);
