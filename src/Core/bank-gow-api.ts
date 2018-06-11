@@ -1,4 +1,4 @@
-import Axios, {AxiosInstance, AxiosPromise, AxiosResponse, AxiosError} from 'axios';
+import Axios, {AxiosResponse} from 'axios';
 
 const gowAxios = Axios.create({
     baseURL: "https://bank.gov.ua/NBUStatService/v1/"
