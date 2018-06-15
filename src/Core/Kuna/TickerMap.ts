@@ -34,15 +34,16 @@ const TickerMap = {
         format: '0,0.[00]',
         compareTo: 'ltcusd'
     },
-    wavesuah: {
-        key: 'wavesuah',
-        baseCurrency: 'WAVES',
-        quoteCurrency: 'UAH',
-        format: '0,0.[00]'
-    },
     eosuah: {
         key: 'eosuah',
         baseCurrency: 'EOS',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]',
+        compareTo: 'eosusd'
+    },
+    wavesuah: {
+        key: 'wavesuah',
+        baseCurrency: 'WAVES',
         quoteCurrency: 'UAH',
         format: '0,0.[00]'
     },
