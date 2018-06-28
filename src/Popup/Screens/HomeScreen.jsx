@@ -93,6 +93,9 @@ export default class HomeScreen extends React.PureComponent {
         tickerList.push(createTickerSeparator('BTC'));
         each(groupedTickers['BTC'], createTicker);
 
+        tickerList.push(createTickerSeparator('ETH'));
+        each(groupedTickers['ETH'], createTicker);
+
         tickerList.push(createTickerSeparator('GBG'));
         each(groupedTickers['GBG'], createTicker);
 

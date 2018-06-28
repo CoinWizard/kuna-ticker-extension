@@ -44,6 +44,25 @@ const TickerMap = {
         key: 'eosuah',
         baseCurrency: 'EOS',
         quoteCurrency: 'UAH',
+        format: '0,0.[00]',
+        compareTo: 'eosusd'
+    },
+    krbuah: {
+        key: 'krbuah',
+        baseCurrency: 'KRB',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]'
+    },
+    xemuah: {
+        key: 'xemuah',
+        baseCurrency: 'XEM',
+        quoteCurrency: 'UAH',
+        format: '0,0.[00]'
+    },
+    remuah: {
+        key: 'remuah',
+        baseCurrency: 'REM',
+        quoteCurrency: 'UAH',
         format: '0,0.[00]'
     },
     zecuah: {
@@ -64,6 +83,8 @@ const TickerMap = {
         quoteCurrency: 'UAH',
         format: '0,0.[00]'
     },
+
+    // to Bitcoin
     kunbtc: {
         key: 'kunbtc',
         baseCurrency: 'KUN',
@@ -136,10 +157,20 @@ const TickerMap = {
         quoteCurrency: 'UAH',
         format: '0,0.[000000]'
     },
+
+    // to Golos Gold
     golgbg: {
         key: 'golgbg',
         baseCurrency: 'GOL',
         quoteCurrency: 'GBG',
+        format: '0,0.[0000]'
+    },
+
+    // to Ethereum
+    remeth: {
+        key: 'remeth',
+        baseCurrency: 'REM',
+        quoteCurrency: 'ETH',
         format: '0,0.[0000]'
     }
 };

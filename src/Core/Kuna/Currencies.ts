@@ -14,6 +14,9 @@ export enum CoinUnits {
     RussianMinerCoin = 'RMC',
     Revain = 'R',
     Aeron = 'ARN',
+    Karbo = 'KRB',
+    Remme = 'REM',
+    Nem = 'XEM',
 
     KunaToken = 'KUN',
 
@@ -175,6 +178,24 @@ export const currencies: Dictionary<CurrencyInterface> = {
     ERC20: {
         key: 'ERC20',
         name: 'ERC20',
+        color: '#0096C8',
+        format: '0,0.[0000]'
+    },
+    REM: {
+        key: 'rem',
+        name: 'Remme',
+        color: '#0096C8',
+        format: '0,0.[0000]'
+    },
+    KRB: {
+        key: 'krb',
+        name: 'Karbo',
+        color: '#0096C8',
+        format: '0,0.[0000]'
+    },
+    XEM: {
+        key: 'xem',
+        name: 'Nem',
         color: '#0096C8',
         format: '0,0.[0000]'
     }
