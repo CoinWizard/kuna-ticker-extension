@@ -171,7 +171,7 @@ const TickerMap = {
         key: 'remeth',
         baseCurrency: 'REM',
         quoteCurrency: 'ETH',
-        format: '0,0.[0000]'
+        format: '0,0.[00000000]'
     }
 };
 
