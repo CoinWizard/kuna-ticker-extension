@@ -22,7 +22,7 @@ export class UsdStatsView extends React.Component<IUsdPriceProps> {
         const arbitragePercent: Numeral
             = Numeral(usdPrice)
             .subtract(bitfinexTicker.last_price)
-            .divide(usdPrice);
+            .divide(bitfinexTicker.last_price);
 
         const arbitrageClass = cn("current-ticker__info-value", {
             '-red': arbitragePercent.value() > 0,
