@@ -1,10 +1,11 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Numeral from 'numeral';
-import {TickerInterface} from 'Core/Interfaces/TickerInterface';
-import {IStore} from "Core/Interfaces/Store";
-import {BitfinexTicker} from "Core/bitfinex";
-import {UsdStatsView} from "Popup/Screens/HomeViews/extra-view";
+import { BitfinexTicker } from 'Core/bitfinex';
+import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { IStore } from 'Core/Interfaces/Store';
+
+import { UsdStatsView } from './extra-view';
 
 interface IProps {
     ticker: TickerInterface;

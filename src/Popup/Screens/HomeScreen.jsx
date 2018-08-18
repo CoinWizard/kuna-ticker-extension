@@ -6,33 +6,9 @@ import Numeral from 'numeral';
 import {sendTickerScreenView} from 'Popup/Analytics';
 
 import {TickerActions} from 'Popup/Actions/TickerActions';
-import {CurrentTickerView} from 'Popup/Screens/HomeViews/CurrentTickerView';
+import {CurrentTickerView} from './home-views/current-ticker-view';
 
-const mapStateToProps = (state) => {
-    const {tickers, currentTickerKey} = state.ticker;
-
-    const totalMap = {};
-    each(tickers, (ticker) => {
-        if (!(ticker.baseAsset in totalMap)) {
-            totalMap[ticker.baseAsset] = 0;
-        }
-
-        if (!(ticker.quoteAsset in totalMap)) {
-            totalMap[ticker.quoteAsset] = 0;
-        }
-
-        totalMap[ticker.baseAsset] += parseFloat(ticker.volume_base);
-        totalMap[ticker.quoteAsset] += parseFloat(ticker.volume_quote);
-    });
-
-    return {
-        tickers: tickers,
-        currentTickerKey: currentTickerKey
-    };
-};
-
-@connect(mapStateToProps)
-export default class HomeScreen extends React.PureComponent {
+class HomeScreenComponent extends React.PureComponent {
 
     state = {
         selectMode: false
@@ -134,3 +110,28 @@ export default class HomeScreen extends React.PureComponent {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    const {tickers, currentTickerKey} = state.ticker;
+
+    const totalMap = {};
+    each(tickers, (ticker) => {
+        if (!(ticker.baseAsset in totalMap)) {
+            totalMap[ticker.baseAsset] = 0;
+        }
+
+        if (!(ticker.quoteAsset in totalMap)) {
+            totalMap[ticker.quoteAsset] = 0;
+        }
+
+        totalMap[ticker.baseAsset] += parseFloat(ticker.volume_base);
+        totalMap[ticker.quoteAsset] += parseFloat(ticker.volume_quote);
+    });
+
+    return {
+        tickers: tickers,
+        currentTickerKey: currentTickerKey
+    };
+};
+
+export const HomeScreen = connect(mapStateToProps)(HomeScreenComponent);

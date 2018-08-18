@@ -1,7 +1,7 @@
 import React from 'react';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import proxyStore from 'Popup/Store';
-import HomeScreen from 'Popup/Screens/HomeScreen';
+import { HomeScreen } from 'Popup/Screens/HomeScreen';
 import 'Popup/EventHandler';
 
 interface AppProps {

@@ -1,7 +1,7 @@
 // import './cross-origin-handler';
 
 import * as _ from 'lodash';
-import { kunaApiClient } from 'kuna-sdk';
+import {kunaApiClient} from 'kuna-sdk';
 
 import {STORE_KEY} from 'Core/Constant';
 import store from 'Core/Store/index';
@@ -37,8 +37,8 @@ const updateTicker = (key, kunaTickerData) => {
         };
 
         currentTicker.depth = {
-            bid: kunaTickerData.sell,
-            ask: kunaTickerData.buy
+            ask: kunaTickerData.sell,
+            bid: kunaTickerData.buy,
         };
 
         if (ticker.currentTickerKey === currentTicker.key) {
@@ -62,7 +62,7 @@ const updateTicker = (key, kunaTickerData) => {
 const tickerUpdater = async () => {
     const tickers = await kunaApiClient.getTickers();
 
-    _.each(tickers, (ticker, key) => store.dispatch(updateTicker(key, ticker.ticker)));
+    _.each(tickers, ticker => store.dispatch(updateTicker(ticker.pair, ticker)));
 };
 
 const initBackground = () => {

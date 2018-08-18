@@ -26,7 +26,7 @@ export class TickerCalculator extends React.Component<IProps, IState> {
         value: ''
     };
 
-    onChangeInput(activateInput: string) {
+    protected onChangeInput(activateInput: string) {
         return (event) => {
             this.setState({
                 value: event.target.value,
@@ -41,9 +41,11 @@ export class TickerCalculator extends React.Component<IProps, IState> {
             return;
         }
 
-        return (<div className="calculator-fee">
-            <span>Fee:</span> <b>{Numeral(calculatedValue * fee).format(coin.format)} {coin.key}</b>
-        </div>);
+        return (
+            <div className="calculator-fee">
+                <span>Fee:</span> <b>{Numeral(calculatedValue * fee).format(coin.format)} {coin.key}</b>
+            </div>
+        );
     }
 
     render() {

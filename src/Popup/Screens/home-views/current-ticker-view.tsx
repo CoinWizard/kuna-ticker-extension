@@ -1,13 +1,14 @@
 import React from 'react';
 import Numeral from 'numeral';
-import {Router, Switch, Route, NavLink} from 'react-router-dom';
-import {createMemoryHistory, MemoryHistory} from 'history';
+import { Router, Switch, Route, NavLink } from 'react-router-dom';
+import { createMemoryHistory, MemoryHistory } from 'history';
 
-import {sendTickerScreenView} from 'Popup/Analytics';
-import {TickerInterface} from 'Core/Interfaces/TickerInterface';
+import { sendTickerScreenView } from 'Popup/Analytics';
+import { TickerInterface } from 'Core/Interfaces/TickerInterface';
 
-import {TickerStats} from './TickerStats';
-import {TickerCalculator} from './TickerCalculator';
+import { TickerStats } from './ticker-stats';
+import { TickerCalculator } from './ticker-calculator';
+import { ArbitrageTab } from './arbitrage-tab';
 
 interface IViewProps {
     ticker: TickerInterface;
@@ -19,6 +20,8 @@ export class CurrentTickerView extends React.Component<IViewProps> {
     public componentDidMount() {
         const {ticker} = this.props;
         sendTickerScreenView(ticker);
+
+        console.log(ticker);
     }
 
     public render(): JSX.Element {
@@ -56,6 +59,11 @@ export class CurrentTickerView extends React.Component<IViewProps> {
                                      activeClassName="-active"
                                      className="current-ticker-tabs__item"
                             >Calculator</NavLink>
+
+                            <NavLink to="/arbitrage"
+                                     activeClassName="-active"
+                                     className="current-ticker-tabs__item"
+                            >Arbitrage</NavLink>
                         </div>
                     </div>
 
@@ -63,6 +71,7 @@ export class CurrentTickerView extends React.Component<IViewProps> {
                         <Switch>
                             <Route path="/" exact render={() => <TickerStats ticker={ticker}/>}/>
                             <Route path="/calculator" exact render={() => <TickerCalculator ticker={ticker}/>}/>
+                            <Route path="/arbitrage" exact render={() => <ArbitrageTab ticker={ticker}/>}/>
                         </Switch>
                     </div>
                 </div>
