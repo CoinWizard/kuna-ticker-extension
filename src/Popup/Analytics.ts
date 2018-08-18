@@ -26,5 +26,5 @@ export const sendScreenView = (pageTitle) => {
 };
 
 export const sendTickerScreenView = (ticker) => {
-    sendScreenView(`KUNA / Popup ~ ${ticker.baseCurrency}/${ticker.quoteCurrency}`);
+    sendScreenView(`KUNA / Popup ~ ${ticker.baseAsset}/${ticker.quoteAsset}`);
 };

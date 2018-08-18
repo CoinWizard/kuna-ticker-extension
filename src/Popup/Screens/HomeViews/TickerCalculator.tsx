@@ -1,7 +1,7 @@
 import React from 'react';
 import Numeral from 'numeral';
-import {TickerInterface} from 'Core/Interfaces/TickerInterface';
-import {getCurrencyByKey, CurrencyInterface} from 'Core/Kuna/Currencies';
+import { KunaAsset, getAsset } from 'kuna-sdk';
+import { TickerInterface } from 'Core/Interfaces/TickerInterface';
 
 interface IProps {
     ticker: TickerInterface;
@@ -35,7 +35,7 @@ export class TickerCalculator extends React.Component<IProps, IState> {
         }
     }
 
-    drawFeeComponent(calculatedValue: number, coin: CurrencyInterface): void | any {
+    drawFeeComponent(calculatedValue: number, coin: KunaAsset): void | any {
 
         if (calculatedValue <= 0) {
             return;
@@ -64,8 +64,8 @@ export class TickerCalculator extends React.Component<IProps, IState> {
                 break;
         }
 
-        let baseCoin: CurrencyInterface = getCurrencyByKey(ticker.baseCurrency),
-            quoteCoin: CurrencyInterface = getCurrencyByKey(ticker.quoteCurrency);
+        let baseCoin: KunaAsset = getAsset(ticker.baseAsset),
+            quoteCoin: KunaAsset = getAsset(ticker.quoteAsset);
 
         return (
             <div className="calculator">

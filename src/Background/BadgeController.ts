@@ -36,7 +36,7 @@ export default class BadgeController {
 
         browserAction.setTitle({
             title: 'Kuna Ticker: ' +
-            `${ticker.baseCurrency} / ${ticker.quoteCurrency}` +
+            `${ticker.baseAsset} / ${ticker.quoteAsset}` +
             ` - ${Numeral(ticker.price).format(ticker.format)}`
         });
     }

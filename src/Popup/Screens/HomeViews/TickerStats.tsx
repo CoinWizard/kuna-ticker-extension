@@ -22,14 +22,14 @@ class TickerStatsComponent extends React.Component<IProps & IStateProps> {
         return (
             <div>
                 <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">Volume {ticker.baseCurrency}</span>
+                    <span className="current-ticker__info-label">Volume {ticker.baseAsset}</span>
                     <span className="current-ticker__info-value">
                         {Numeral(ticker.volume_base).format("0,0.[00]")}
                     </span>
                 </label>
 
                 <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">Volume {ticker.quoteCurrency}</span>
+                    <span className="current-ticker__info-label">Volume {ticker.quoteAsset}</span>
                     <span className="current-ticker__info-value">
                         {Numeral(ticker.volume_quote).format("0,0.[00]")}
                     </span>
@@ -50,7 +50,7 @@ class TickerStatsComponent extends React.Component<IProps & IStateProps> {
                     </span>
                 </label>
 
-                {ticker.quoteCurrency === 'UAH' && uahRate && (
+                {ticker.quoteAsset === 'UAH' && uahRate && (
                     <UsdStatsView ticker={ticker} uahRate={uahRate} bitfinexTicker={bitfinexTicker}/>
                 )}
             </div>

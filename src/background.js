@@ -1,11 +1,12 @@
 // import './cross-origin-handler';
 
 import * as _ from 'lodash';
+import { kunaApiClient } from 'kuna-sdk';
+
 import {STORE_KEY} from 'Core/Constant';
 import store from 'Core/Store/index';
 import {wrapStore} from 'react-chrome-redux';
 import ExtensionPlatform from 'Core/Extension';
-import KunaApiClient from 'Core/Kuna/ApiClient';
 import BadgeController from 'Background/BadgeController';
 import {setupContextMenu} from 'Background/ExtensionSetup';
 
@@ -13,7 +14,6 @@ import {checkUahRate} from 'Background/check-uah-rate';
 import {processBitfinexTickers} from 'Background/check-bitfinex';
 
 const updateTicker = (key, kunaTickerData) => {
-
     const {ticker} = store.getState();
 
     const currentTicker = ticker.tickers[key];
@@ -59,10 +59,10 @@ const updateTicker = (key, kunaTickerData) => {
 };
 
 
-const tickerUpdater = () => {
-    KunaApiClient.extractTickers().then((tickers) => {
-        _.each(tickers, (ticker, key) => store.dispatch(updateTicker(key, ticker.ticker)));
-    });
+const tickerUpdater = async () => {
+    const tickers = await kunaApiClient.getTickers();
+
+    _.each(tickers, (ticker, key) => store.dispatch(updateTicker(key, ticker.ticker)));
 };
 
 const initBackground = () => {
@@ -95,9 +95,6 @@ setupContextMenu();
 ExtensionPlatform.getRuntime().onInstalled.addListener((event) => {
     switch (event.reason) {
         case 'install':
-            ExtensionPlatform.getTabs().create({
-                url: 'http://blokspot.io/price-trackers/ticker-for-kuna?ref=kuna-extension'
-            });
             break;
 
         case 'update':

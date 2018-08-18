@@ -1,3 +1,5 @@
+import { KunaAssetUnit } from 'kuna-sdk';
+
 export interface OHLCInterface {
     high?: number;
     low?: number;
@@ -12,8 +14,8 @@ export interface DepthInterface {
 
 export interface TickerInterface {
     key: string;
-    baseCurrency: string;
-    quoteCurrency: string;
+    baseAsset: KunaAssetUnit;
+    quoteAsset: KunaAssetUnit;
     format: string;
     compareTo?: string;
 

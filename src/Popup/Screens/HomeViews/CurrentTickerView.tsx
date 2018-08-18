@@ -30,12 +30,12 @@ export class CurrentTickerView extends React.Component<IViewProps> {
                     <div className="current-ticker__bugged">
                         <label className="current-ticker__price">
                         <span className="current-ticker__price-base">
-                        1<span className="current-ticker__price-currency">{ticker.baseCurrency}</span>
+                        1<span className="current-ticker__price-currency">{ticker.baseAsset}</span>
                         </span>
                             <span className="current-ticker__price-separator">=</span>
                             <span className="current-ticker__price-quote">
                             {Numeral(ticker.price).format(ticker.format)}
-                                <span className="current-ticker__price-currency">{ticker.quoteCurrency}</span>
+                                <span className="current-ticker__price-currency">{ticker.quoteAsset}</span>
                         </span>
                         </label>
 
@@ -43,7 +43,7 @@ export class CurrentTickerView extends React.Component<IViewProps> {
                             <a href={`https://kuna.io/markets/${ticker.key}?src=Kuna_Extension`}
                                className="current-ticker__market-link"
                                target="_blank"
-                            >Market {ticker.baseCurrency}/{ticker.quoteCurrency}</a>
+                            >Market {ticker.baseAsset}/{ticker.quoteAsset}</a>
                         </div>
 
                         <div className="current-ticker-tabs">

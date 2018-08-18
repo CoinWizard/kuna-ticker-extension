@@ -4,14 +4,14 @@ import proxyStore from 'Popup/Store';
 import HomeScreen from 'Popup/Screens/HomeScreen';
 import 'Popup/EventHandler';
 
-interface IProps {
+interface AppProps {
 }
 
-interface IState {
+interface AppState {
     ready: boolean;
 }
 
-export class PopupApplication extends React.Component<IProps, IState> {
+export class PopupApplication extends React.PureComponent<AppProps, AppState> {
 
     public constructor(props: any, context) {
         super(props, context);
@@ -21,7 +21,7 @@ export class PopupApplication extends React.Component<IProps, IState> {
         };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         proxyStore.ready(() => {
             setTimeout(() => {
                 this.setState({ready: true});

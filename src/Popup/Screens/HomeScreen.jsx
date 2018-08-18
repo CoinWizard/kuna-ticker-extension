@@ -1,10 +1,8 @@
 import React from 'react';
 import store from 'Popup/Store/index';
 import {connect} from 'react-redux';
-import {find, map, each, groupBy} from 'lodash';
+import {find, each, groupBy} from 'lodash';
 import Numeral from 'numeral';
-
-import {Events} from 'Core/EventProtocol/Events';
 import {sendTickerScreenView} from 'Popup/Analytics';
 
 import {TickerActions} from 'Popup/Actions/TickerActions';
@@ -15,16 +13,16 @@ const mapStateToProps = (state) => {
 
     const totalMap = {};
     each(tickers, (ticker) => {
-        if (!(ticker.baseCurrency in totalMap)) {
-            totalMap[ticker.baseCurrency] = 0;
+        if (!(ticker.baseAsset in totalMap)) {
+            totalMap[ticker.baseAsset] = 0;
         }
 
-        if (!(ticker.quoteCurrency in totalMap)) {
-            totalMap[ticker.quoteCurrency] = 0;
+        if (!(ticker.quoteAsset in totalMap)) {
+            totalMap[ticker.quoteAsset] = 0;
         }
 
-        totalMap[ticker.baseCurrency] += parseFloat(ticker.volume_base);
-        totalMap[ticker.quoteCurrency] += parseFloat(ticker.volume_quote);
+        totalMap[ticker.baseAsset] += parseFloat(ticker.volume_base);
+        totalMap[ticker.quoteAsset] += parseFloat(ticker.volume_quote);
     });
 
     return {
@@ -54,7 +52,7 @@ export default class HomeScreen extends React.PureComponent {
         const {tickers = [], currentTickerKey = null} = this.props;
         const {selectMode = false} = this.state;
 
-        const groupedTickers = groupBy(tickers, 'quoteCurrency');
+        const groupedTickers = groupBy(tickers, 'quoteAsset');
         const tickerList = [];
 
         const createTicker = (ticker) => {
@@ -69,10 +67,10 @@ export default class HomeScreen extends React.PureComponent {
             tickerList.push(
                 <div {...tickerListItemProps}>
                     <label className="ticker-list__item-name">
-                        <b>{ticker.baseCurrency}</b> / {ticker.quoteCurrency}
+                        <b>{ticker.baseAsset}</b> / {ticker.quoteAsset}
                     </label>
                     <span className="ticker-list__item-price">
-                        {Numeral(ticker.price).format(ticker.format)} {ticker.quoteCurrency}
+                        {Numeral(ticker.price).format(ticker.format)} {ticker.quoteAsset}
                     </span>
                 </div>
             );
@@ -125,7 +123,7 @@ export default class HomeScreen extends React.PureComponent {
                     {
                         currentTicker && (
                             <label {...currentMarketLabelProps}>
-                                {currentTicker.baseCurrency}/{currentTicker.quoteCurrency}
+                                {currentTicker.baseAsset}/{currentTicker.quoteAsset}
                             </label>
                         )
                     }

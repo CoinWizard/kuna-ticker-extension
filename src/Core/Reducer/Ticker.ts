@@ -1,21 +1,21 @@
-import {Dictionary, each} from 'lodash';
+import { Dictionary, each } from 'lodash';
 
-import {ActionTypes} from 'Popup/Actions/ActionTypes';
-import {ObjectUtility} from 'Core/ObjectUtility';
-import {TickerInterface} from 'Core/Interfaces/TickerInterface';
-import {ITickerStore} from 'Core/Interfaces/Store';
+import { kunaPairMap } from 'kuna-sdk';
 
-import KunaTickerMap from 'Core/Kuna/TickerMap';
-
+import { ActionTypes } from 'Popup/Actions/ActionTypes';
+import { ObjectUtility } from 'Core/ObjectUtility';
+import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { ITickerStore } from 'Core/Interfaces/Store';
 
 const initialTickerState: ITickerStore = {
     tickers: {} as Dictionary<TickerInterface>,
     currentTickerKey: 'btcuah'
 };
 
-each(KunaTickerMap, (ticker) => {
-    initialTickerState.tickers[ticker.key] = {
-        ...ticker,
+each(kunaPairMap, (pair) => {
+    initialTickerState.tickers[pair.key] = {
+        ...pair,
+
         price: 0,
         volume_base: 0,
         volume_quote: 0,
