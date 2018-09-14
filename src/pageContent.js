@@ -1,6 +1,6 @@
 import React from 'react';
-import {render} from 'react-dom';
-import PageBudgetApplication from './PageContent/index';
+import { render } from 'react-dom';
+import PageBudgetApplication from './page-content';
 
 const onContentLoaded = () => {
     let componentElement = document.createElement('div');

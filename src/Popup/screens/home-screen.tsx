@@ -1,32 +1,35 @@
 import React from 'react';
 import store from 'Popup/Store/index';
-import {connect} from 'react-redux';
-import {find, each, groupBy} from 'lodash';
+import { connect } from 'react-redux';
+import { KunaAssetUnit } from 'kuna-sdk';
+import { find, each, groupBy } from 'lodash';
 import Numeral from 'numeral';
-import {sendTickerScreenView} from 'Popup/Analytics';
+import { sendTickerScreenView } from 'Popup/Analytics';
 
-import {TickerActions} from 'Popup/Actions/TickerActions';
-import {CurrentTickerView} from './home-views/current-ticker-view';
 
-class HomeScreenComponent extends React.PureComponent {
+import { TickerActions } from 'Popup/Actions/TickerActions';
+import { CurrentTickerView } from './home-views/current-ticker-view';
+
+
+class HomeScreenComponent extends React.PureComponent<any, any> {
 
     state = {
-        selectMode: false
+        selectMode: false,
     };
 
     onSelectMarket = (tickerKey) => {
-        const {tickers = []} = this.props;
-        const currentTicker = find(tickers, {key: tickerKey});
+        const { tickers = [] } = this.props;
+        const currentTicker = find(tickers, { key: tickerKey });
         store.dispatch(TickerActions.setCurrentTickerKey(tickerKey));
 
         sendTickerScreenView(currentTicker);
 
-        this.setState({selectMode: false});
+        this.setState({ selectMode: false });
     };
 
     drawTickerList() {
-        const {tickers = [], currentTickerKey = null} = this.props;
-        const {selectMode = false} = this.state;
+        const { tickers = [], currentTickerKey = null } = this.props;
+        const { selectMode = false } = this.state;
 
         const groupedTickers = groupBy(tickers, 'quoteAsset');
         const tickerList = [];
@@ -37,7 +40,7 @@ class HomeScreenComponent extends React.PureComponent {
                 className: `ticker-list__item ${currentTickerKey === ticker.key ? '-active' : ''}`,
                 onClick: () => {
                     this.onSelectMarket(ticker.key);
-                }
+                },
             };
 
             tickerList.push(
@@ -48,7 +51,7 @@ class HomeScreenComponent extends React.PureComponent {
                     <span className="ticker-list__item-price">
                         {Numeral(ticker.price).format(ticker.format)} {ticker.quoteAsset}
                     </span>
-                </div>
+                </div>,
             );
         };
 
@@ -61,31 +64,33 @@ class HomeScreenComponent extends React.PureComponent {
             );
         };
 
-        tickerList.push(createTickerSeparator('UAH'));
-        each(groupedTickers['UAH'], createTicker);
+        tickerList.push(createTickerSeparator(KunaAssetUnit.UkrainianHryvnia));
+        each(groupedTickers[KunaAssetUnit.UkrainianHryvnia], createTicker);
 
-        tickerList.push(createTickerSeparator('BTC'));
-        each(groupedTickers['BTC'], createTicker);
+        tickerList.push(createTickerSeparator(KunaAssetUnit.Bitcoin));
+        each(groupedTickers[KunaAssetUnit.Bitcoin], createTicker);
 
-        tickerList.push(createTickerSeparator('ETH'));
-        each(groupedTickers['ETH'], createTicker);
+        tickerList.push(createTickerSeparator(KunaAssetUnit.Ethereum));
+        each(groupedTickers[KunaAssetUnit.Ethereum], createTicker);
 
-        tickerList.push(createTickerSeparator('GBG'));
-        each(groupedTickers['GBG'], createTicker);
+        tickerList.push(createTickerSeparator(KunaAssetUnit.StasisEuro));
+        each(groupedTickers[KunaAssetUnit.StasisEuro], createTicker);
+
+        tickerList.push(createTickerSeparator(KunaAssetUnit.GolosGold));
+        each(groupedTickers[KunaAssetUnit.GolosGold], createTicker);
 
         return <div className={`ticker-list ${selectMode ? '-active' : ''}`}>{tickerList}</div>;
     }
 
     render() {
-        const {tickers = [], currentTickerKey = null} = this.props;
-
-        const currentTicker = find(tickers, {key: currentTickerKey});
+        const { tickers = [], currentTickerKey = null } = this.props;
+        const currentTicker = find(tickers, { key: currentTickerKey }) as any;
 
         const currentMarketLabelProps = {
             className: 'header__current-market',
             onClick: () => {
-                this.setState({selectMode: true});
-            }
+                this.setState({ selectMode: true });
+            },
         };
 
         return (
@@ -94,7 +99,7 @@ class HomeScreenComponent extends React.PureComponent {
 
                 <header className="header">
                     <a href="https://kuna.io/?src=Kuna_Extension" target="_blank" className="header__logo">
-                        <img className="header__logo-img" src="/images/kuna-logo.png"/>
+                        <img className="header__logo-img" src="/images/kuna-logo.png" />
                     </a>
                     {
                         currentTicker && (
@@ -105,14 +110,18 @@ class HomeScreenComponent extends React.PureComponent {
                     }
                 </header>
 
-                {currentTicker ? <CurrentTickerView ticker={currentTicker}/> : <div className="loading">Wait...</div>}
+                {currentTicker ? (
+                    <CurrentTickerView ticker={currentTicker} />
+                ) :(
+                    <div className="loading">Wait...</div>
+                )}
             </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => {
-    const {tickers, currentTickerKey} = state.ticker;
+    const { tickers, currentTickerKey } = state.ticker;
 
     const totalMap = {};
     each(tickers, (ticker) => {
@@ -130,7 +139,7 @@ const mapStateToProps = (state) => {
 
     return {
         tickers: tickers,
-        currentTickerKey: currentTickerKey
+        currentTickerKey: currentTickerKey,
     };
 };
 

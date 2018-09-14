@@ -1,6 +1,6 @@
 import { Dictionary, each } from 'lodash';
 
-import { kunaPairMap } from 'kuna-sdk';
+import { kunaMarketMap } from 'kuna-sdk';
 
 import { ActionTypes } from 'Popup/Actions/ActionTypes';
 import { ObjectUtility } from 'Core/ObjectUtility';
@@ -12,7 +12,7 @@ const initialTickerState: ITickerStore = {
     currentTickerKey: 'btcuah'
 };
 
-each(kunaPairMap, (pair) => {
+each(kunaMarketMap, (pair) => {
     initialTickerState.tickers[pair.key] = {
         ...pair,
 

@@ -122,8 +122,8 @@ const WebpackConfig = {
         alias: {
             Core: Path.join(__dirname, 'src/Core'),
             Popup: Path.join(__dirname, 'src/Popup'),
-            Background: Path.join(__dirname, 'src/Background'),
-            PageContent: Path.join(__dirname, 'src/PageContent')
+            background: Path.join(__dirname, 'src/background'),
+            "page-content": Path.join(__dirname, 'src/page-content')
         }
     },
 

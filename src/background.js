@@ -1,17 +1,17 @@
 // import './cross-origin-handler';
 
 import * as _ from 'lodash';
-import {kunaApiClient} from 'kuna-sdk';
+import { kunaApiClient } from 'kuna-sdk';
 
-import {STORE_KEY} from 'Core/Constant';
+import { STORE_KEY } from 'Core/Constant';
 import store from 'Core/Store/index';
-import {wrapStore} from 'react-chrome-redux';
+import { wrapStore } from 'react-chrome-redux';
 import ExtensionPlatform from 'Core/Extension';
-import BadgeController from 'Background/BadgeController';
-import {setupContextMenu} from 'Background/ExtensionSetup';
+import BadgeController from 'background/badge-controller';
+import { setupContextMenu } from 'background/ExtensionSetup';
 
-import {checkUahRate} from 'Background/check-uah-rate';
-import {processBitfinexTickers} from 'Background/check-bitfinex';
+import { checkUahRate } from 'background/check-uah-rate';
+import { processBitfinexTickers } from 'background/check-bitfinex';
 
 const updateTicker = (key, kunaTickerData) => {
     const {ticker} = store.getState();
@@ -62,7 +62,7 @@ const updateTicker = (key, kunaTickerData) => {
 const tickerUpdater = async () => {
     const tickers = await kunaApiClient.getTickers();
 
-    _.each(tickers, ticker => store.dispatch(updateTicker(ticker.pair, ticker)));
+    _.each(tickers, ticker => store.dispatch(updateTicker(ticker.market, ticker)));
 };
 
 const initBackground = () => {
