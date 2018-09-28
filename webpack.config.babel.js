@@ -44,39 +44,65 @@ const Plugins = [
     extractScss
 ];
 
-const Loaders = [{
-    test: /\.tsx?$/,
-    loader: 'awesome-typescript-loader',
-    options: {
-        // silent: true,
-        configFile: Path.resolve(__dirname, 'tsconfig.json'),
-        plugins: ['transform-decorators-legacy', 'transform-class-properties']
+function getSVGLoader() {
+    return {
+        test: /\.svg$/,
+        use: [
+            'svg-react-loader',
+            {
+                loader: 'svgo-loader',
+                options: {
+                    floatPrecision: 2,
+                    plugins: [
+                        {
+                            removeViewBox: false,
+                            removeEmptyAttrs: true,
+                        },
+                    ],
+                },
+            },
+        ],
+    };
+}
+
+const Loaders = [
+    {
+        test: /\.tsx?$/,
+        loader: 'awesome-typescript-loader',
+        options: {
+            // silent: true,
+            configFile: Path.resolve(__dirname, 'tsconfig.json'),
+            plugins: ['transform-decorators-legacy', 'transform-class-properties']
+        }
+    },
+    {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules\/(?!(obs-store|etherscan-api))/,
+        options: {
+            presets: ['react', 'es2017', 'es2016', 'stage-0'],
+            plugins: ['transform-decorators-legacy', 'transform-class-properties']
+        }
+    },
+    getSVGLoader(),
+    {
+        test: /\.scss$/,
+        use: extractScss.extract({
+            use: [{
+                loader: "css-loader"
+            }, {
+                loader: "sass-loader",
+                options: {
+                    includePaths: [
+                        Path.resolve(__dirname, './src/Style')
+                    ]
+                }
+            }],
+            // use style-loader in development
+            fallback: "style-loader"
+        })
     }
-}, {
-    test: /\.jsx?$/,
-    loader: 'babel-loader',
-    exclude: /node_modules\/(?!(obs-store|etherscan-api))/,
-    options: {
-        presets: ['react', 'es2017', 'es2016', 'stage-0'],
-        plugins: ['transform-decorators-legacy', 'transform-class-properties']
-    }
-}, {
-    test: /\.scss$/,
-    use: extractScss.extract({
-        use: [{
-            loader: "css-loader"
-        }, {
-            loader: "sass-loader",
-            options: {
-                includePaths: [
-                    Path.resolve(__dirname, './src/Style')
-                ]
-            }
-        }],
-        // use style-loader in development
-        fallback: "style-loader"
-    })
-}];
+];
 
 
 const OptimisationProps = {
@@ -123,6 +149,7 @@ const WebpackConfig = {
             Core: Path.join(__dirname, 'src/Core'),
             Popup: Path.join(__dirname, 'src/Popup'),
             background: Path.join(__dirname, 'src/background'),
+            resources: Path.resolve(__dirname, 'resources'),
             "page-content": Path.join(__dirname, 'src/page-content')
         }
     },

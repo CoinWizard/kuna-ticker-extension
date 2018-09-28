@@ -1,28 +1,32 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "es2015",
-    "allowJs": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false,
-    "sourceMap": true,
-    "jsx": "react",
-    "lib": [
-      "es2016",
-      "dom"
-    ],
-    "rootDirs": [
-      "./src"
-    ],
-    "baseUrl": "./src",
-    "outDir": "./dist/typescript",
-    "skipLibCheck": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
-  },
-  "include": [
-    "./src/**/*"
-  ]
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "allowJs": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "jsx": "react",
+        "lib": [
+            "es2016",
+            "dom"
+        ],
+        "rootDirs": [
+            "./src"
+        ],
+        "baseUrl": "./src",
+        "outDir": "./dist/typescript",
+        "skipLibCheck": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "typeRoots": [
+            "src/definitions",
+            "node_modules/@types"
+        ]
+    },
+    "include": [
+        "./src/**/*"
+    ]
 }

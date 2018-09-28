@@ -15,7 +15,8 @@
     }
 
     &__current-market {
-        display: block;
+        display: flex;
+        align-items: center;
         cursor: pointer;
         padding: 0 22px 0 8px;
         border-radius: 4px;
@@ -36,5 +37,11 @@
             right: 8px;
             top: 50%;
         }
+    }
+
+    &__current-market-icon {
+        height: 16px;
+        width: 16px;
+        margin-right: 4px;
     }
 }
