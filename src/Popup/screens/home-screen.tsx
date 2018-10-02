@@ -137,7 +137,7 @@ class HomeScreenComponent extends React.PureComponent<any, any> {
 
         return (
             <label {...currentMarketLabelProps}>
-                <CoinIcon className="header__current-market-icon" />
+                {CoinIcon && <CoinIcon className="header__current-market-icon"/>}
                 {currentTicker.baseAsset}/{currentTicker.quoteAsset}
             </label>
         )

@@ -2718,7 +2718,7 @@ debug@2.6.9, debug@^2.1.0, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.
   dependencies:
     ms "2.0.0"
 
-debug@3.X, debug@^3.0.0, debug@^3.1.0:
+debug@3.1.0, debug@3.X, debug@^3.0.0, debug@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
@@ -5039,13 +5039,14 @@ klaw@^1.0.0:
   optionalDependencies:
     graceful-fs "^4.1.9"
 
-kuna-sdk@0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/kuna-sdk/-/kuna-sdk-0.2.3.tgz#5f949c8ac77bc9422a11e2d6c18a725b67986903"
+kuna-sdk@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/kuna-sdk/-/kuna-sdk-0.3.2.tgz#6e1afeb3b5950304f70b98cd1e2996978003c63f"
   dependencies:
     axios "0.18.0"
-    debug "^3.1.0"
+    debug "3.1.0"
     lodash "4.17.10"
+    qs "6.5.2"
 
 lazy-cache@^1.0.3:
   version "1.0.4"
@@ -7049,13 +7050,13 @@ qs@5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-5.2.0.tgz#a9f31142af468cb72b25b30136ba2456834916be"
 
+qs@6.5.2, qs@~6.5.1, qs@~6.5.2:
+  version "6.5.2"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
+
 qs@~2.2.3:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/qs/-/qs-2.2.5.tgz#1088abaf9dcc0ae5ae45b709e6c6b5888b23923c"
-
-qs@~6.5.1, qs@~6.5.2:
-  version "6.5.2"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
 
 query-string@^4.1.0:
   version "4.3.4"

@@ -55,7 +55,7 @@
         "history": "4.7.2",
         "jshint": "2.9.6",
         "json-loader": "0.5.7",
-        "kuna-sdk": "0.2.3",
+        "kuna-sdk": "^0.3.2",
         "local-storage": "1.4.2",
         "lodash": "4.17.10",
         "minifycss": "1.0.1",
