@@ -1,5 +1,5 @@
 import React from 'react';
-import store from 'Popup/Store/index';
+import store from 'Popup/store';
 import { connect } from 'react-redux';
 import { KunaAssetUnit } from 'kuna-sdk';
 import { find, each, groupBy } from 'lodash';
@@ -13,29 +13,57 @@ import { getCoinIcon } from 'Popup/svg';
 import { TickerInterface } from 'Core/Interfaces/TickerInterface';
 
 
-class HomeScreenComponent extends React.PureComponent<any, any> {
+type HomeScreenState = {
+    selectMode: boolean;
+};
 
-    state = {
+class HomeScreenComponent extends React.PureComponent<any, HomeScreenState> {
+    public readonly state: HomeScreenState = {
         selectMode: false,
     };
 
-    protected onSelectMarket = (tickerKey): void => {
-        const {tickers = []} = this.props;
-        const currentTicker = find(tickers, {key: tickerKey});
+
+    public render(): JSX.Element {
+        const { tickers = [], currentTickerKey = null } = this.props;
+        const currentTicker = find(tickers, { key: currentTickerKey }) as any;
+
+        return (
+            <div>
+                {this.drawMarketList()}
+
+                <header className="header">
+                    <a href="https://kuna.io/?src=Kuna_Extension" target="_blank" className="header__logo">
+                        <img className="header__logo-img" src="/images/kuna-logo.png" />
+                    </a>
+                    {this.renderCurrentTickerHeader()}
+                </header>
+
+                {currentTicker ? (
+                    <CurrentTickerView ticker={currentTicker} />
+                ) : (
+                    <div className="loading">Wait...</div>
+                )}
+            </div>
+        );
+    }
+
+
+    protected changeMarket = (tickerKey: string): void => {
+        const { tickers = [] } = this.props;
+        const currentTicker = find(tickers, { key: tickerKey });
         store.dispatch(TickerActions.setCurrentTickerKey(tickerKey));
 
         sendTickerScreenView(currentTicker);
 
-        this.setState({selectMode: false});
+        this.setState({ selectMode: false });
     };
+
 
     protected createMarketRow = (market: TickerInterface, isActive: boolean = false) => {
         const tickerListItemProps = {
             key: market.key,
             className: `ticker-list__item ${isActive ? '-active' : ''}`,
-            onClick: () => {
-                this.onSelectMarket(market.key);
-            },
+            onClick: () => this.changeMarket(market.key),
         };
 
         const CoinIcon = getCoinIcon(market.baseAsset);
@@ -44,9 +72,9 @@ class HomeScreenComponent extends React.PureComponent<any, any> {
             <div {...tickerListItemProps}>
                 <label className="ticker-list__item-name">
                     {CoinIcon ? (
-                        <CoinIcon className="ticker-list__item-icon"/>
+                        <CoinIcon className="ticker-list__item-icon" />
                     ) : (
-                        <div className="ticker-list__item-no-icon"/>
+                        <div className="ticker-list__item-no-icon" />
                     )}
                     <b>{market.baseAsset}</b> / {market.quoteAsset}
                 </label>
@@ -57,9 +85,10 @@ class HomeScreenComponent extends React.PureComponent<any, any> {
         );
     };
 
+
     protected drawMarketList(): JSX.Element {
-        const {tickers = [], currentTickerKey = null} = this.props;
-        const {selectMode = false} = this.state;
+        const { tickers = [], currentTickerKey = null } = this.props;
+        const { selectMode = false } = this.state;
 
         const groupedTickers = groupBy(tickers, 'quoteAsset');
         const marketList = [];
@@ -73,7 +102,7 @@ class HomeScreenComponent extends React.PureComponent<any, any> {
         };
 
         const createTicker = (ticker) => {
-            marketList.push(this.createMarketRow(ticker, currentTickerKey === ticker.key))
+            marketList.push(this.createMarketRow(ticker, currentTickerKey === ticker.key));
         };
 
         marketList.push(createTickerSeparator(KunaAssetUnit.UkrainianHryvnia));
@@ -94,58 +123,34 @@ class HomeScreenComponent extends React.PureComponent<any, any> {
         return <div className={`ticker-list ${selectMode ? '-active' : ''}`}>{marketList}</div>;
     }
 
-    public render(): JSX.Element {
-        const {tickers = [], currentTickerKey = null} = this.props;
-        const currentTicker = find(tickers, {key: currentTickerKey}) as any;
-
-        return (
-            <div>
-                {this.drawMarketList()}
-
-                <header className="header">
-                    <a href="https://kuna.io/?src=Kuna_Extension" target="_blank" className="header__logo">
-                        <img className="header__logo-img" src="/images/kuna-logo.png"/>
-                    </a>
-                    {this.renderCurrentTickerHeader()}
-                </header>
-
-                {currentTicker ? (
-                    <CurrentTickerView ticker={currentTicker}/>
-                ) : (
-                    <div className="loading">Wait...</div>
-                )}
-            </div>
-        );
-    }
 
     protected renderCurrentTickerHeader(): JSX.Element {
-        const {tickers = [], currentTickerKey = null} = this.props;
-        const currentTicker = find(tickers, {key: currentTickerKey}) as any;
+        const { tickers = [], currentTickerKey = null } = this.props;
+        const currentTicker = find(tickers, { key: currentTickerKey }) as any;
 
         const currentMarketLabelProps = {
             className: 'header__current-market',
-            onClick: () => {
-                this.setState({selectMode: true});
-            },
+            onClick: () => this.setState({ selectMode: true }),
         };
 
         if (!currentTicker) {
-            return <div/>;
+            return <div />;
         }
 
         const CoinIcon = getCoinIcon(currentTicker.baseAsset);
 
         return (
             <label {...currentMarketLabelProps}>
-                {CoinIcon && <CoinIcon className="header__current-market-icon"/>}
+                {CoinIcon && <CoinIcon className="header__current-market-icon" />}
                 {currentTicker.baseAsset}/{currentTicker.quoteAsset}
             </label>
-        )
+        );
     }
 }
 
-const mapStateToProps = (state) => {
-    const {tickers, currentTickerKey} = state.ticker;
+
+const mapStateToProps = (store) => {
+    const { tickers, currentTickerKey } = store.ticker;
 
     const totalMap = {};
     each(tickers, (ticker) => {

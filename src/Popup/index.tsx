@@ -1,8 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import proxyStore from 'Popup/Store';
+import proxyStore from 'Popup/store';
 import { HomeScreen } from 'Popup/screens/home-screen';
-import 'Popup/EventHandler';
+import 'Popup/event-handler';
 
 interface AppProps {
 }
@@ -17,20 +17,20 @@ export class PopupApplication extends React.PureComponent<AppProps, AppState> {
         super(props, context);
 
         this.state = {
-            ready: false
+            ready: false,
         };
     }
 
     public componentDidMount(): void {
         proxyStore.ready(() => {
             setTimeout(() => {
-                this.setState({ready: true});
+                this.setState({ ready: true });
             }, 0);
         });
     }
 
     public render(): JSX.Element {
-        const {ready = false} = this.state;
+        const { ready = false } = this.state;
 
         if (false === ready) {
             return (
@@ -43,7 +43,7 @@ export class PopupApplication extends React.PureComponent<AppProps, AppState> {
         return (
             <div className="application">
                 <Provider store={proxyStore}>
-                    <HomeScreen/>
+                    <HomeScreen />
                 </Provider>
             </div>
         );
