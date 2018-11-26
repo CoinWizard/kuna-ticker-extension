@@ -29,15 +29,14 @@ Numeral.register('locale', 'ua', {
 // switch between locales
 numeral.locale('ua');
 
-interface AppProps {
+export type AppProps = {
 }
 
-interface AppState {
+export type AppState = {
     ready: boolean;
 }
 
 export class PopupApplication extends React.PureComponent<AppProps, AppState> {
-
     public constructor(props: any, context) {
         super(props, context);
 
