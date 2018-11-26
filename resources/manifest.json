@@ -11,7 +11,8 @@
         "contextMenus",
         "webRequestBlocking",
         "http://*/*",
-        "https://*/*"
+        "https://*/*",
+        "notifications"
     ],
     "author": "CoinWizard Team",
     "icons": {

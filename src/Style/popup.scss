@@ -15,7 +15,7 @@ body {
     background: white;
     color: $color-dark-gray;
     font-family: $font;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 @import "parts/header";
@@ -27,7 +27,6 @@ body {
     right: 8px;
     bottom: 4px;
     z-index: 1000;
-    font-weight: 100;
     color: rgb(220, 220, 220);
 
     a {
@@ -47,7 +46,6 @@ body {
     line-height: 60px;
     text-align: center;
     font-size: 18px;
-    font-weight: 100;
     letter-spacing: 0.8px;
 }
 

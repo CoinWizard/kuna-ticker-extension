@@ -13,11 +13,16 @@ import { getCoinIcon } from 'Popup/svg';
 import { TickerInterface } from 'Core/Interfaces/TickerInterface';
 
 
+type HomeScreenProps = {
+    tickers: any;
+    currentTickerKey: string;
+};
+
 type HomeScreenState = {
     selectMode: boolean;
 };
 
-class HomeScreenComponent extends React.PureComponent<any, HomeScreenState> {
+class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScreenState> {
     public readonly state: HomeScreenState = {
         selectMode: false,
     };
@@ -76,7 +81,9 @@ class HomeScreenComponent extends React.PureComponent<any, HomeScreenState> {
                     ) : (
                         <div className="ticker-list__item-no-icon" />
                     )}
-                    <b>{market.baseAsset}</b> / {market.quoteAsset}
+                    <b>{market.baseAsset}</b>
+                    <span> / </span>
+                    <span>{market.quoteAsset}</span>
                 </label>
                 <span className="ticker-list__item-price">
                     {Numeral(market.price).format(market.format)} {market.quoteAsset}
@@ -142,7 +149,7 @@ class HomeScreenComponent extends React.PureComponent<any, HomeScreenState> {
         return (
             <label {...currentMarketLabelProps}>
                 {CoinIcon && <CoinIcon className="header__current-market-icon" />}
-                {currentTicker.baseAsset}/{currentTicker.quoteAsset}
+                {currentTicker.baseAsset} / {currentTicker.quoteAsset}
             </label>
         );
     }

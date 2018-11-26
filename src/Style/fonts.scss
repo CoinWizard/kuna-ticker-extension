@@ -1,2 +1,25 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800');
-$font: 'Nunito', sans-serif;
+@font-face {
+    font-family: 'TT Norms Regular';
+    font-weight: 400;
+    src: url(/fonts/tt_norms_regular.otf);
+}
+
+@font-face {
+    font-family: 'TT Norms Medium';
+    font-weight: 500;
+    src: url(/fonts/tt_norms_medium.otf);
+}
+
+@font-face {
+    font-family: 'TT Norms Bold';
+    font-weight: 600;
+    src: url(/fonts/tt_norms_bold.otf);
+}
+
+@font-face {
+    font-family: 'TT Norms ExtraBold';
+    font-weight: 700;
+    src: url(/fonts/tt_norms_extrabold.otf);
+}
+
+$font: 'TT Norms', sans-serif;

@@ -84,7 +84,7 @@ const initBackground = () => {
     setInterval(processBitfinexTickers, 10 * 60 * 1000);
 
     ExtensionPlatform.getExtension().browserAction.setBadgeBackgroundColor({
-        color: '#11a0ff'
+        color: '#5850FA'
     });
 };
 
@@ -93,6 +93,29 @@ document.addEventListener('DOMContentLoaded', initBackground);
 setupContextMenu();
 
 ExtensionPlatform.getRuntime().onInstalled.addListener((event) => {
+
+    let notify = ExtensionPlatform.getExtension().notifications;
+
+    if (!!notify) {
+        notify.create({
+            type: 'basic',
+            iconUrl: '/images/kuna_258.png',
+            title: 'Kuna Ticker now in AppStore',
+            message: 'Open AppStore to install iOS application'
+        });
+
+        const onClick = () => {
+            notify.onClicked.removeListener(onClick);
+
+            ExtensionPlatform.getTabs().create({
+                url: 'https://itunes.apple.com/us/app/id1441322325'
+            });
+        };
+
+        notify.onClicked.addListener(onClick);
+    }
+
+
     switch (event.reason) {
         case 'install':
             break;

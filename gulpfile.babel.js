@@ -30,6 +30,14 @@ gulp.task('copy:images', copyTask({
     ]
 }));
 
+gulp.task('copy:fonts', copyTask({
+    source: './resources/fonts/',
+    destinations: [
+        './dist/firefox/fonts',
+        './dist/chrome/fonts'
+    ]
+}));
+
 gulp.task('copy:views', copyTask({
     source: './resources/views/',
     destinations: [
@@ -65,7 +73,7 @@ gulp.task('js:watch', []);
 gulp.task('css', []);
 
 
-const staticFiles = ['images', 'views', 'root'];
+const staticFiles = ['images', 'views', 'root', 'fonts'];
 let copyStrings = staticFiles.map(staticFile => `copy:${staticFile}`);
 gulp.task('copy', [
     ...copyStrings,

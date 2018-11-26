@@ -1,14 +1,13 @@
-import {TickerInterface} from './TickerInterface';
-import {BitfinexTicker} from 'Core/bitfinex';
-import {Dictionary} from 'lodash';
+import { BitfinexTicker } from 'Core/bitfinex';
+import { TickerInterface } from './TickerInterface';
 
 export interface IGlobalStore {
     uahRate?: null;
-    bitfinexTickers: Dictionary<BitfinexTicker>;
+    bitfinexTickers: Record<string, BitfinexTicker>;
 }
 
 export interface ITickerStore {
-    tickers: Dictionary<TickerInterface>;
+    tickers: Record<string, TickerInterface>;
     currentTickerKey?: string;
 }
 

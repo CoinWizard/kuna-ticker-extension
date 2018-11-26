@@ -7,8 +7,8 @@ import { createMemoryHistory, MemoryHistory } from 'history';
 import { sendTickerScreenView } from 'Popup/Analytics';
 import { TickerInterface } from 'Core/Interfaces/TickerInterface';
 
-import { TickerStats } from './ticker-stats';
 import { TickerCalculator } from './ticker-calculator';
+import { TickerStats } from './ticker-stats';
 import { ArbitrageTab } from './arbitrage-tab';
 
 const ARBITRAGE_ENABLED = Boolean(localStorage.get('little_engine_that_could'));
@@ -17,18 +17,17 @@ interface IViewProps {
     ticker: TickerInterface;
 }
 
-export class CurrentTickerView extends React.Component<IViewProps> {
+export class CurrentTickerView extends React.PureComponent<IViewProps> {
     protected history: MemoryHistory = createMemoryHistory();
 
-    public componentDidMount() {
-        const {ticker} = this.props;
-        sendTickerScreenView(ticker);
+    public componentDidMount(): void {
+        const { ticker } = this.props;
 
-        console.log(ticker);
+        sendTickerScreenView(ticker);
     }
 
     public render(): JSX.Element {
-        const {ticker} = this.props;
+        const { ticker } = this.props;
 
         return (
             <Router history={this.history}>
@@ -74,10 +73,10 @@ export class CurrentTickerView extends React.Component<IViewProps> {
 
                     <div className="current-ticker__info-container">
                         <Switch>
-                            <Route path="/" exact render={() => <TickerStats ticker={ticker}/>}/>
-                            <Route path="/calculator" exact render={() => <TickerCalculator ticker={ticker}/>}/>
+                            <Route path="/" exact render={() => <TickerStats ticker={ticker} />} />
+                            <Route path="/calculator" exact render={() => <TickerCalculator ticker={ticker} />} />
                             {ARBITRAGE_ENABLED && (
-                                <Route path="/arbitrage" exact render={() => <ArbitrageTab ticker={ticker}/>}/>
+                                <Route path="/arbitrage" exact render={() => <ArbitrageTab ticker={ticker} />} />
                             )}
                         </Switch>
                     </div>

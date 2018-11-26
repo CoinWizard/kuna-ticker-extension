@@ -2,6 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "module": "es2015",
+        "strict": false,
         "allowJs": true,
         "declaration": false,
         "moduleResolution": "node",
@@ -26,6 +27,9 @@
             "node_modules/@types"
         ]
     },
+    "exclude": [
+        "node_modules"
+    ],
     "include": [
         "./src/**/*"
     ]
