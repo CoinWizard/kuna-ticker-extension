@@ -96,7 +96,6 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
     protected drawMarketList(): JSX.Element {
         const { tickers = [], currentTickerKey = null } = this.props;
         const { selectMode = false } = this.state;
-
         const groupedTickers = groupBy(tickers, 'quoteAsset');
         const marketList = [];
 
