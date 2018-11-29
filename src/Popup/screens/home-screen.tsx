@@ -1,7 +1,7 @@
 import React from 'react';
 import store from 'Popup/store';
 import { connect } from 'react-redux';
-import { KunaAssetUnit } from 'kuna-sdk';
+import { getAsset, KunaAssetUnit } from 'kuna-sdk';
 import { find, each, groupBy } from 'lodash';
 import Numeral from 'numeral';
 import { sendTickerScreenView } from 'Popup/Analytics';
@@ -81,9 +81,9 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
                     ) : (
                         <div className="ticker-list__item-no-icon" />
                     )}
-                    <b>{market.baseAsset}</b>
-                    <span> / </span>
-                    <span>{market.quoteAsset}</span>
+                    <span className="base-asset">{market.baseAsset}</span>
+                    <span className="asset-separator"> / </span>
+                    <span className="quote-asset">{market.quoteAsset}</span>
                 </label>
                 <span className="ticker-list__item-price">
                     {Numeral(market.price).format(market.format)} {market.quoteAsset}
@@ -100,10 +100,15 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
         const groupedTickers = groupBy(tickers, 'quoteAsset');
         const marketList = [];
 
-        const createTickerSeparator = (coinKey) => {
+        const createTickerSeparator = (coinAsset: KunaAssetUnit) => {
+
+            const asset = getAsset(coinAsset);
+            const CoinIcon = getCoinIcon(coinAsset);
+
             return (
-                <div className="ticker-list__separator" key={'separator-' + coinKey}>
-                    to {coinKey}
+                <div className="ticker-list__separator" key={'separator-' + coinAsset}>
+                    {CoinIcon ? <CoinIcon className="ticker-list__separator-icon" /> : undefined}
+                    <div className="ticker-list__separator-name">{asset.name}</div>
                 </div>
             );
         };

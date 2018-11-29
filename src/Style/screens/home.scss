@@ -9,7 +9,7 @@
 
     &__price {
         font-size: 28px;
-        font-weight: 500;
+        font-weight: 400;
         display: block;
         position: relative;
         width: 100%;
@@ -65,7 +65,7 @@
 
         &-value {
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 400;
             letter-spacing: 0.8px;
 
             &.-red {
@@ -136,22 +136,29 @@
         color: $color-kuna-dark-blue;
         font-size: 16px;
         font-weight: 500;
-        margin-top: 4px;
-        margin-bottom: 8px;
-        margin-left: 8px;
-        &:after {
-            position: absolute;
-            content: '';
-            height: 1px;
-            background: $color-kuna-dark-blue;
-            top: 10px;
-            left: 80px;
-            right: -4px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        border-bottom: 2px solid $color-all-ocean;
+        margin: 8px 0 0 0;
+        padding: 4px 8px 12px 8px;
+
+        &-icon {
+            height: 20px;
+            width: 20px;
+            margin-right: 8px;
+        }
+        
+        &-name {
+            font-weight: 400;
         }
     }
 
     &__item + &__separator {
-        margin-top: 16px;
+        margin-top: 20px;
+        padding-top: 12px;
+        border-top: 2px solid $color-all-ocean;
     }
 
     &__item {
@@ -164,6 +171,8 @@
         cursor: pointer;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        height: 44px;
 
         &:hover {
             background-color: rgb(245, 245, 245);
@@ -172,6 +181,29 @@
         &-name {
             display: flex;
             align-items: center;
+            cursor: pointer;
+
+            .base-asset,
+            .asset-separator,
+            .quote-asset {
+                display: inline-block;
+                vertical-align: center;
+            }
+
+            .base-asset {
+                font-weight: 500;
+            }
+
+            .asset-separator {
+                font-weight: 500;
+                margin: 0 3px;
+            }
+
+            .quote-asset {
+                font-weight: 400;
+                color: $color-gull-gray;
+                font-size: 12px;
+            }
         }
 
         &-icon {
@@ -185,7 +217,7 @@
         }
 
         &-price {
-            color: $color-kuna-blue;
+            color: $color-dark-gray;
         }
 
         &.-active {
