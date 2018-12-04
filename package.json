@@ -1,7 +1,7 @@
 {
     "name": "kuna-ticker-extension",
     "description": "Exchange Ticker Extension for Kuna.io",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "public": true,
     "scripts": {
         "build:webpack": "webpack-cli",
