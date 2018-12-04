@@ -15,7 +15,11 @@ body {
     background: white;
     color: $color-dark-gray;
     font-family: $font;
-    font-weight: 400;
+    font-weight: 500;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: antialiased;
+    text-size-adjust: 100%;
 }
 
 @import "parts/header";

@@ -37,9 +37,6 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
                 {this.drawMarketList()}
 
                 <header className="header">
-                    <a href="https://kuna.io/?src=Kuna_Extension" target="_blank" className="header__logo">
-                        <img className="header__logo-img" src="/images/kuna-logo.png" />
-                    </a>
                     {this.renderCurrentTickerHeader()}
                 </header>
 
@@ -153,7 +150,15 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
         return (
             <label {...currentMarketLabelProps}>
                 {CoinIcon && <CoinIcon className="header__current-market-icon" />}
-                {currentTicker.baseAsset} / {currentTicker.quoteAsset}
+                <div className="header__current-market-text">
+                    <span className="base">{currentTicker.baseAsset}</span>
+                    <span className="separator"> / </span>
+                    <span className="quote">{currentTicker.quoteAsset}</span>
+                </div>
+
+                <div className="drop-down">
+                    <div className="drop-down__icon"/>
+                </div>
             </label>
         );
     }

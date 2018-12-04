@@ -1,6 +1,5 @@
 .header {
-    padding: 0 16px;
-    height: 46px;
+    height: 48px;
     background: white;
     display: flex;
     justify-content: space-between;
@@ -16,32 +15,67 @@
 
     &__current-market {
         display: flex;
+        width: 100%;
         align-items: center;
         cursor: pointer;
-        padding: 0 22px 0 8px;
+        padding: 0 16px 0 16px;
         border-radius: 4px;
         font-size: 14px;
-        color: $color-shuttle-gray;
 
-        &:after {
-            border-style: solid;
-            border-color: $color-shuttle-gray;
-            border-width: 1px 1px 0 0;
-            content: '';
-            transform: rotate(135deg);
-            display: block;
-            height: 4px;
-            width: 4px;
-            margin-top: -4px;
+        height: 100%;
+        background-color: transparent;
+        transition: background-color 0.6s;
+
+        &:hover {
+            transition: background-color 0.2s;
+            background-color: $color-all-ocean;
+        }
+
+        & > .drop-down {
             position: absolute;
-            right: 8px;
+            right: 16px;
             top: 50%;
+            transform: translateY(-50%);
         }
     }
 
     &__current-market-icon {
-        height: 16px;
-        width: 16px;
-        margin-right: 4px;
+        height: 28px;
+        width: 28px;
+        margin-right: 12px;
+    }
+
+    &__current-market-text {
+        font-size: 18px;
+
+        & > .base {
+            font-weight: 500;
+        }
+
+        & > .quote {
+            color: $color-gull-gray;
+            font-weight: 400;
+            font-size: 16px;
+        }
+    }
+}
+
+.drop-down {
+    border-radius: 8px;
+    background: #F6F8F9;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__icon {
+        border-style: solid;
+        border-color: #8BABC4;
+        border-width: 2px 2px 0 0;
+        transform: rotate(135deg) translateY(1px) translateX(-1px);
+        display: block;
+        height: 10px;
+        width: 10px;
     }
 }
