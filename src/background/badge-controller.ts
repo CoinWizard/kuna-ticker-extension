@@ -1,13 +1,13 @@
 import * as Numeral from 'numeral';
 
 import ExtensionPlatform from 'Core/Extension';
-import {TickerInterface} from 'Core/Interfaces/TickerInterface';
+import { TickerInterface } from 'Core/Interfaces/TickerInterface';
 
 const browserAction = ExtensionPlatform.getExtension().browserAction;
 
 export default class BadgeController {
 
-    static formatTickerPrice (price: number): string {
+    static formatTickerPrice(price: number): string {
         let priceNumeral = Numeral(price);
 
         if (price < 10) {
@@ -29,15 +29,15 @@ export default class BadgeController {
         return '' + price;
     }
 
-    static updateBudgetTexts (ticker: TickerInterface) {
+    static updateBudgetTexts(ticker: TickerInterface) {
         browserAction.setBadgeText({
-            text: BadgeController.formatTickerPrice(ticker.price)
+            text: BadgeController.formatTickerPrice(ticker.price),
         });
 
         browserAction.setTitle({
             title: 'Kuna Ticker: ' +
             `${ticker.baseAsset} / ${ticker.quoteAsset}` +
-            ` - ${Numeral(ticker.price).format(ticker.format)}`
+            ` - ${Numeral(ticker.price).format(ticker.format)}`,
         });
     }
 }

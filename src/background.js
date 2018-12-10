@@ -75,8 +75,10 @@ const initBackground = () => {
         return store.getState();
     };
 
+
     tickerUpdater();
     setInterval(tickerUpdater, 60 * 1000);
+
 
     checkUahRate();
     setInterval(checkUahRate, 60 * 60 * 1000);
@@ -88,7 +90,7 @@ const initBackground = () => {
         processBitfinexTickers();
         processBitstampTickers();
     }, 10 * 60 * 1000);
-    
+
     ExtensionPlatform.getExtension().browserAction.setBadgeBackgroundColor({
         color: '#5850FA'
     });
