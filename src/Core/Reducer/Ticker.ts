@@ -9,7 +9,7 @@ import { ITickerStore } from 'Core/Interfaces/Store';
 
 const initialTickerState: ITickerStore = {
     tickers: {} as Dictionary<TickerInterface>,
-    currentTickerKey: 'btcuah'
+    currentTickerKey: 'btcuah',
 };
 
 each(kunaMarketMap, (pair) => {
@@ -27,8 +27,8 @@ each(kunaMarketMap, (pair) => {
         },
         depth: {
             bid: 0,
-            ask: 0
-        }
+            ask: 0,
+        },
     };
 });
 
@@ -42,17 +42,17 @@ interface ActionInterface {
 }
 
 function updateTicker(state: ITickerStore, ticker: TickerInterface) {
-    const {tickers} = state;
+    const { tickers } = state;
     tickers[ticker.key] = ticker;
 
-    return ObjectUtility.updateObject(state, {tickers: tickers});
+    return ObjectUtility.updateObject(state, { tickers: tickers });
 }
 
 export default function tickerState(state: ITickerStore = initialTickerState,
                                     action: ActionInterface = null) {
     switch (action.type) {
         case ActionTypes.FETCH_TICKERS: {
-            return ObjectUtility.updateObject(state, {tickers: action.tickers});
+            return ObjectUtility.updateObject(state, { tickers: action.tickers });
         }
 
         case ActionTypes.UPDATE_TICKER: {
@@ -60,7 +60,7 @@ export default function tickerState(state: ITickerStore = initialTickerState,
         }
 
         case ActionTypes.SET_CURRENT_TICKER: {
-            return ObjectUtility.updateObject(state, {currentTickerKey: action.tickerKey});
+            return ObjectUtility.updateObject(state, { currentTickerKey: action.tickerKey });
         }
     }
 

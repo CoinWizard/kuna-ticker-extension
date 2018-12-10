@@ -1,11 +1,11 @@
-import Axios, {AxiosResponse} from 'axios';
+import Axios, { AxiosResponse } from 'axios';
 
 const gowAxios = Axios.create({
-    baseURL: "https://bank.gov.ua/NBUStatService/v1/"
+    baseURL: 'https://bank.gov.ua/NBUStatService/v1/',
 });
 
 const minfinAxios = Axios.create({
-    baseURL: "https://minfin.com.ua/"
+    baseURL: 'https://minfin.com.ua/',
 });
 
 
@@ -19,7 +19,7 @@ function extractUahPriceReport(el: HTMLElement): number {
     const text: Element = el.getElementsByClassName('mf-currency-block')[1];
 
     if (!text) {
-        throw new Error("No data");
+        throw new Error('No data');
     }
 
     const bidPrice = priceExtractor(text, 'mf-currency-bid');
@@ -35,7 +35,7 @@ export const fetchGowUAAxios = (): Promise<number> => {
     };
 
     return gowAxios
-        .get("/statdirectory/exchange?json&valcode=USD")
+        .get('/statdirectory/exchange?json&valcode=USD')
         .then(onSuccess);
 };
 

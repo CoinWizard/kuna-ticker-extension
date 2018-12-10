@@ -229,3 +229,31 @@
         }
     }
 }
+
+
+.compare-mode {
+    &__container {
+        display: flex;
+        width: 100%;
+        margin: 10px 0 0 0;
+    }
+
+    &__btn {
+        padding: 5px 10px;
+        background-color: $color-all-ocean;
+
+        &.-active {
+            background-color: $color-alto;
+        }
+
+        &:first-child {
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        &:last-child {
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+    }
+}

@@ -1,55 +1,58 @@
 import React from 'react';
+import { map } from 'lodash';
 import cn from 'classnames';
-import {TickerInterface} from 'Core/Interfaces/TickerInterface';
-import {BitfinexTicker} from "Core/bitfinex";
-import Numeral from "numeral";
+import Numeral from 'numeral';
+import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { BitfinexTicker } from 'Core/bitfinex';
+import { BitstampTicker } from 'Core/bitstamp';
+
 
 interface IUsdPriceProps {
     uahRate: number;
     ticker: TickerInterface;
     bitfinexTicker?: BitfinexTicker;
+    bitstampTicker?: BitstampTicker;
 }
 
-export class UsdStatsView extends React.Component<IUsdPriceProps> {
 
-    protected renderBitfinex(usdPrice: number) {
-        const {bitfinexTicker = null} = this.props;
+enum ExchangeMode {
+    Bitfinex = 'bitfinex',
+    Bitstamp = 'bitstamp'
+}
 
-        if (!bitfinexTicker) {
-            return null;
-        }
 
-        const arbitragePercent: Numeral
-            = Numeral(usdPrice)
-            .subtract(bitfinexTicker.last_price)
-            .divide(bitfinexTicker.last_price);
+type UsdStatsViewState = {
+    mode?: ExchangeMode
+};
 
-        const arbitrageClass = cn("current-ticker__info-value", {
-            '-red': arbitragePercent.value() > 0,
-            '-green': arbitragePercent.value() < 0
-        });
 
-        return (
-            <React.Fragment>
-                <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">% Arbitrage</span>
-                    <span className={arbitrageClass}>
-                        {arbitragePercent.format('+0,0.[00]%')}
-                    </span>
-                </label>
+type CompareTickerParams = {
+    arbitragePercent: Numeral;
+    lastPrice: Numeral;
+};
 
-                <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">Bitfinex Price</span>
-                    <span className="current-ticker__info-value">
-                        ${Numeral(bitfinexTicker.last_price).format("0,0.[00]")}
-                    </span>
-                </label>
-            </React.Fragment>
-        );
+
+export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewState> {
+
+    public constructor(props: IUsdPriceProps) {
+        super(props);
+
+        this.state = {
+            mode: this.__checkAvailableMode(props),
+        };
     }
 
+    public componentWillUpdate(nextProps: IUsdPriceProps) {
+        if (this.props.ticker.key !== nextProps.ticker.key) {
+            this.setState({
+                mode: this.__checkAvailableMode(nextProps),
+            });
+        }
+    }
+
+
     public render(): JSX.Element {
-        const {ticker, uahRate} = this.props;
+        const { ticker, uahRate } = this.props;
 
         const usdPrice = ticker.price / uahRate;
 
@@ -58,19 +61,142 @@ export class UsdStatsView extends React.Component<IUsdPriceProps> {
                 <label className="current-ticker__info">
                     <span className="current-ticker__info-label">UAH/USD</span>
                     <span className="current-ticker__info-value">
-                        {Numeral(uahRate).format("0,0.[00]")}
+                        {Numeral(uahRate).format('0,0.[00]')}
                     </span>
                 </label>
 
                 <label className="current-ticker__info">
                     <span className="current-ticker__info-label">USD Price</span>
                     <span className="current-ticker__info-value">
-                        ${Numeral(usdPrice).format("0,0.[00]")}
+                        ${Numeral(usdPrice).format('0,0.[00]')}
                     </span>
                 </label>
 
-                {this.renderBitfinex(usdPrice)}
+                {this.__renderCompares(usdPrice)}
             </div>
-        )
+        );
     }
+
+    protected __checkAvailableMode = (props: IUsdPriceProps): ExchangeMode | undefined => {
+        const { bitstampTicker, bitfinexTicker } = props;
+
+        if (bitfinexTicker) {
+            return ExchangeMode.Bitfinex;
+        }
+
+        if (bitstampTicker) {
+            return ExchangeMode.Bitstamp;
+        }
+    };
+
+
+    protected __renderCompares(usdPrice: number) {
+        const { mode } = this.state;
+
+        if (!mode) {
+            return undefined;
+        }
+
+        const params = this.__getCompareTickersParams(usdPrice);
+
+        return (
+            <>
+                <div className="compare-mode__container">
+                    {map(ExchangeMode, (value: ExchangeMode, key: string) => {
+                        const active = mode === value;
+
+                        return (
+                            <button
+                                key={value}
+                                onClick={this.__onClickMode(value)}
+                                className={cn('compare-mode__btn', { '-active': active })}
+                            >{key}</button>
+                        );
+                    })}
+                </div>
+
+                {this.__renderCompareToValues(params, mode)}
+            </>
+        );
+    }
+
+    protected __renderCompareToValues = (params: CompareTickerParams, mode: ExchangeMode) => {
+        if (!params) {
+            return (
+                <label className="current-ticker__info">
+                    <span className="current-ticker__info-value" style={{ width: '100%' }}>
+                        No data for {mode}
+                    </span>
+                </label>
+            );
+        }
+
+        const arbitrageClass = cn('current-ticker__info-value', {
+            '-red': params.arbitragePercent.value() > 0,
+            '-green': params.arbitragePercent.value() < 0,
+        });
+
+        return (
+            <>
+                <label className="current-ticker__info">
+                    <span className="current-ticker__info-label">% Arbitrage</span>
+                    <span className={arbitrageClass}>
+                        {params.arbitragePercent.format('+0,0.[00]%')}
+                    </span>
+                </label>
+
+                <label className="current-ticker__info">
+                    <span className="current-ticker__info-label">Price</span>
+                    <span className="current-ticker__info-value">
+                        ${params.lastPrice.format('0,0.[00]')}
+                    </span>
+                </label>
+            </>
+        );
+    };
+
+    protected __getCompareTickersParams = (usdPrice: number): CompareTickerParams | undefined => {
+        const { bitfinexTicker = null, bitstampTicker = null } = this.props;
+        const { mode } = this.state;
+
+        switch (mode) {
+            case ExchangeMode.Bitfinex: {
+                if (!bitfinexTicker) {
+                    return;
+                }
+
+                const arbitragePercent: Numeral
+                    = Numeral(usdPrice)
+                    .subtract(bitfinexTicker.last_price)
+                    .divide(bitfinexTicker.last_price);
+
+                return {
+                    arbitragePercent: arbitragePercent,
+                    lastPrice: Numeral(bitfinexTicker.last_price),
+                };
+            }
+
+            case ExchangeMode.Bitstamp: {
+                if (!bitstampTicker) {
+                    return;
+                }
+
+                const arbitragePercent: Numeral
+                    = Numeral(usdPrice)
+                    .subtract(bitstampTicker.last)
+                    .divide(bitstampTicker.last);
+
+                return {
+                    arbitragePercent: arbitragePercent,
+                    lastPrice: Numeral(bitstampTicker.last),
+                };
+            }
+        }
+    };
+
+    protected __onClickMode = (mode: ExchangeMode) => {
+        return () => {
+            this.setState({ mode: mode });
+        };
+    };
 }

@@ -12,6 +12,7 @@ import { setupContextMenu } from 'background/ExtensionSetup';
 
 import { checkUahRate } from 'background/check-uah-rate';
 import { processBitfinexTickers } from 'background/check-bitfinex';
+import { processBitstampTickers } from 'background/check-bitstamp';
 
 const updateTicker = (key, kunaTickerData) => {
     const {ticker} = store.getState();
@@ -20,7 +21,7 @@ const updateTicker = (key, kunaTickerData) => {
 
     if (!currentTicker) {
         return {
-            type: "NOTHING"
+            type: 'NOTHING'
         };
     }
 
@@ -54,7 +55,7 @@ const updateTicker = (key, kunaTickerData) => {
     }
 
     return {
-        type: "NOTHING"
+        type: 'NOTHING'
     };
 };
 
@@ -80,9 +81,14 @@ const initBackground = () => {
     checkUahRate();
     setInterval(checkUahRate, 60 * 60 * 1000);
 
-    processBitfinexTickers();
-    setInterval(processBitfinexTickers, 10 * 60 * 1000);
 
+    processBitfinexTickers();
+    processBitstampTickers();
+    setInterval(() => {
+        processBitfinexTickers();
+        processBitstampTickers();
+    }, 10 * 60 * 1000);
+    
     ExtensionPlatform.getExtension().browserAction.setBadgeBackgroundColor({
         color: '#5850FA'
     });

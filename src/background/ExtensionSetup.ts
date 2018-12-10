@@ -9,9 +9,9 @@ export function setupContextMenu() {
         contexts: ["browser_action"],
         onclick: () => {
             extension.tabs.create({
-                url: "https://coinwizard.me?src=Kuna_Extension"
+                url: "https://coinwizard.me?src=Kuna_Extension",
             });
-        }
+        },
     });
 
     extension.contextMenus.create({
@@ -19,8 +19,8 @@ export function setupContextMenu() {
         contexts: ["browser_action"],
         onclick: () => {
             extension.tabs.create({
-                url: "https://github.com/CoinWizard/kuna-ticker-extension"
+                url: "https://github.com/CoinWizard/kuna-ticker-extension",
             });
-        }
+        },
     });
 }

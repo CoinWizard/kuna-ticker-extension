@@ -1,11 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Numeral from 'numeral';
-import { BitfinexTicker } from 'Core/bitfinex';
+import { connect } from 'react-redux';
 import { TickerInterface } from 'Core/Interfaces/TickerInterface';
 import { IStore } from 'Core/Interfaces/Store';
+import { BitfinexTicker } from 'Core/bitfinex';
+import { BitstampTicker } from 'Core/bitstamp';
+
 
 import { UsdStatsView } from './extra-view';
+
 
 interface IProps {
     ticker: TickerInterface;
@@ -14,11 +17,12 @@ interface IProps {
 interface IStateProps {
     uahRate?: number;
     bitfinexTicker?: BitfinexTicker;
+    bitstampTicker?: BitstampTicker;
 }
 
 class TickerStatsComponent extends React.Component<IProps & IStateProps> {
     public render() {
-        const {ticker, uahRate = null, bitfinexTicker = null} = this.props;
+        const { ticker, uahRate = null, bitfinexTicker = null, bitstampTicker = null } = this.props;
 
         return (
             <div>
@@ -52,24 +56,31 @@ class TickerStatsComponent extends React.Component<IProps & IStateProps> {
                 </label>
 
                 {ticker.quoteAsset === 'UAH' && uahRate && (
-                    <UsdStatsView ticker={ticker} uahRate={uahRate} bitfinexTicker={bitfinexTicker}/>
+                    <UsdStatsView ticker={ticker}
+                                  uahRate={uahRate}
+                                  bitfinexTicker={bitfinexTicker}
+                                  bitstampTicker={bitstampTicker}
+                    />
                 )}
             </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (store: IStore, ownProps: IProps): IStateProps => {
 
     let bitfinexTicker = null;
+    let bitstampTicker = null;
     if (ownProps.ticker.compareTo) {
-        bitfinexTicker = store.global.bitfinexTickers[ownProps.ticker.compareTo];
+        bitfinexTicker = store.global.bitfinexTickers[ownProps.ticker.compareTo] || undefined;
+        bitstampTicker = store.global.bitstampTickers[ownProps.ticker.compareTo] || undefined;
     }
 
     return {
         uahRate: store.global.uahRate,
-        bitfinexTicker: bitfinexTicker
-    }
+        bitfinexTicker: bitfinexTicker,
+        bitstampTicker: bitstampTicker,
+    };
 };
 
 export const TickerStats = connect(mapStateToProps)(TickerStatsComponent);

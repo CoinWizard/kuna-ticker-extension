@@ -157,7 +157,7 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
                 </div>
 
                 <div className="drop-down">
-                    <div className="drop-down__icon"/>
+                    <div className="drop-down__icon" />
                 </div>
             </label>
         );

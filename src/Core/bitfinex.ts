@@ -1,7 +1,7 @@
-import Axios, {AxiosInstance, AxiosResponse, AxiosError} from 'axios';
+import Axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
 const axiosClient: AxiosInstance = Axios.create({
-    baseURL: 'https://api.bitfinex.com/v1'
+    baseURL: 'https://api.bitfinex.com/v1',
 });
 
 export interface BitfinexTicker {
@@ -22,7 +22,7 @@ export function fetchBitfinexTicker(symbol: string): Promise<BitfinexTicker> {
 
     const onError = (error: AxiosError) => {
 
-        const {response = null} = error;
+        const { response = null } = error;
 
         console.error(error);
         console.error(response);

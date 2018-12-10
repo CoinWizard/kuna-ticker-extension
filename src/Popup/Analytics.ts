@@ -19,7 +19,7 @@ if (!visitorUUID) {
     localStorage.set(USER_UUID_KEY, visitorUUID);
 }
 
-export const visitor = UniversalAnalytics(GA_IDENTIFY, visitorUUID, {https: true});
+export const visitor = UniversalAnalytics(GA_IDENTIFY, visitorUUID, { https: true });
 
 export const sendScreenView = (pageTitle) => {
     visitor.screenview(pageTitle, APPLICATION_NAME, DISPLAYED_VERSION).send();
