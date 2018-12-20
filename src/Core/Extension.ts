@@ -1,6 +1,6 @@
 import CreateProperties = chrome.tabs.CreateProperties;
 import Manifest = chrome.runtime.Manifest;
-import ExtensionInstance from 'Core/ExtensionInstance';
+import ExtensionInstance from 'Core/extension-instance';
 
 const extension: ExtensionInstance = new ExtensionInstance();
 

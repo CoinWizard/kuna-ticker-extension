@@ -16,7 +16,8 @@ export type TickerInterface = KunaMarket & {
     OHLC: OHLCInterface;
     depth: DepthInterface;
 
-    price?: number;
+    price: number;
+    dailyChangePercent: number;
     volume_base?: number;
     volume_quote?: number;
 }

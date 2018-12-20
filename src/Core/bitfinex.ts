@@ -1,4 +1,4 @@
-import Axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+import Axios, { AxiosInstance } from 'axios';
 
 const axiosClient: AxiosInstance = Axios.create({
     baseURL: 'https://api.bitfinex.com/v1',
@@ -15,18 +15,12 @@ export interface BitfinexTicker {
     timestamp: string;
 }
 
-export function fetchBitfinexTicker(symbol: string): Promise<BitfinexTicker> {
-    const onSuccess = (response: AxiosResponse) => {
-        return response.data;
-    };
+export async function fetchBitfinexTicker(symbol: string): Promise<BitfinexTicker> {
+    try {
+        const { data } = await axiosClient.get(`/pubticker/${symbol}`);
 
-    const onError = (error: AxiosError) => {
-
-        const { response = null } = error;
-
-        console.error(error);
-        console.error(response);
-    };
-
-    return axiosClient.get(`/pubticker/${symbol}`).then(onSuccess, onError);
+        return data as BitfinexTicker;
+    } catch (error) {
+        console.warn(error);
+    }
 }

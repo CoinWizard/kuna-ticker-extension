@@ -33,20 +33,31 @@
 
     &__market {
         display: block;
-        line-height: 14px;
         margin-top: 4px;
+
         &-link {
-            font-size: 12px;
-            color: $color-gull-gray;
+            transition: all 0.4s;
+            font-size: 14px;
+            color: $color-shuttle-gray;
             text-decoration: none;
+
+            display: inline-block;
+            line-height: 20px;
+            padding: 5px 10px;
+            border: 1px solid $color-all-ocean;
+            border-radius: 3px;
+
             &:hover {
-                color: darken($color-gull-gray, 5%);
+                transition: all 0.2s;
+                color: darken($color-shuttle-gray, 5%);
+                border-color: darken($color-all-ocean, 10%);
             }
         }
     }
 
     &__info {
         &-container {
+            margin-top: 8px;
             padding: 0 16px 16px 16px;
         }
 
@@ -91,6 +102,7 @@
             cursor: pointer;
             color: $color-gull-gray;
             text-decoration: none;
+
             &:after {
                 transition: all 0.2s;
                 position: absolute;
@@ -101,13 +113,30 @@
                 bottom: -5px;
                 background: $color-kuna-dark-blue;
             }
+
             &.-active {
                 color: $color-shuttle-gray;
+
                 &:after {
                     height: 2px;
                 }
             }
         }
+    }
+}
+
+.daily-change {
+    display: inline-block;
+    margin: 4px 0;
+    font-size: 14px;
+    font-weight: 500;
+
+    &.-up {
+        color: $color-success;
+    }
+
+    &.-down {
+        color: $color-danger;
     }
 }
 
@@ -149,7 +178,7 @@
             width: 20px;
             margin-right: 8px;
         }
-        
+
         &-name {
             font-weight: 400;
         }

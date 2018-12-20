@@ -15,7 +15,7 @@ const KUNA_FEE = 1 - 0.0025;
 const BINANCE_FEE = 1 - 0.001;
 
 const usd = (num: string | number | Numeral): string => {
-    return Numeral(num).format(USD_FORMAT)
+    return Numeral(num).format(USD_FORMAT);
 };
 
 class ArbitrageTabComponent extends React.Component<ArbitrageProps, ArbitrageState> {
@@ -25,7 +25,7 @@ class ArbitrageTabComponent extends React.Component<ArbitrageProps, ArbitrageSta
     };
 
     public async componentDidMount(): Promise<void> {
-        const {arbitrageParams} = this.props;
+        const { arbitrageParams } = this.props;
         if (!arbitrageParams) {
             return;
         }
@@ -39,7 +39,7 @@ class ArbitrageTabComponent extends React.Component<ArbitrageProps, ArbitrageSta
             return;
         }
 
-        this.setState({binancePrice: undefined});
+        this.setState({ binancePrice: undefined });
 
         if (!this.props.arbitrageParams) {
             return;
@@ -50,13 +50,12 @@ class ArbitrageTabComponent extends React.Component<ArbitrageProps, ArbitrageSta
 
 
     public render(): JSX.Element {
-
-        const {tusdPrice, arbitrageParams, ticker} = this.props;
-        const {binancePrice} = this.state;
+        const { tusdPrice, arbitrageParams } = this.props;
+        const { binancePrice } = this.state;
 
         if (!arbitrageParams) {
             return (
-                <div style={{textAlign: 'center', padding: '30px 0', fontWeight: 600}}>
+                <div style={{ textAlign: 'center', padding: '30px 0', fontWeight: 600 }}>
                     Disabled
                 </div>
             );
@@ -77,22 +76,18 @@ class ArbitrageTabComponent extends React.Component<ArbitrageProps, ArbitrageSta
             response = {
                 imp: {
                     result: importUah,
-                    percent: (importUah - beforeUah) / beforeUah
+                    percent: (importUah - beforeUah) / beforeUah,
                 },
                 exp: {
                     result: exportUah,
-                    percent: (exportUah - beforeUah) / beforeUah
-                }
-            }
+                    percent: (exportUah - beforeUah) / beforeUah,
+                },
+            };
         }
 
         return (
             <div className="arbitrage-box">
-                <input
-                    className="calculator-side-input"
-                    value={this.state.value}
-                    onChange={this.onChangeInput}
-                />
+                <input className="calculator-side-input" value={this.state.value} onChange={this.onChangeInput} />
 
                 {response && (
                     <div className="arbitrage-box__response">
@@ -119,15 +114,15 @@ class ArbitrageTabComponent extends React.Component<ArbitrageProps, ArbitrageSta
     }
 
     protected onChangeInput = (event) => {
-        this.setState({value: event.target.value});
-    }
+        this.setState({ value: event.target.value });
+    };
 
     /**
      * Export strategy
      */
     protected calculateExport(): number {
-        const {tusdPrice, arbitrageParams, ticker} = this.props;
-        const {binancePrice} = this.state;
+        const { tusdPrice, arbitrageParams, ticker } = this.props;
+        const { binancePrice } = this.state;
 
         // UAH -> ETH (Kuna)
         let result = (this.value / ticker.depth.ask) * KUNA_FEE;
@@ -151,8 +146,8 @@ class ArbitrageTabComponent extends React.Component<ArbitrageProps, ArbitrageSta
      * Import strategy
      */
     protected calculateImport(): number {
-        const {tusdPrice, arbitrageParams, ticker} = this.props;
-        const {binancePrice} = this.state;
+        const { tusdPrice, arbitrageParams, ticker } = this.props;
+        const { binancePrice } = this.state;
 
         // UAH -> TUSD (Kuna)
         let result = (this.value / (+tusdPrice.ask)) * KUNA_FEE;
@@ -176,10 +171,10 @@ class ArbitrageTabComponent extends React.Component<ArbitrageProps, ArbitrageSta
     protected async updateStates(arbitrageParams): Promise<void> {
         const client = Binance();
         const response = await client.dailyStats({
-            symbol: arbitrageParams.binanceSymbol
+            symbol: arbitrageParams.binanceSymbol,
         }) as DailyStatsResult;
 
-        this.setState({binancePrice: response});
+        this.setState({ binancePrice: response });
     }
 }
 
@@ -203,7 +198,7 @@ type ArbitrageState = {
 
 
 const mapStateToProps = (state, ownProps: OuterProps): ConnectedProps => {
-    const {tickers} = state.ticker;
+    const { tickers } = state.ticker;
 
     const usdTicker = tickers[TUSD_UAH_PAIR];
 
@@ -216,10 +211,10 @@ const mapStateToProps = (state, ownProps: OuterProps): ConnectedProps => {
             bid: usdTicker.depth.bid,
             ask: usdTicker.depth.ask,
         },
-        arbitrageParams: arbitrageParamsMap[ownProps.ticker.key] || undefined
+        arbitrageParams: arbitrageParamsMap[ownProps.ticker.key] || undefined,
     };
 };
 
 export const ArbitrageTab = compose<ArbitrageProps, OuterProps>(
-    connect(mapStateToProps)
+    connect(mapStateToProps),
 )(ArbitrageTabComponent);

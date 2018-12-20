@@ -16,8 +16,8 @@ interface IUsdPriceProps {
 
 
 enum ExchangeMode {
-    Bitfinex = 'bitfinex',
-    Bitstamp = 'bitstamp'
+    Bitstamp = 'bitstamp',
+    Bitfinex = 'bitfinex'
 }
 
 
@@ -80,17 +80,18 @@ export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewSt
     protected __checkAvailableMode = (props: IUsdPriceProps): ExchangeMode | undefined => {
         const { bitstampTicker, bitfinexTicker } = props;
 
-        if (bitfinexTicker) {
-            return ExchangeMode.Bitfinex;
-        }
-
         if (bitstampTicker) {
             return ExchangeMode.Bitstamp;
+        }
+
+        if (bitfinexTicker) {
+            return ExchangeMode.Bitfinex;
         }
     };
 
 
     protected __renderCompares(usdPrice: number) {
+
         const { mode } = this.state;
 
         if (!mode) {
@@ -100,30 +101,30 @@ export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewSt
         const params = this.__getCompareTickersParams(usdPrice);
 
         return (
-            <>
+            <div>
                 <div className="compare-mode__container">
                     {map(ExchangeMode, (value: ExchangeMode, key: string) => {
                         const active = mode === value;
 
                         return (
-                            <button
-                                key={value}
-                                onClick={this.__onClickMode(value)}
-                                className={cn('compare-mode__btn', { '-active': active })}
+                            <button key={value}
+                                    onClick={this.__onClickMode(value)}
+                                    className={cn('compare-mode__btn', { '-active': active })}
                             >{key}</button>
                         );
                     })}
                 </div>
 
                 {this.__renderCompareToValues(params, mode)}
-            </>
+            </div>
         );
     }
+
 
     protected __renderCompareToValues = (params: CompareTickerParams, mode: ExchangeMode) => {
         if (!params) {
             return (
-                <label className="current-ticker__info">
+                <label className="current-ticker__info" style={{ width: '100%', flex: 1 }}>
                     <span className="current-ticker__info-value" style={{ width: '100%' }}>
                         No data for {mode}
                     </span>
@@ -137,7 +138,7 @@ export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewSt
         });
 
         return (
-            <>
+            <div>
                 <label className="current-ticker__info">
                     <span className="current-ticker__info-label">% Arbitrage</span>
                     <span className={arbitrageClass}>
@@ -151,7 +152,7 @@ export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewSt
                         ${params.lastPrice.format('0,0.[00]')}
                     </span>
                 </label>
-            </>
+            </div>
         );
     };
 

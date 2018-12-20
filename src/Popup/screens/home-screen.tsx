@@ -97,13 +97,10 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
         const marketList = [];
 
         const createTickerSeparator = (coinAsset: KunaAssetUnit) => {
-
             const asset = getAsset(coinAsset);
-            const CoinIcon = getCoinIcon(coinAsset);
 
             return (
                 <div className="ticker-list__separator" key={'separator-' + coinAsset}>
-                    {CoinIcon ? <CoinIcon className="ticker-list__separator-icon" /> : undefined}
                     <div className="ticker-list__separator-name">{asset.name}</div>
                 </div>
             );
@@ -121,6 +118,12 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
 
         marketList.push(createTickerSeparator(KunaAssetUnit.Ethereum));
         each(groupedTickers[KunaAssetUnit.Ethereum], createTicker);
+
+        marketList.push(createTickerSeparator(KunaAssetUnit.AdvancedRUB));
+        each(groupedTickers[KunaAssetUnit.AdvancedRUB], createTicker);
+
+        marketList.push(createTickerSeparator(KunaAssetUnit.AdvancedUSD));
+        each(groupedTickers[KunaAssetUnit.AdvancedUSD], createTicker);
 
         marketList.push(createTickerSeparator(KunaAssetUnit.StasisEuro));
         each(groupedTickers[KunaAssetUnit.StasisEuro], createTicker);

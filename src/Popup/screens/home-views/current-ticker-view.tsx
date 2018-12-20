@@ -1,5 +1,6 @@
 import React from 'react';
-import Numeral from 'numeral';
+import numeral from 'numeral';
+import cn from 'classnames';
 import localStorage from 'local-storage';
 import { Router, Switch, Route, NavLink } from 'react-router-dom';
 import { createMemoryHistory, MemoryHistory } from 'history';
@@ -34,21 +35,30 @@ export class CurrentTickerView extends React.PureComponent<IViewProps> {
                 <div className="current-ticker">
                     <div className="current-ticker__bugged">
                         <label className="current-ticker__price">
-                        <span className="current-ticker__price-base">
-                        1<span className="current-ticker__price-currency">{ticker.baseAsset}</span>
-                        </span>
+                            <span className="current-ticker__price-base">
+                                1<span className="current-ticker__price-currency">{ticker.baseAsset}</span>
+                            </span>
                             <span className="current-ticker__price-separator">=</span>
                             <span className="current-ticker__price-quote">
-                            {Numeral(ticker.price).format(ticker.format)}
+                                {numeral(ticker.price).format(ticker.format)}
                                 <span className="current-ticker__price-currency">{ticker.quoteAsset}</span>
-                        </span>
+                            </span>
                         </label>
+
+                        {(typeof ticker.dailyChangePercent === 'number') ? (
+                            <div className={cn('daily-change', {
+                                '-up': ticker.dailyChangePercent > 0,
+                                '-down': ticker.dailyChangePercent <= 0,
+                            })}>
+                                {numeral(ticker.dailyChangePercent).format('+0,0.00')}%
+                            </div>
+                        ) : undefined}
 
                         <div className="current-ticker__market">
                             <a href={`https://kuna.io/markets/${ticker.key}?src=Kuna_Extension`}
                                className="current-ticker__market-link"
                                target="_blank"
-                            >Market {ticker.baseAsset}/{ticker.quoteAsset}</a>
+                            >To trading {ticker.baseAsset}/{ticker.quoteAsset}</a>
                         </div>
 
                         <div className="current-ticker-tabs">
