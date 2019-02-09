@@ -1,5 +1,5 @@
 <p align="center">
-  <h3 align="center">Chrome Extension for Kuna</h3>
+  <h1 align="center">Chrome Extension for Kuna</h1>
 
   <p align="center">
     Track anything with your altcoins. Use the Kuna Ticker Extension to track 

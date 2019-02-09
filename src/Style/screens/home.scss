@@ -245,7 +245,25 @@
         }
 
         &-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
             color: $color-dark-gray;
+
+            &-value {
+            }
+
+            &-percentage {
+                margin-top: 3px;
+                font-size: 10px;
+
+                &.-up {
+                    color: $color-success;
+                }
+                &.-down {
+                    color: $color-danger;
+                }
+            }
         }
 
         &.-active {
@@ -258,7 +276,6 @@
         }
     }
 }
-
 
 .compare-mode {
     &__container {

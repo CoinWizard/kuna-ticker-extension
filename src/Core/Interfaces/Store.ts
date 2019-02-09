@@ -2,7 +2,6 @@ import { BitfinexTicker } from 'Core/bitfinex';
 import { BitstampTicker } from 'Core/bitstamp';
 import { TickerInterface } from './TickerInterface';
 
-
 export interface IGlobalStore {
     uahRate?: null;
     bitfinexTickers: Record<string, BitfinexTicker>;
@@ -10,7 +9,7 @@ export interface IGlobalStore {
 }
 
 export interface ITickerStore {
-    tickers: Record<string, TickerInterface>;
+    tickers: Record<string, Partial<TickerInterface>>;
     currentTickerKey?: string;
 }
 

@@ -1,16 +1,15 @@
 import React from 'react';
+import cn from 'classnames';
 import store from 'Popup/store';
 import { connect } from 'react-redux';
 import { getAsset, KunaAssetUnit } from 'kuna-sdk';
 import { find, each, groupBy } from 'lodash';
 import Numeral from 'numeral';
-import { sendTickerScreenView } from 'Popup/Analytics';
-
-
-import { TickerActions } from 'Popup/Actions/TickerActions';
-import { CurrentTickerView } from './home-views/current-ticker-view';
-import { getCoinIcon } from 'Popup/svg';
 import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { sendTickerScreenView } from 'Popup/Analytics';
+import { TickerActions } from 'Popup/Actions/TickerActions';
+import { getCoinIcon } from 'Popup/svg';
+import { CurrentTickerView } from './home-views/current-ticker-view';
 
 
 type HomeScreenProps = {
@@ -29,8 +28,8 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
 
 
     public render(): JSX.Element {
-        const { tickers = [], currentTickerKey = null } = this.props;
-        const currentTicker = find(tickers, { key: currentTickerKey }) as any;
+        const {tickers = [], currentTickerKey = null} = this.props;
+        const currentTicker = find(tickers, {key: currentTickerKey}) as any;
 
         return (
             <div>
@@ -41,7 +40,7 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
                 </header>
 
                 {currentTicker ? (
-                    <CurrentTickerView ticker={currentTicker} />
+                    <CurrentTickerView ticker={currentTicker}/>
                 ) : (
                     <div className="loading">Wait...</div>
                 )}
@@ -51,48 +50,61 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
 
 
     protected changeMarket = (tickerKey: string): void => {
-        const { tickers = [] } = this.props;
-        const currentTicker = find(tickers, { key: tickerKey });
+        const {tickers = []} = this.props;
+        const currentTicker = find(tickers, {key: tickerKey});
         store.dispatch(TickerActions.setCurrentTickerKey(tickerKey));
 
         sendTickerScreenView(currentTicker);
 
-        this.setState({ selectMode: false });
+        this.setState({selectMode: false});
     };
 
 
-    protected createMarketRow = (market: TickerInterface, isActive: boolean = false) => {
+    protected createMarketRow = (ticker: TickerInterface, isActive: boolean = false) => {
         const tickerListItemProps = {
-            key: market.key,
+            key: ticker.key,
             className: `ticker-list__item ${isActive ? '-active' : ''}`,
-            onClick: () => this.changeMarket(market.key),
+            onClick: () => this.changeMarket(ticker.key),
         };
 
-        const CoinIcon = getCoinIcon(market.baseAsset);
+        const CoinIcon = getCoinIcon(ticker.baseAsset);
+
+        const pValue = Numeral(ticker.dailyChangePercent);
+
+        const changeClassNames = cn('ticker-list__item-price-percentage', {
+            '-up': pValue.value() > 0,
+            '-down': pValue.value() <= 0,
+        });
 
         return (
             <div {...tickerListItemProps}>
                 <label className="ticker-list__item-name">
                     {CoinIcon ? (
-                        <CoinIcon className="ticker-list__item-icon" />
+                        <CoinIcon className="ticker-list__item-icon"/>
                     ) : (
-                        <div className="ticker-list__item-no-icon" />
+                        <div className="ticker-list__item-no-icon"/>
                     )}
-                    <span className="base-asset">{market.baseAsset}</span>
+                    <span className="base-asset">{ticker.baseAsset}</span>
                     <span className="asset-separator"> / </span>
-                    <span className="quote-asset">{market.quoteAsset}</span>
+                    <span className="quote-asset">{ticker.quoteAsset}</span>
                 </label>
-                <span className="ticker-list__item-price">
-                    {Numeral(market.price).format(market.format)} {market.quoteAsset}
-                </span>
+
+                <div className="ticker-list__item-price">
+                    <div className="ticker-list__item-price-value">
+                        {Numeral(ticker.price).format(ticker.format)} {ticker.quoteAsset}
+                    </div>
+                    <div className={changeClassNames}>
+                        {pValue.format('+0,0.[00]')}%
+                    </div>
+                </div>
             </div>
         );
     };
 
 
     protected drawMarketList(): JSX.Element {
-        const { tickers = [], currentTickerKey = null } = this.props;
-        const { selectMode = false } = this.state;
+        const {tickers = [], currentTickerKey = null} = this.props;
+        const {selectMode = false} = this.state;
         const groupedTickers = groupBy(tickers, 'quoteAsset');
         const marketList = [];
 
@@ -106,7 +118,11 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
             );
         };
 
-        const createTicker = (ticker) => {
+        const createTicker = (ticker: TickerInterface) => {
+            if (ticker.price === 0) {
+                return;
+            }
+
             marketList.push(this.createMarketRow(ticker, currentTickerKey === ticker.key));
         };
 
@@ -115,6 +131,9 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
 
         marketList.push(createTickerSeparator(KunaAssetUnit.Bitcoin));
         each(groupedTickers[KunaAssetUnit.Bitcoin], createTicker);
+
+        marketList.push(createTickerSeparator(KunaAssetUnit.Tether));
+        each(groupedTickers[KunaAssetUnit.Tether], createTicker);
 
         marketList.push(createTickerSeparator(KunaAssetUnit.Ethereum));
         each(groupedTickers[KunaAssetUnit.Ethereum], createTicker);
@@ -136,23 +155,23 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
 
 
     protected renderCurrentTickerHeader(): JSX.Element {
-        const { tickers = [], currentTickerKey = null } = this.props;
-        const currentTicker = find(tickers, { key: currentTickerKey }) as any;
+        const {tickers = [], currentTickerKey = null} = this.props;
+        const currentTicker = find(tickers, {key: currentTickerKey}) as any;
 
         const currentMarketLabelProps = {
             className: 'header__current-market',
-            onClick: () => this.setState({ selectMode: true }),
+            onClick: () => this.setState({selectMode: true}),
         };
 
         if (!currentTicker) {
-            return <div />;
+            return <div/>;
         }
 
         const CoinIcon = getCoinIcon(currentTicker.baseAsset);
 
         return (
             <label {...currentMarketLabelProps}>
-                {CoinIcon && <CoinIcon className="header__current-market-icon" />}
+                {CoinIcon && <CoinIcon className="header__current-market-icon"/>}
                 <div className="header__current-market-text">
                     <span className="base">{currentTicker.baseAsset}</span>
                     <span className="separator"> / </span>
@@ -160,7 +179,7 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
                 </div>
 
                 <div className="drop-down">
-                    <div className="drop-down__icon" />
+                    <div className="drop-down__icon"/>
                 </div>
             </label>
         );
@@ -169,7 +188,7 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
 
 
 const mapStateToProps = (store) => {
-    const { tickers, currentTickerKey } = store.ticker;
+    const {tickers, currentTickerKey} = store.ticker;
 
     const totalMap = {};
     each(tickers, (ticker) => {
