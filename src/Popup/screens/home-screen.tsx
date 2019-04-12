@@ -129,6 +129,9 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
         marketList.push(createTickerSeparator(KunaAssetUnit.UkrainianHryvnia));
         each(groupedTickers[KunaAssetUnit.UkrainianHryvnia], createTicker);
 
+        marketList.push(createTickerSeparator(KunaAssetUnit.USDollar));
+        each(groupedTickers[KunaAssetUnit.USDollar], createTicker);
+
         marketList.push(createTickerSeparator(KunaAssetUnit.Bitcoin));
         each(groupedTickers[KunaAssetUnit.Bitcoin], createTicker);
 
@@ -141,14 +144,8 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
         marketList.push(createTickerSeparator(KunaAssetUnit.AdvancedRUB));
         each(groupedTickers[KunaAssetUnit.AdvancedRUB], createTicker);
 
-        marketList.push(createTickerSeparator(KunaAssetUnit.AdvancedUSD));
-        each(groupedTickers[KunaAssetUnit.AdvancedUSD], createTicker);
-
         marketList.push(createTickerSeparator(KunaAssetUnit.StasisEuro));
         each(groupedTickers[KunaAssetUnit.StasisEuro], createTicker);
-
-        marketList.push(createTickerSeparator(KunaAssetUnit.GolosGold));
-        each(groupedTickers[KunaAssetUnit.GolosGold], createTicker);
 
         return <div className={`ticker-list ${selectMode ? '-active' : ''}`}>{marketList}</div>;
     }
