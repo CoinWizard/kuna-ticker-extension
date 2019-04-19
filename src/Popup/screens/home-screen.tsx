@@ -141,8 +141,8 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
         marketList.push(createTickerSeparator(KunaAssetUnit.Ethereum));
         each(groupedTickers[KunaAssetUnit.Ethereum], createTicker);
 
-        marketList.push(createTickerSeparator(KunaAssetUnit.AdvancedRUB));
-        each(groupedTickers[KunaAssetUnit.AdvancedRUB], createTicker);
+        marketList.push(createTickerSeparator(KunaAssetUnit.RussianRuble));
+        each(groupedTickers[KunaAssetUnit.RussianRuble], createTicker);
 
         marketList.push(createTickerSeparator(KunaAssetUnit.StasisEuro));
         each(groupedTickers[KunaAssetUnit.StasisEuro], createTicker);
