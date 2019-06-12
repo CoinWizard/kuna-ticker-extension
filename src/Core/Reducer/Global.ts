@@ -2,11 +2,13 @@ import { IGlobalStore } from 'Core/Interfaces/Store';
 import { ObjectUtility } from 'Core/ObjectUtility';
 import { BitfinexTicker } from 'Core/bitfinex';
 import { BitstampTicker } from 'Core/bitstamp';
+import { BinanceTicker } from 'Core/binance-helper';
 
 const initialState: IGlobalStore = {
     uahRate: null,
     bitfinexTickers: {},
     bitstampTickers: {},
+    binanceTickers: {},
 };
 
 interface ActionInterface {
@@ -35,6 +37,19 @@ function updateBitstampTicker(state: IGlobalStore, symbol: string, ticker: Bitst
 }
 
 
+function updateBinanceTicker(state: IGlobalStore, tickers: BinanceTicker[]) {
+    const { binanceTickers } = state;
+
+    tickers.map((t: BinanceTicker) => {
+        binanceTickers[t.symbol] = t;
+    });
+
+    return ObjectUtility.updateObject(state, {
+        binanceTickers: binanceTickers,
+    });
+}
+
+
 /**
  * @param {IGlobalStore} state
  * @param {ActionInterface} action
@@ -53,6 +68,10 @@ export default function globalState(state: IGlobalStore = initialState, action: 
 
         case 'GLOBAL::SET_BITSTAMP_TICKER': {
             return updateBitstampTicker(state, action.symbol, action.ticker);
+        }
+
+        case 'GLOBAL::SET_BINANCE_TICKER': {
+            return updateBinanceTicker(state, action.tickers);
         }
     }
 

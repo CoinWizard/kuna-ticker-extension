@@ -11,6 +11,7 @@ import { checkUahRate } from 'background/check-uah-rate';
 import { setupContextMenu } from 'background/ExtensionSetup';
 import { processBitfinexTickers } from 'background/check-bitfinex';
 import { processBitstampTickers } from 'background/check-bitstamp';
+import { processBinanceTickers } from 'background/check-binance';
 
 
 /**
@@ -30,7 +31,6 @@ const updateTicker = (key, kunaTickerData) => {
     }
 
     try {
-
         currentTicker.price = kunaTickerData.lastPrice || 0;
         currentTicker.dailyChangePercent = kunaTickerData.dailyChangePercent || 0;
         currentTicker.volume_base = kunaTickerData.volume;
@@ -72,6 +72,7 @@ const tickerUpdater = async () => {
     _.each(tickers, (ticker) => store.dispatch(updateTicker(ticker.symbol, ticker)));
 };
 
+
 const initBackground = () => {
     wrapStore(store, {
         portName: STORE_KEY
@@ -81,20 +82,19 @@ const initBackground = () => {
         return store.getState();
     };
 
-
     tickerUpdater();
     setInterval(tickerUpdater, 60 * 1000);
-
 
     checkUahRate();
     setInterval(checkUahRate, 60 * 60 * 1000);
 
-
     processBitfinexTickers();
     processBitstampTickers();
+    processBinanceTickers();
     setInterval(() => {
         processBitfinexTickers();
         processBitstampTickers();
+        processBinanceTickers();
     }, 10 * 60 * 1000);
 
     ExtensionPlatform.getExtension().browserAction.setBadgeBackgroundColor({
@@ -102,9 +102,10 @@ const initBackground = () => {
     });
 };
 
-document.addEventListener('DOMContentLoaded', initBackground);
 
+document.addEventListener('DOMContentLoaded', initBackground);
 setupContextMenu();
+
 
 ExtensionPlatform.getRuntime().onInstalled.addListener((event) => {
     switch (event.reason) {
