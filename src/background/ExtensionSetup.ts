@@ -5,11 +5,11 @@ const extension = ExtensionPlatform.getExtension();
 export function setupContextMenu() {
     extension.contextMenus.removeAll();
     extension.contextMenus.create({
-        title: "by CoinWizard Team",
+        title: "by Plark with 🚀",
         contexts: ["browser_action"],
         onclick: () => {
             extension.tabs.create({
-                url: "https://coinwizard.me?src=Kuna_Extension",
+                url: "https://plark.io?src=Kuna_Extension",
             });
         },
     });
