@@ -7,7 +7,7 @@ import { find, each, groupBy } from 'lodash';
 import Numeral from 'numeral';
 import { TickerInterface } from 'Core/Interfaces';
 import { sendTickerScreenView } from 'Popup/Analytics';
-import { TickerActions } from 'Popup/Actions/TickerActions';
+import { TickerActions } from 'Core/actions';
 import { getCoinIcon } from 'Popup/svg';
 import { CurrentTickerView } from './home-views/current-ticker-view';
 
@@ -32,12 +32,8 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
         const currentTicker = find(tickers, {key: currentTickerKey}) as any;
 
         return (
-            <div>
+            <div className="home-screen">
                 {this.drawMarketList()}
-
-                <header className="header">
-                    {this.renderCurrentTickerHeader()}
-                </header>
 
                 {currentTicker ? (
                     <CurrentTickerView ticker={currentTicker}/>
@@ -63,7 +59,7 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
     protected createMarketRow = (ticker: TickerInterface, isActive: boolean = false) => {
         const tickerListItemProps = {
             key: ticker.key,
-            className: `ticker-list__item ${isActive ? '-active' : ''}`,
+            className: `market-list__item ${isActive ? '-active' : ''}`,
             onClick: () => this.changeMarket(ticker.key),
         };
 
@@ -71,26 +67,26 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
 
         const pValue = Numeral(ticker.dailyChangePercent);
 
-        const changeClassNames = cn('ticker-list__item-price-percentage', {
+        const changeClassNames = cn('market-list__item-price-percentage', {
             '-up': pValue.value() > 0,
             '-down': pValue.value() <= 0,
         });
 
         return (
             <div {...tickerListItemProps}>
-                <label className="ticker-list__item-name">
+                <label className="market-list__item-name">
                     {CoinIcon ? (
-                        <CoinIcon className="ticker-list__item-icon"/>
+                        <CoinIcon className="market-list__item-icon"/>
                     ) : (
-                        <div className="ticker-list__item-no-icon"/>
+                        <div className="market-list__item-no-icon"/>
                     )}
                     <span className="base-asset">{ticker.baseAsset}</span>
                     <span className="asset-separator"> / </span>
                     <span className="quote-asset">{ticker.quoteAsset}</span>
                 </label>
 
-                <div className="ticker-list__item-price">
-                    <div className="ticker-list__item-price-value">
+                <div className="market-list__item-price">
+                    <div className="market-list__item-price-value">
                         {Numeral(ticker.price).format(ticker.format)} {ticker.quoteAsset}
                     </div>
                     <div className={changeClassNames}>
@@ -112,8 +108,8 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
             const asset = getAsset(coinAsset);
 
             return (
-                <div className="ticker-list__separator" key={'separator-' + coinAsset}>
-                    <div className="ticker-list__separator-name">{asset.name}</div>
+                <div className="market-list__separator" key={'separator-' + coinAsset}>
+                    <div className="market-list__separator-name">{asset.name}</div>
                 </div>
             );
         };
@@ -129,11 +125,11 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
         marketList.push(createTickerSeparator(KunaAssetUnit.UkrainianHryvnia));
         each(groupedTickers[KunaAssetUnit.UkrainianHryvnia], createTicker);
 
-        marketList.push(createTickerSeparator(KunaAssetUnit.USDollar));
-        each(groupedTickers[KunaAssetUnit.USDollar], createTicker);
-
         marketList.push(createTickerSeparator(KunaAssetUnit.Bitcoin));
         each(groupedTickers[KunaAssetUnit.Bitcoin], createTicker);
+
+        marketList.push(createTickerSeparator(KunaAssetUnit.USDollar));
+        each(groupedTickers[KunaAssetUnit.USDollar], createTicker);
 
         marketList.push(createTickerSeparator(KunaAssetUnit.Tether));
         each(groupedTickers[KunaAssetUnit.Tether], createTicker);
@@ -147,7 +143,7 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
         marketList.push(createTickerSeparator(KunaAssetUnit.StasisEuro));
         each(groupedTickers[KunaAssetUnit.StasisEuro], createTicker);
 
-        return <div className={`ticker-list ${selectMode ? '-active' : ''}`}>{marketList}</div>;
+        return <div className="market-list">{marketList}</div>;
     }
 
 

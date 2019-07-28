@@ -1,42 +1,46 @@
-import { createStore, applyMiddleware, AnyAction } from 'redux';
+import { createStore, applyMiddleware, AnyAction, MiddlewareAPI, Dispatch } from 'redux';
 import BadgeController from 'background/badge-controller';
-import { ActionTypes } from 'Popup/Actions/ActionTypes';
+import { ActionTypes } from 'Core/actions';
 import rootReducer from '../Reducer';
 import { IStore, TickerInterface } from '../Interfaces';
 
-const trackBudgeMiddleware = (store: IStore) => (next) => (action: AnyAction) => {
-    next(action);
+const trackBudgeMiddleware = (api: MiddlewareAPI<IStore>) => {
+    return (next: Dispatch<IStore>) => {
+        return (action: AnyAction) => {
+            next(action);
 
-    const {ticker} = store;
+            const {ticker} = api.getState();
 
-    if (!ticker) {
-        return;
-    }
-
-    switch (action.type) {
-        case ActionTypes.UPDATE_TICKER: {
-            if (ticker.currentTickerKey === action.ticker.key) {
-                BadgeController.updateBudgetTexts(action.ticker);
+            if (!ticker) {
+                return;
             }
 
-            break;
-        }
+            switch (action.type) {
+                case ActionTypes.UPDATE_TICKER: {
+                    if (ticker.currentTickerKey === action.ticker.key) {
+                        BadgeController.updateBudgetTexts(action.ticker);
+                    }
 
-        case ActionTypes.SET_CURRENT_TICKER: {
-            const newTicker = ticker.tickers[action.currentTickerKey] as TickerInterface;
-            if (newTicker) {
-                BadgeController.updateBudgetTexts(newTicker);
+                    break;
+                }
+
+                case ActionTypes.SET_CURRENT_TICKER: {
+                    const newTicker = ticker.tickers[action.tickerKey] as TickerInterface;
+                    if (newTicker) {
+                        BadgeController.updateBudgetTexts(newTicker);
+                    }
+                    break;
+                }
             }
-            break;
-        }
-    }
+        };
+    };
 };
 
 const store = createStore<IStore>(
     rootReducer,
-
-    // tslint:disable-next-line
-    applyMiddleware(trackBudgeMiddleware),
+    applyMiddleware(
+        trackBudgeMiddleware as any,
+    ),
 );
 
 export default store;

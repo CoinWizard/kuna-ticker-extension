@@ -1,23 +1,22 @@
-import { ActionTypes } from 'Popup/Actions/ActionTypes';
 import { TickerInterface } from 'Core/Interfaces';
+import ActionTypes from './action-types';
 
-export class TickerActions {
-
-    static updateTicker(ticker: TickerInterface) {
+export default class TickerActions {
+    public static updateTicker(ticker: TickerInterface) {
         return {
             type: ActionTypes.UPDATE_TICKER,
             ticker: ticker,
         };
     }
 
-    static setCurrentTickerKey(tickerKey: string) {
+    public static setCurrentTickerKey(tickerKey: string) {
         return {
             type: ActionTypes.SET_CURRENT_TICKER,
             tickerKey: tickerKey,
         };
     }
 
-    static fetchTickers(tickers: Map<string, TickerInterface>) {
+    public static fetchTickers(tickers: Map<string, TickerInterface>) {
         return {
             type: ActionTypes.FETCH_TICKERS,
             tickers: tickers,

@@ -6,8 +6,7 @@ import { TickerInterface } from 'Core/Interfaces';
 const browserAction = ExtensionPlatform.getExtension().browserAction;
 
 export default class BadgeController {
-
-    static formatTickerPrice(price: number): string {
+    public static formatTickerPrice(price: number): string {
         let priceNumeral = Numeral(price);
 
         if (price < 10) {
@@ -29,7 +28,7 @@ export default class BadgeController {
         return '' + price;
     }
 
-    static updateBudgetTexts(ticker: TickerInterface) {
+    public static updateBudgetTexts(ticker: TickerInterface) {
         browserAction.setBadgeText({
             text: BadgeController.formatTickerPrice(ticker.price),
         });

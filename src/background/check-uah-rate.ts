@@ -1,11 +1,14 @@
-import store from "Core/Store";
-import {fetchUahRate} from "Core/bank-gow-api";
+import store from 'Core/Store'
+import kunaClient from 'Core/kuna-client';
 
-export const checkUahRate = () => {
-    fetchUahRate().then((rate) => {
+export async function checkUahRate() {
+
+    const rates = await kunaClient.getExchangeRates();
+    const uahRate = rates.find(rate => rate.currency === 'uah');
+    if (uahRate) {
         store.dispatch({
-            type: "GLOBAL::SET_UAH_RATE",
-            uahRate: rate
+            type: 'GLOBAL::SET_UAH_RATE',
+            uahRate: uahRate.usd,
         });
-    });
-};
+    }
+}

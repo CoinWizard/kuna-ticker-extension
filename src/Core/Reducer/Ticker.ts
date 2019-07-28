@@ -2,10 +2,10 @@ import { Dictionary, each } from 'lodash';
 
 import { kunaMarketMap } from 'kuna-sdk';
 
-import { ActionTypes } from 'Popup/Actions/ActionTypes';
 import { ObjectUtility } from 'Core/ObjectUtility';
 import { TickerInterface } from 'Core/Interfaces';
 import { ITickerStore } from 'Core/Interfaces';
+import { ActionTypes } from 'Core/actions';
 
 const initialTickerState: ITickerStore = {
     tickers: {} as Dictionary<TickerInterface>,
@@ -48,8 +48,10 @@ function updateTicker(state: ITickerStore, ticker: TickerInterface) {
     return ObjectUtility.updateObject(state, { tickers: tickers });
 }
 
-export default function tickerState(state: ITickerStore = initialTickerState,
-                                    action: ActionInterface = null) {
+export default function tickerState(
+    state: ITickerStore = initialTickerState,
+    action?: ActionInterface
+) {
     switch (action.type) {
         case ActionTypes.FETCH_TICKERS: {
             return ObjectUtility.updateObject(state, { tickers: action.tickers });

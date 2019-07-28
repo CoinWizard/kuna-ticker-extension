@@ -3,16 +3,16 @@
 @import "cleaner";
 
 html {
-    width: 310px;
-    max-width: 310px;
+    width: 540px;
+    max-width: 540px;
 }
 
 body {
-    width: 310px;
-    height: 270px;
+    width: 540px;
+    height: 400px;
     overflow: hidden;
     font-size: 16px;
-    background: white;
+    background: $color-kuna-blue;
     color: $color-dark-gray;
     font-family: $font;
     font-weight: 500;
