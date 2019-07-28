@@ -2,7 +2,7 @@ import React from 'react';
 import { map } from 'lodash';
 import cn from 'classnames';
 import Numeral from 'numeral';
-import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { TickerInterface } from 'Core/Interfaces';
 import { BitfinexTicker } from 'Core/bitfinex';
 import { BitstampTicker } from 'Core/bitstamp';
 

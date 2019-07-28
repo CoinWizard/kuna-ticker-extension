@@ -1,5 +1,5 @@
 import { ActionTypes } from 'Popup/Actions/ActionTypes';
-import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { TickerInterface } from 'Core/Interfaces';
 
 export class TickerActions {
 

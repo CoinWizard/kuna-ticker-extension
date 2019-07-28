@@ -4,8 +4,8 @@ import { kunaMarketMap } from 'kuna-sdk';
 
 import { ActionTypes } from 'Popup/Actions/ActionTypes';
 import { ObjectUtility } from 'Core/ObjectUtility';
-import { TickerInterface } from 'Core/Interfaces/TickerInterface';
-import { ITickerStore } from 'Core/Interfaces/Store';
+import { TickerInterface } from 'Core/Interfaces';
+import { ITickerStore } from 'Core/Interfaces';
 
 const initialTickerState: ITickerStore = {
     tickers: {} as Dictionary<TickerInterface>,

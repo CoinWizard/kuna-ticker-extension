@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { IStore } from 'Core/Interfaces/Store';
+import { IStore } from 'Core/Interfaces';
 
 import Global from './Global';
 import Ticker from './Ticker';

@@ -6,7 +6,7 @@ import { Router, Switch, Route, NavLink } from 'react-router-dom';
 import { createMemoryHistory, MemoryHistory } from 'history';
 
 import { sendTickerScreenView } from 'Popup/Analytics';
-import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { TickerInterface } from 'Core/Interfaces';
 
 import { TickerCalculator } from './ticker-calculator';
 import { TickerStats } from './ticker-stats';

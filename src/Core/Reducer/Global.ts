@@ -1,4 +1,4 @@
-import { IGlobalStore } from 'Core/Interfaces/Store';
+import { IGlobalStore } from 'Core/Interfaces';
 import { ObjectUtility } from 'Core/ObjectUtility';
 import { BitfinexTicker } from 'Core/bitfinex';
 import { BitstampTicker } from 'Core/bitstamp';

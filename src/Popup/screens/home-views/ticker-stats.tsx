@@ -1,8 +1,8 @@
 import React from 'react';
 import Numeral from 'numeral';
 import { connect } from 'react-redux';
-import { TickerInterface } from 'Core/Interfaces/TickerInterface';
-import { IStore } from 'Core/Interfaces/Store';
+import { TickerInterface } from 'Core/Interfaces';
+import { IStore } from 'Core/Interfaces';
 import { BitfinexTicker } from 'Core/bitfinex';
 import { BitstampTicker } from 'Core/bitstamp';
 

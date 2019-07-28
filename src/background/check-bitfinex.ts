@@ -1,4 +1,4 @@
-import store from "Core/Store";
+import store from 'Core/Store'
 import { map } from 'lodash';
 import { fetchBitfinexTicker, BitfinexTicker } from 'Core/bitfinex';
 

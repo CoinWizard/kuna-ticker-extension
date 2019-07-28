@@ -1,7 +1,7 @@
 import React from 'react';
 import Numeral from 'numeral';
 import { KunaAsset, getAsset } from 'kuna-sdk';
-import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { TickerInterface } from 'Core/Interfaces';
 
 interface IProps {
     ticker: TickerInterface;

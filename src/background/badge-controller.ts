@@ -1,7 +1,7 @@
 import * as Numeral from 'numeral';
 
 import ExtensionPlatform from 'Core/Extension';
-import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { TickerInterface } from 'Core/Interfaces';
 
 const browserAction = ExtensionPlatform.getExtension().browserAction;
 

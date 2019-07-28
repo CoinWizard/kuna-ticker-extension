@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getAsset, KunaAssetUnit } from 'kuna-sdk';
 import { find, each, groupBy } from 'lodash';
 import Numeral from 'numeral';
-import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { TickerInterface } from 'Core/Interfaces';
 import { sendTickerScreenView } from 'Popup/Analytics';
 import { TickerActions } from 'Popup/Actions/TickerActions';
 import { getCoinIcon } from 'Popup/svg';

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Numeral from 'numeral';
 import Binance, { DailyStatsResult } from 'binance-api-node';
 import { ArbitrageParams, arbitrageParamsMap, Fees } from './arbitrage-params';
-import { TickerInterface } from 'Core/Interfaces/TickerInterface';
+import { TickerInterface } from 'Core/Interfaces';
 
 const TUSD_UAH_PAIR = 'tusduah';
 
