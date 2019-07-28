@@ -9,6 +9,10 @@ const trackBudgeMiddleware = (store: IStore) => (next) => (action: AnyAction) =>
 
     const {ticker} = store;
 
+    if (!ticker) {
+        return;
+    }
+
     switch (action.type) {
         case ActionTypes.UPDATE_TICKER: {
             if (ticker.currentTickerKey === action.ticker.key) {

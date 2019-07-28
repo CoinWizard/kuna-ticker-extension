@@ -3,8 +3,10 @@ import { each } from 'lodash';
 import kunaClient from 'Core/kuna-client';
 import { IStore } from 'Core/Interfaces';
 import { checkUahRate } from '../check-uah-rate';
-import { processBitstampTickers } from '../check-bitstamp';
 import { processBitfinexTickers } from '../check-bitfinex';
+import { processBitstampTickers } from '../check-bitstamp';
+import { processBinanceTickers } from '../check-binance';
+
 
 export class RootController {
     protected store: Redux.Store<IStore>;
@@ -19,10 +21,12 @@ export class RootController {
         setInterval(checkUahRate, 60 * 60 * 1000);
 
         processBitfinexTickers();
+        processBinanceTickers();
         processBitstampTickers();
 
         setInterval(() => {
             processBitfinexTickers();
+            processBinanceTickers();
             processBitstampTickers();
         }, 10 * 60 * 1000);
     }

@@ -1,13 +1,15 @@
 import React from 'react';
 import Numeral from 'numeral';
+import { get } from 'lodash';
 import { connect } from 'react-redux';
 import { TickerInterface } from 'Core/Interfaces';
 import { IStore } from 'Core/Interfaces';
 import { BitfinexTicker } from 'Core/bitfinex';
 import { BitstampTicker } from 'Core/bitstamp';
-
+import { BinanceTicker } from 'Core/binance-helper';
 
 import { UsdStatsView } from './extra-view';
+import { compareToExchanges } from 'Core/helper';
 
 
 interface IProps {
@@ -18,11 +20,12 @@ interface IStateProps {
     uahRate?: number;
     bitfinexTicker?: BitfinexTicker;
     bitstampTicker?: BitstampTicker;
+    binanceTicker?: BinanceTicker;
 }
 
 class TickerStatsComponent extends React.Component<IProps & IStateProps> {
     public render() {
-        const { ticker, uahRate = null, bitfinexTicker = null, bitstampTicker = null } = this.props;
+        const { ticker, uahRate, bitfinexTicker, bitstampTicker, binanceTicker } = this.props;
 
         return (
             <div>
@@ -60,6 +63,7 @@ class TickerStatsComponent extends React.Component<IProps & IStateProps> {
                                   uahRate={uahRate}
                                   bitfinexTicker={bitfinexTicker}
                                   bitstampTicker={bitstampTicker}
+                                  binanceTicker={binanceTicker}
                     />
                 )}
             </div>
@@ -68,18 +72,17 @@ class TickerStatsComponent extends React.Component<IProps & IStateProps> {
 }
 
 const mapStateToProps = (store: IStore, ownProps: IProps): IStateProps => {
+    const { toBinance, toBitfinex, toBitstamp } = compareToExchanges(ownProps.ticker.key);
 
-    let bitfinexTicker = null;
-    let bitstampTicker = null;
-    if (ownProps.ticker.compareTo) {
-        bitfinexTicker = store.global.bitfinexTickers[ownProps.ticker.compareTo] || undefined;
-        bitstampTicker = store.global.bitstampTickers[ownProps.ticker.compareTo] || undefined;
-    }
+    const bitfinexTicker = get(store.global.bitfinexTickers, toBitfinex);
+    const bitstampTicker = get(store.global.bitstampTickers, toBitstamp);
+    const binanceTicker = get(store.global.binanceTickers, toBinance);
 
     return {
         uahRate: store.global.uahRate,
         bitfinexTicker: bitfinexTicker,
         bitstampTicker: bitstampTicker,
+        binanceTicker: binanceTicker,
     };
 };
 

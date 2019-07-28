@@ -20,4 +20,6 @@ export type TickerInterface = KunaMarket & {
     dailyChangePercent: number;
     volume_base?: number;
     volume_quote?: number;
+
+    compareToBinance?: string;
 }

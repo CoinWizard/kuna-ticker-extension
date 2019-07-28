@@ -7,6 +7,7 @@ import store from 'Core/Store';
 import { setupContextMenu } from 'background/ExtensionSetup';
 import { RootController } from 'background/controller';
 
+
 const initBackground = () => {
     wrapStore(store, {
         portName: STORE_KEY
@@ -23,9 +24,10 @@ const initBackground = () => {
     });
 };
 
-document.addEventListener('DOMContentLoaded', initBackground);
 
+document.addEventListener('DOMContentLoaded', initBackground);
 setupContextMenu();
+
 
 ExtensionPlatform.getRuntime().onInstalled.addListener((event) => {
     switch (event.reason) {

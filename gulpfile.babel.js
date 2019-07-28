@@ -68,23 +68,20 @@ gulp.task('manifest:production', () => {
 //| Configuration for create JavaScript bundles
 //| Use WebPack
 //|---------------------------------------------------------------------------
-gulp.task('js', []);
-gulp.task('js:watch', []);
-gulp.task('css', []);
 
 
 const staticFiles = ['images', 'views', 'root', 'fonts'];
 let copyStrings = staticFiles.map(staticFile => `copy:${staticFile}`);
-gulp.task('copy', [
+gulp.task('copy', gulp.series(
     ...copyStrings,
-    'manifest:production'
-]);
+    'manifest:production',
+));
 
 gulp.task('clean', function clean() {
     return del(['./dist/*']);
 });
 
-gulp.task('build', ['copy']);
+gulp.task('build', gulp.parallel('copy'));
 
 gulp.task('copy:watch', function () {
     gulp.watch(['./src/*.*'], 'build');
@@ -92,7 +89,7 @@ gulp.task('copy:watch', function () {
 
 gulp.task('zip:chrome', zipTask('chrome'));
 gulp.task('zip:firefox', zipTask('firefox'));
-gulp.task('zip', ['zip:chrome', 'zip:firefox']);
+gulp.task('zip', gulp.series('zip:chrome', 'zip:firefox'));
 
 function copyTask(opts) {
     const {
@@ -109,7 +106,7 @@ function copyTask(opts) {
         });
 
         return stream
-    }
+    };
 }
 
 function zipTask(target) {

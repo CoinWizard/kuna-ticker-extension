@@ -5,6 +5,7 @@ import Numeral from 'numeral';
 import { TickerInterface } from 'Core/Interfaces';
 import { BitfinexTicker } from 'Core/bitfinex';
 import { BitstampTicker } from 'Core/bitstamp';
+import { BinanceTicker } from 'Core/binance-helper';
 
 
 interface IUsdPriceProps {
@@ -12,12 +13,14 @@ interface IUsdPriceProps {
     ticker: TickerInterface;
     bitfinexTicker?: BitfinexTicker;
     bitstampTicker?: BitstampTicker;
+    binanceTicker?: BinanceTicker;
 }
 
 
 enum ExchangeMode {
     Bitstamp = 'bitstamp',
-    Bitfinex = 'bitfinex'
+    Bitfinex = 'bitfinex',
+    Binance = 'binance'
 }
 
 
@@ -78,7 +81,7 @@ export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewSt
     }
 
     protected __checkAvailableMode = (props: IUsdPriceProps): ExchangeMode | undefined => {
-        const { bitstampTicker, bitfinexTicker } = props;
+        const { bitstampTicker, bitfinexTicker, binanceTicker } = props;
 
         if (bitstampTicker) {
             return ExchangeMode.Bitstamp;
@@ -86,6 +89,10 @@ export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewSt
 
         if (bitfinexTicker) {
             return ExchangeMode.Bitfinex;
+        }
+
+        if (binanceTicker) {
+            return ExchangeMode.Binance;
         }
     };
 
@@ -157,7 +164,7 @@ export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewSt
     };
 
     protected __getCompareTickersParams = (usdPrice: number): CompareTickerParams | undefined => {
-        const { bitfinexTicker = null, bitstampTicker = null } = this.props;
+        const { bitfinexTicker = undefined, bitstampTicker = undefined, binanceTicker = undefined } = this.props;
         const { mode } = this.state;
 
         switch (mode) {
@@ -190,6 +197,22 @@ export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewSt
                 return {
                     arbitragePercent: arbitragePercent,
                     lastPrice: Numeral(bitstampTicker.last),
+                };
+            }
+
+            case ExchangeMode.Binance: {
+                if (!binanceTicker) {
+                    return;
+                }
+
+                const arbitragePercent: Numeral
+                    = Numeral(usdPrice)
+                    .subtract(binanceTicker.last_price)
+                    .divide(binanceTicker.last_price);
+
+                return {
+                    arbitragePercent: arbitragePercent,
+                    lastPrice: Numeral(binanceTicker.last_price),
                 };
             }
         }
