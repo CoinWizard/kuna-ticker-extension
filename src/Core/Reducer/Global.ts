@@ -62,6 +62,10 @@ export default function globalState(state: IGlobalStore = initialState, action: 
             return ObjectUtility.updateObject(state, { uahRate: action.uahRate });
         }
 
+        case 'GLOBAL::SET_RATES': {
+            return ObjectUtility.updateObject(state, { rates: action.rates });
+        }
+
         case 'GLOBAL::SET_BITFINEX_TICKER': {
             return updateBitfinexTicker(state, action.symbol, action.ticker);
         }

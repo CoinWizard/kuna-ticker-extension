@@ -1,3 +1,4 @@
+import { KunaV3ExchangeRate } from 'kuna-sdk';
 import React from 'react';
 import Numeral from 'numeral';
 import { get } from 'lodash';
@@ -17,7 +18,8 @@ interface IProps {
 }
 
 interface IStateProps {
-    uahRate?: number;
+    baseRate?: KunaV3ExchangeRate;
+    quoteRate?: KunaV3ExchangeRate;
     bitfinexTicker?: BitfinexTicker;
     bitstampTicker?: BitstampTicker;
     binanceTicker?: BinanceTicker;
@@ -25,21 +27,21 @@ interface IStateProps {
 
 class TickerStatsComponent extends React.Component<IProps & IStateProps> {
     public render() {
-        const { ticker, uahRate, bitfinexTicker, bitstampTicker, binanceTicker } = this.props;
+        const { ticker, bitfinexTicker, bitstampTicker, binanceTicker } = this.props;
 
         return (
             <div>
                 <label className="current-ticker__info">
                     <span className="current-ticker__info-label">Volume {ticker.baseAsset}</span>
                     <span className="current-ticker__info-value">
-                        {Numeral(ticker.volume_base).format("0,0.[00]")}
+                        {Numeral(ticker.volume_base).format('0,0.[00]')}
                     </span>
                 </label>
 
                 <label className="current-ticker__info">
                     <span className="current-ticker__info-label">Volume {ticker.quoteAsset}</span>
                     <span className="current-ticker__info-value">
-                        {Numeral(ticker.volume_quote).format("0,0.[00]")}
+                        {Numeral(ticker.volume_quote).format('0,0.[00]')}
                     </span>
                 </label>
 
@@ -47,23 +49,24 @@ class TickerStatsComponent extends React.Component<IProps & IStateProps> {
                 <label className="current-ticker__info">
                     <span className="current-ticker__info-label">Low price</span>
                     <span className="current-ticker__info-value">
-                        {Numeral(ticker.OHLC.low).format("0,0.[00]")}
+                        {Numeral(ticker.OHLC.low).format('0,0.[00]')}
                     </span>
                 </label>
 
                 <label className="current-ticker__info">
                     <span className="current-ticker__info-label">High price</span>
                     <span className="current-ticker__info-value">
-                        {Numeral(ticker.OHLC.high).format("0,0.[00]")}
+                        {Numeral(ticker.OHLC.high).format('0,0.[00]')}
                     </span>
                 </label>
 
-                {ticker.quoteAsset === 'UAH' && uahRate && (
-                    <UsdStatsView ticker={ticker}
-                                  uahRate={uahRate}
-                                  bitfinexTicker={bitfinexTicker}
-                                  bitstampTicker={bitstampTicker}
-                                  binanceTicker={binanceTicker}
+                {this.props.quoteRate && (
+                    <UsdStatsView
+                        rate={this.props.quoteRate}
+                        ticker={ticker}
+                        bitfinexTicker={bitfinexTicker}
+                        bitstampTicker={bitstampTicker}
+                        binanceTicker={binanceTicker}
                     />
                 )}
             </div>
@@ -78,8 +81,23 @@ const mapStateToProps = (store: IStore, ownProps: IProps): IStateProps => {
     const bitstampTicker = get(store.global.bitstampTickers, toBitstamp);
     const binanceTicker = get(store.global.binanceTickers, toBinance);
 
+    let baseRate = undefined;
+    let quoteRate = undefined;
+
+    const rates = store.global.rates;
+    try {
+        if (rates) {
+            const { baseAsset, quoteAsset } = ownProps.ticker;
+            baseRate = rates.find(r => r.currency === baseAsset.toLowerCase());
+            quoteRate = rates.find(r => r.currency === quoteAsset.toLowerCase());
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
     return {
-        uahRate: store.global.uahRate,
+        baseRate: baseRate,
+        quoteRate: quoteRate,
         bitfinexTicker: bitfinexTicker,
         bitstampTicker: bitstampTicker,
         binanceTicker: binanceTicker,

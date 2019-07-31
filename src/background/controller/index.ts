@@ -3,6 +3,7 @@ import { each } from 'lodash';
 import kunaClient from 'Core/kuna-client';
 import { IStore } from 'Core/Interfaces';
 import { checkUahRate } from '../check-uah-rate';
+import { checkRates } from '../check-rates';
 import { processBitfinexTickers } from '../check-bitfinex';
 import { processBitstampTickers } from '../check-bitstamp';
 import { processBinanceTickers } from '../check-binance';
@@ -18,6 +19,7 @@ export class RootController {
         setInterval(() => this.tickerUpdater(), 60 * 1000);
 
         checkUahRate();
+        checkRates();
         setInterval(checkUahRate, 60 * 60 * 1000);
 
         processBitfinexTickers();
@@ -25,6 +27,10 @@ export class RootController {
         processBitstampTickers();
 
         setInterval(() => {
+            checkRates().catch((error: Error) => {
+                console.error(error);
+            });
+
             processBitfinexTickers();
             processBinanceTickers();
             processBitstampTickers();
@@ -46,7 +52,7 @@ export class RootController {
      * @returns {*}
      */
     protected updateTicker(key: string, kunaTickerData) {
-        const {ticker} = this.store.getState();
+        const { ticker } = this.store.getState();
 
         const currentTicker = ticker.tickers[key];
 

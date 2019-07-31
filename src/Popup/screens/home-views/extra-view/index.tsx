@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import { KunaV3ExchangeRate } from 'kuna-sdk';
 import cn from 'classnames';
 import Numeral from 'numeral';
 import { TickerInterface } from 'Core/Interfaces';
@@ -9,7 +10,7 @@ import { BinanceTicker } from 'Core/binance-helper';
 
 
 interface IUsdPriceProps {
-    uahRate: number;
+    rate: KunaV3ExchangeRate;
     ticker: TickerInterface;
     bitfinexTicker?: BitfinexTicker;
     bitstampTicker?: BitstampTicker;
@@ -36,7 +37,6 @@ type CompareTickerParams = {
 
 
 export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewState> {
-
     public constructor(props: IUsdPriceProps) {
         super(props);
 
@@ -55,27 +55,27 @@ export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewSt
 
 
     public render(): JSX.Element {
-        const { ticker, uahRate } = this.props;
+        const { ticker, rate } = this.props;
 
-        const usdPrice = ticker.price / uahRate;
+        const baseUsdPrice = ticker.price * rate.usd;
 
         return (
             <div>
                 <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">UAH/USD</span>
+                    <span className="current-ticker__info-label">USD Volume</span>
                     <span className="current-ticker__info-value">
-                        {Numeral(uahRate).format('0,0.[00]')}
+                        ${Numeral(ticker.volume_base).multiply(baseUsdPrice).format('0,0.[00]')}
                     </span>
                 </label>
 
                 <label className="current-ticker__info">
                     <span className="current-ticker__info-label">USD Price</span>
                     <span className="current-ticker__info-value">
-                        ${Numeral(usdPrice).format('0,0.[00]')}
+                        ${Numeral(baseUsdPrice).format('0,0.[00]')}
                     </span>
                 </label>
 
-                {this.__renderCompares(usdPrice)}
+                {this.__renderCompares(baseUsdPrice)}
             </div>
         );
     }

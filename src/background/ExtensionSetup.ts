@@ -5,21 +5,21 @@ const extension = ExtensionPlatform.getExtension();
 export function setupContextMenu() {
     extension.contextMenus.removeAll();
     extension.contextMenus.create({
-        title: "by Plark with 🚀",
-        contexts: ["browser_action"],
+        title: 'by Plark with 🚀',
+        contexts: ['browser_action'],
         onclick: () => {
             extension.tabs.create({
-                url: "https://plark.io?src=Kuna_Extension",
+                url: 'https://plark.io?utm_source=kuna-extention&utm_medium=context',
             });
         },
     });
 
     extension.contextMenus.create({
-        title: "Source code",
-        contexts: ["browser_action"],
+        title: 'Source code',
+        contexts: ['browser_action'],
         onclick: () => {
             extension.tabs.create({
-                url: "https://github.com/CoinWizard/kuna-ticker-extension",
+                url: 'https://github.com/CoinWizard/kuna-ticker-extension',
             });
         },
     });
