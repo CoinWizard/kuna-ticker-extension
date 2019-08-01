@@ -27,7 +27,7 @@
         ]
     },
     "dependencies": {
-        "@types/node": "^12.6.8",
+        "@types/node": "12.6.8",
         "autoprefixer": "7.2.6",
         "awesome-typescript-loader": "5.2.0",
         "axios": "0.19.0",
@@ -59,7 +59,7 @@
         "history": "4.7.2",
         "jshint": "2.9.6",
         "json-loader": "0.5.7",
-        "kuna-sdk": "0.4.0-beta.16",
+        "kuna-sdk": "0.4.0-beta.18",
         "local-storage": "1.4.2",
         "lodash": "4.17.15",
         "minifycss": "1.0.1",

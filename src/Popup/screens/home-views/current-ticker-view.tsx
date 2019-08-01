@@ -55,7 +55,7 @@ export class CurrentTickerView extends React.PureComponent<IViewProps> {
                         ) : undefined}
 
                         <div className="current-ticker__market">
-                            <a href={`https://kuna.io/markets/${ticker.key}?src=Kuna_Extension`}
+                            <a href={`https://kuna.io/markets/${ticker.key}?ref=Kuna_Extension`}
                                className="current-ticker__market-link"
                                target="_blank"
                             >To trading {ticker.baseAsset}/{ticker.quoteAsset}</a>
