@@ -8,7 +8,6 @@ const symbolsToCheck = [
     'ltcusd',  // Litecoin
     'xrpusd',  // Ripple
     'ethusd',  // Ethereum
-
     'bchusd',  // Bitcoin Cash
 ];
 

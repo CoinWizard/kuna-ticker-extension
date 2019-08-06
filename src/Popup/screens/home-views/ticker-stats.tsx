@@ -9,9 +9,9 @@ import { BitfinexTicker } from 'Core/bitfinex';
 import { BitstampTicker } from 'Core/bitstamp';
 import { BinanceTicker } from 'Core/binance-helper';
 
-import { UsdStatsView } from './extra-view';
 import { compareToExchanges } from 'Core/helper';
-
+import { UsdStatsView } from './extra-view';
+import InfoCell from './info-cell';
 
 interface IProps {
     ticker: TickerInterface;
@@ -31,34 +31,25 @@ class TickerStatsComponent extends React.Component<IProps & IStateProps> {
 
         return (
             <div>
-                <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">Volume {ticker.baseAsset}</span>
-                    <span className="current-ticker__info-value">
-                        {Numeral(ticker.volume_base).format('0,0.[00]')}
-                    </span>
-                </label>
+                <InfoCell
+                    value={Numeral(ticker.volume_base).format('0,0.[00]')}
+                    label={`Volume ${ticker.baseAsset}`}
+                />
 
-                <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">Volume {ticker.quoteAsset}</span>
-                    <span className="current-ticker__info-value">
-                        {Numeral(ticker.volume_quote).format('0,0.[00]')}
-                    </span>
-                </label>
+                <InfoCell
+                    value={Numeral(ticker.volume_quote).format('0,0.[00]')}
+                    label={`Volume ${ticker.quoteAsset}`}
+                />
 
+                <InfoCell
+                    value={Numeral(ticker.OHLC.low).format('0,0.[00]')}
+                    label="Low price"
+                />
 
-                <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">Low price</span>
-                    <span className="current-ticker__info-value">
-                        {Numeral(ticker.OHLC.low).format('0,0.[00]')}
-                    </span>
-                </label>
-
-                <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">High price</span>
-                    <span className="current-ticker__info-value">
-                        {Numeral(ticker.OHLC.high).format('0,0.[00]')}
-                    </span>
-                </label>
+                <InfoCell
+                    value={Numeral(ticker.OHLC.high).format('0,0.[00]')}
+                    label="High price"
+                />
 
                 {this.props.quoteRate && (
                     <UsdStatsView

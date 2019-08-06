@@ -7,7 +7,7 @@ import { TickerInterface } from 'Core/Interfaces';
 import { BitfinexTicker } from 'Core/bitfinex';
 import { BitstampTicker } from 'Core/bitstamp';
 import { BinanceTicker } from 'Core/binance-helper';
-
+import InfoCell from '../info-cell';
 
 interface IUsdPriceProps {
     rate: KunaV3ExchangeRate;
@@ -61,19 +61,15 @@ export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewSt
 
         return (
             <div>
-                <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">USD Volume</span>
-                    <span className="current-ticker__info-value">
-                        ${Numeral(ticker.volume_base).multiply(baseUsdPrice).format('0,0.[00]')}
-                    </span>
-                </label>
+                <InfoCell
+                    value={'$' + Numeral(ticker.volume_base).multiply(baseUsdPrice).format('0,0.[00]')}
+                    label="USD Volume"
+                />
 
-                <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">USD Price</span>
-                    <span className="current-ticker__info-value">
-                        ${Numeral(baseUsdPrice).format('0,0.[00]')}
-                    </span>
-                </label>
+                <InfoCell
+                    value={'$' + Numeral(baseUsdPrice).format('0,0.[00]')}
+                    label="USD Price"
+                />
 
                 {this.__renderCompares(baseUsdPrice)}
             </div>
@@ -139,26 +135,23 @@ export class UsdStatsView extends React.Component<IUsdPriceProps, UsdStatsViewSt
             );
         }
 
-        const arbitrageClass = cn('current-ticker__info-value', {
+        const arbitrageClass = cn({
             '-red': params.arbitragePercent.value() > 0,
             '-green': params.arbitragePercent.value() < 0,
         });
 
         return (
             <div>
-                <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">% Arbitrage</span>
-                    <span className={arbitrageClass}>
-                        {params.arbitragePercent.format('+0,0.[00]%')}
-                    </span>
-                </label>
+                <InfoCell
+                    valueClassName={arbitrageClass}
+                    value={params.arbitragePercent.format('+0,0.[00]%')}
+                    label="% Arbitrage"
+                />
 
-                <label className="current-ticker__info">
-                    <span className="current-ticker__info-label">Price</span>
-                    <span className="current-ticker__info-value">
-                        ${params.lastPrice.format('0,0.[00]')}
-                    </span>
-                </label>
+                <InfoCell
+                    value={params.lastPrice.format('0,0.[00]')}
+                    label="Price"
+                />
             </div>
         );
     };

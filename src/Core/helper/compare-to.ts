@@ -12,6 +12,9 @@ export default function compareToKeys(symbol: string): CompareToResult {
         case 'bchuah':
             return { toBinance: 'bchusdt', toBitfinex: 'bchusd', toBitstamp: 'bchusd' };
 
+        case 'bnbuah':
+            return { toBinance: 'bnbusdt', toBitfinex: undefined, toBitstamp: undefined };
+
         case 'ethuah':
             return { toBinance: 'ethusdt', toBitfinex: 'ethusd', toBitstamp: 'ethusd' };
 

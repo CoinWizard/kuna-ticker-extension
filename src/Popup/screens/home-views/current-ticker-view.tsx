@@ -7,6 +7,7 @@ import { createMemoryHistory, MemoryHistory } from 'history';
 
 import { sendTickerScreenView } from 'Popup/Analytics';
 import { TickerInterface } from 'Core/Interfaces';
+import { getCoinIcon } from 'Popup/svg';
 
 import { TickerCalculator } from './ticker-calculator';
 import { TickerStats } from './ticker-stats';
@@ -30,19 +31,23 @@ export class CurrentTickerView extends React.PureComponent<IViewProps> {
     public render(): JSX.Element {
         const { ticker } = this.props;
 
+        const CoinIcon = getCoinIcon(ticker.baseAsset);
+
         return (
             <Router history={this.history}>
                 <div className="current-ticker">
+
+                    <header className="current-ticker__header">
+                        {CoinIcon ? <CoinIcon className="market-list__item-icon" /> : undefined}
+
+                        <span className="current-ticker__header-label">
+                            {ticker.baseAsset} / {ticker.quoteAsset}
+                        </span>
+                    </header>
+
                     <div className="current-ticker__bugged">
                         <label className="current-ticker__price">
-                            <span className="current-ticker__price-base">
-                                1<span className="current-ticker__price-currency">{ticker.baseAsset}</span>
-                            </span>
-                            <span className="current-ticker__price-separator">=</span>
-                            <span className="current-ticker__price-quote">
-                                {numeral(ticker.price).format(ticker.format)}
-                                <span className="current-ticker__price-currency">{ticker.quoteAsset}</span>
-                            </span>
+                            {numeral(ticker.price).format(ticker.format)} {ticker.quoteAsset}
                         </label>
 
                         {(typeof ticker.dailyChangePercent === 'number') ? (
@@ -58,7 +63,7 @@ export class CurrentTickerView extends React.PureComponent<IViewProps> {
                             <a href={`https://kuna.io/markets/${ticker.key}?ref=Kuna_Extension`}
                                className="current-ticker__market-link"
                                target="_blank"
-                            >To trading {ticker.baseAsset}/{ticker.quoteAsset}</a>
+                            >Exchange {ticker.baseAsset}/{ticker.quoteAsset}</a>
                         </div>
 
                         <div className="current-ticker-tabs">

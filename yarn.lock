@@ -5157,10 +5157,10 @@ klaw@^1.0.0:
   optionalDependencies:
     graceful-fs "^4.1.9"
 
-kuna-sdk@0.4.0-beta.18:
-  version "0.4.0-beta.18"
-  resolved "https://registry.yarnpkg.com/kuna-sdk/-/kuna-sdk-0.4.0-beta.18.tgz#24fe19eb4a7589839f54da1cd0b65a315f8c0d3a"
-  integrity sha512-qRSOi3kkDZOBnjpN8j1XYs4xNwwoS0ekmg0wdvMTd71S937gUR7LQdHf0qJV3R2QRdytTl+XcrAWBsFHF+jteg==
+kuna-sdk@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/kuna-sdk/-/kuna-sdk-0.4.0.tgz#7b76d698c9c119dec03e25034af43cdca2de0cf7"
+  integrity sha512-GLZunDAEQTKfba6TinlgI2C6JmYUbPJVWR//GdkeG+JWWbKmqMSLWiMVpzBufZTEvkLYRzI7hzfXx7wjDjl11g==
   dependencies:
     axios "0.19.0"
     debug "3.1.0"
@@ -6200,9 +6200,10 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
-numeral@2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/numeral/-/numeral-2.0.6.tgz#4ad080936d443c2561aed9f2197efffe25f4e506"
+numeral@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/numeral/-/numeral-2.0.4.tgz#545a0c709e090a9cf79bebec802b93f60061f038"
+  integrity sha1-VFoMcJ4JCpz3m+vsgCuT9gBh8Dg=
 
 oauth-sign@~0.8.2:
   version "0.8.2"
