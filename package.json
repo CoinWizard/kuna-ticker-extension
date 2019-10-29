@@ -61,7 +61,7 @@
         "json-loader": "0.5.7",
         "kuna-sdk": "0.4.0",
         "local-storage": "1.4.2",
-        "lodash": "4.17.15",
+        "lodash": "4.17.13",
         "minifycss": "1.0.1",
         "mkdirp": "0.5.1",
         "moment": "2.22.2",
