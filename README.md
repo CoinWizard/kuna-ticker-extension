@@ -9,8 +9,6 @@
     <a href="https://kuna.io/?utm_source=github&utm_medium=readme&utm_campaign=Kuna_Extension">kuna.io</a>
     ·
     <a href="https://chrome.google.com/webstore/detail/kunaio-ticker-exchange/fgdaflnjoincloakmmndamfgofijeine">Chrome Extension</a>
-    ·
-    <a href="https://coinwizard.me?src=kuna-extension">CoinWizard</a>
   </p>
 </p>
 
