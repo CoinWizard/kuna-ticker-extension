@@ -5,15 +5,12 @@
     "description": "Следи за ценой Bitcoin и другой криптой с Kuna Ticker",
     "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
     "permissions": [
-        "tabs",
         "storage",
         "webRequest",
         "contextMenus",
-        "notifications",
-        "http://*/*",
         "https://*/*"
     ],
-    "author": "CoinWizard Team",
+    "author": "Laurel Nomads team",
     "icons": {
         "114": "/images/kuna_114.png",
         "128": "/images/kuna_128.png",

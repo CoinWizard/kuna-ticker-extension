@@ -1,6 +1,6 @@
 import { Dictionary, each } from 'lodash';
 
-import { kunaMarketMap } from 'kuna-sdk';
+// import { kunaMarketMap } from 'kuna-sdk';
 
 import { ObjectUtility } from 'Core/ObjectUtility';
 import { TickerInterface } from 'Core/Interfaces';
@@ -12,25 +12,25 @@ const initialTickerState: ITickerStore = {
     currentTickerKey: 'btcuah',
 };
 
-each(kunaMarketMap, (pair) => {
-    initialTickerState.tickers[pair.key] = {
-        ...pair,
-
-        price: 0,
-        volume_base: 0,
-        volume_quote: 0,
-        OHLC: {
-            high: 0,
-            low: 0,
-            open: 0,
-            close: 0,
-        },
-        depth: {
-            bid: 0,
-            ask: 0,
-        },
-    };
-});
+// each(kunaMarketMap, (pair) => {
+//     initialTickerState.tickers[pair.key] = {
+//         ...pair,
+//
+//         price: 0,
+//         volume_base: 0,
+//         volume_quote: 0,
+//         OHLC: {
+//             high: 0,
+//             low: 0,
+//             open: 0,
+//             close: 0,
+//         },
+//         depth: {
+//             bid: 0,
+//             ask: 0,
+//         },
+//     };
+// });
 
 
 interface ActionInterface {

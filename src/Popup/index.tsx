@@ -47,9 +47,7 @@ export class PopupApplication extends React.PureComponent<AppProps, AppState> {
 
     public componentDidMount(): void {
         proxyStore.ready(() => {
-            setTimeout(() => {
-                this.setState({ ready: true });
-            }, 0);
+            setTimeout(() => this.setState({ ready: true }), 0);
         });
     }
 
@@ -61,6 +59,15 @@ export class PopupApplication extends React.PureComponent<AppProps, AppState> {
                 <div className='application -loading'>
                     <div className="loading">Loading...</div>
                 </div>
+            );
+        }
+
+        const { currencies, markets } = proxyStore.getState().global;
+        if (!currencies || !markets) {
+            return (
+              <div className='application -loading'>
+                  <div className="loading">Loading...</div>
+              </div>
             );
         }
 

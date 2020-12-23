@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import Numeral from 'numeral';
-import { find, each, groupBy, reduce } from 'lodash';
+import { find, each, groupBy, orderBy, reduce } from 'lodash';
 import { connect } from 'react-redux';
 import { getAsset, KunaAssetUnit } from 'kuna-sdk';
 import store from 'Popup/store';
@@ -10,7 +10,6 @@ import { sendTickerScreenView } from 'Popup/Analytics';
 import { TickerActions } from 'Core/actions';
 import { getCoinIcon } from 'Popup/svg';
 import { CurrentTickerView } from './home-views/current-ticker-view';
-
 
 type HomeScreenProps = {
     tickers: any;
@@ -132,14 +131,14 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
         marketList.push(createTickerSeparator(KunaAssetUnit.UkrainianHryvnia));
         each(groupedTickers[KunaAssetUnit.UkrainianHryvnia], createTicker);
 
-        marketList.push(createTickerSeparator(KunaAssetUnit.RussianRuble));
-        each(groupedTickers[KunaAssetUnit.RussianRuble], createTicker);
-
         marketList.push(createTickerSeparator(KunaAssetUnit.Bitcoin));
         each(groupedTickers[KunaAssetUnit.Bitcoin], createTicker);
 
         marketList.push(createTickerSeparator(KunaAssetUnit.USDollar));
         each(groupedTickers[KunaAssetUnit.USDollar], createTicker);
+
+        marketList.push(createTickerSeparator(KunaAssetUnit.RussianRuble));
+        each(groupedTickers[KunaAssetUnit.RussianRuble], createTicker);
 
         marketList.push(createTickerSeparator(KunaAssetUnit.Tether));
         each(groupedTickers[KunaAssetUnit.Tether], createTicker);
@@ -152,8 +151,10 @@ class HomeScreenComponent extends React.PureComponent<HomeScreenProps, HomeScree
 const mapStateToProps = (store) => {
     const { tickers, currentTickerKey } = store.ticker;
 
+    let orderedTickers = orderBy(tickers, 'index');
+
     const totalMap = {};
-    each(tickers, (ticker) => {
+    each(orderedTickers, (ticker) => {
         if (!(ticker.baseAsset in totalMap)) {
             totalMap[ticker.baseAsset] = 0;
         }
@@ -167,7 +168,7 @@ const mapStateToProps = (store) => {
     });
 
     return {
-        tickers: tickers,
+        tickers: orderedTickers,
         currentTickerKey: currentTickerKey,
     };
 };

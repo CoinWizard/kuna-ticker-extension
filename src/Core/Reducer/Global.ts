@@ -6,6 +6,8 @@ import { BinanceTicker } from 'Core/binance-helper';
 
 const initialState: IGlobalStore = {
     uahRate: null,
+    currencies: undefined,
+    markets: undefined,
     bitfinexTickers: {},
     bitstampTickers: {},
     binanceTickers: {},
@@ -64,6 +66,14 @@ export default function globalState(state: IGlobalStore = initialState, action: 
 
         case 'GLOBAL::SET_RATES': {
             return ObjectUtility.updateObject(state, { rates: action.rates });
+        }
+
+        case 'GLOBAL::SET_CURRENCIES': {
+            return ObjectUtility.updateObject(state, { currencies: action.currencies });
+        }
+
+        case 'GLOBAL::SET_MARKETS': {
+            return ObjectUtility.updateObject(state, { markets: action.markets });
         }
 
         case 'GLOBAL::SET_BITFINEX_TICKER': {
