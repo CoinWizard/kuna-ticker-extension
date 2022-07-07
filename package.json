@@ -64,7 +64,7 @@
         "lodash": "4.17.15",
         "minifycss": "1.0.1",
         "mkdirp": "0.5.1",
-        "moment": "2.22.2",
+        "moment": "2.29.4",
         "momentjs": "2.0.0",
         "net": "1.0.2",
         "node-sass": "4.12.0",
